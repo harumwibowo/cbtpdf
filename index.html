@@ -22,6 +22,9 @@
     .sidebar-transition { transition: transform 0.3s ease-in-out; }
     .submenu-collapse { transition: max-height 0.3s ease-out; overflow: hidden; max-height: 0; }
     .submenu-collapse.open { max-height: 500px; }
+    .sidebar-collapsed #sidebar { width: 0; overflow: hidden; min-width: 0; border: none; }
+    .sidebar-collapsed #adminContent { margin-left: 0; }
+    .sidebar-collapsed .lg\:ml-64 { margin-left: 0; }
     .nav-item.active { background-color: rgba(99, 102, 241, 0.1); color: #6366f1; border-right: 3px solid #6366f1; }
     @media (max-width: 1023px) { .sidebar-mobile { transform: translateX(-100%); } .sidebar-mobile.open { transform: translateX(0); } }
   </style>
@@ -148,18 +151,18 @@
       <div class="p-5 border-b border-gray-100 flex items-center space-x-3">
         <img id="sidebarLogo" src="https://via.placeholder.com/36" alt="Logo" class="w-9 h-9 rounded-xl object-cover" onerror="this.style.display='none'" />
         <div>
-          <h3 class="font-bold text-sm text-gray-800 leading-tight">CBT Panel</h3>
+          <div class="flex items-center justify-between"><h3 class="font-bold text-sm text-gray-800 leading-tight">CBT Panel</h3><button onclick="toggleSidebarCollapse()" class="p-1 rounded-lg hover:bg-gray-100 text-gray-400 hidden lg:block" title="Sembunyikan Sidebar"><i data-lucide="panel-left-close" class="w-4 h-4"></i></button></div>
           <p class="text-[10px] text-gray-400" id="sidebarUserRole">Admin</p>
         </div>
       </div>
 
       <nav class="flex-1 overflow-y-auto py-3 px-3 space-y-1 text-sm">
-        <button onclick="showAdminPage('dashboard')" data-page="dashboard" class="nav-item w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left">
+        <button onclick="showAdminPage('dashboard')" data-page="dashboard" data-role="all" class="nav-item w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left">
           <i data-lucide="layout-dashboard" class="w-5 h-5 flex-shrink-0"></i>
           <span class="font-medium">Dasbor</span>
         </button>
 
-        <div>
+        <div data-role="admin">
           <button onclick="toggleSubmenu(this)" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left">
             <div class="flex items-center space-x-3"><i data-lucide="database" class="w-5 h-5 flex-shrink-0"></i><span class="font-medium">Data Master</span></div>
             <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200"></i>
@@ -170,7 +173,7 @@
           </div>
         </div>
 
-        <div>
+        <div data-role="admin,guru">
           <button onclick="toggleSubmenu(this)" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left">
             <div class="flex items-center space-x-3"><i data-lucide="folder-open" class="w-5 h-5 flex-shrink-0"></i><span class="font-medium">Persiapan</span></div>
             <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200"></i>
@@ -180,19 +183,19 @@
           </div>
         </div>
 
-        <div>
+        <div data-role="admin,guru,pengawas">
           <button onclick="toggleSubmenu(this)" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left">
             <div class="flex items-center space-x-3"><i data-lucide="monitor" class="w-5 h-5 flex-shrink-0"></i><span class="font-medium">Ujian</span></div>
             <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200"></i>
           </button>
           <div class="submenu-collapse ml-2">
             <button onclick="showAdminPage('monitor')" data-page="monitor" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-gray-500 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left text-sm"><i data-lucide="eye" class="w-4 h-4 flex-shrink-0"></i><span>Monitor</span></button>
-            <button onclick="showAdminPage('hasil')" data-page="hasil" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-gray-500 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left text-sm"><i data-lucide="clipboard-check" class="w-4 h-4 flex-shrink-0"></i><span>Hasil</span></button>
-            <button onclick="showAdminPage('analisis')" data-page="analisis" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-gray-500 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left text-sm"><i data-lucide="bar-chart-3" class="w-4 h-4 flex-shrink-0"></i><span>Analisis Bank Soal</span></button>
+            <button onclick="showAdminPage('hasil')" data-page="hasil" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-gray-500 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left text-sm" data-role="admin,guru"><i data-lucide="clipboard-check" class="w-4 h-4 flex-shrink-0"></i><span>Hasil</span></button>
+            <button onclick="showAdminPage('analisis')" data-page="analisis" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-gray-500 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left text-sm" data-role="admin,guru"><i data-lucide="bar-chart-3" class="w-4 h-4 flex-shrink-0"></i><span>Analisis Bank Soal</span></button>
           </div>
         </div>
 
-        <button onclick="showAdminPage('pengaturan')" data-page="pengaturan" class="nav-item w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left">
+        <button onclick="showAdminPage('pengaturan')" data-page="pengaturan" data-role="admin" class="nav-item w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left">
           <i data-lucide="settings" class="w-5 h-5 flex-shrink-0"></i><span class="font-medium">Pengaturan</span>
         </button>
       </nav>
@@ -214,39 +217,81 @@
       <div id="pageDashboard" class="admin-page space-y-6">
         <div class="flex items-center justify-between">
           <h1 class="text-xl md:text-2xl font-bold text-gray-900">Dasbor</h1>
+          <div class="flex items-center space-x-2 text-xs text-gray-400"><i data-lucide="calendar" class="w-3.5 h-3.5"></i><span id="dashDate">-</span></div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
-            <div class="flex items-center justify-between mb-3"><span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Sekolah</span><div class="p-2 bg-indigo-50 rounded-xl"><i data-lucide="building-2" class="w-4 h-4 text-indigo-600"></i></div></div>
-            <p class="text-lg font-bold text-gray-900" id="dashNamaSekolah">-</p>
-          </div>
-          <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
-            <div class="flex items-center justify-between mb-3"><span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Total Siswa</span><div class="p-2 bg-emerald-50 rounded-xl"><i data-lucide="users" class="w-4 h-4 text-emerald-600"></i></div></div>
-            <p class="text-lg font-bold text-gray-900" id="dashTotalSiswa">0</p>
-          </div>
-          <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
-            <div class="flex items-center justify-between mb-3"><span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Total Kelas</span><div class="p-2 bg-amber-50 rounded-xl"><i data-lucide="layers" class="w-4 h-4 text-amber-600"></i></div></div>
-            <p class="text-lg font-bold text-gray-900" id="dashTotalKelas">0</p>
-          </div>
-          <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
-            <div class="flex items-center justify-between mb-3"><span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Total Mata Ujian</span><div class="p-2 bg-rose-50 rounded-xl"><i data-lucide="book-open" class="w-4 h-4 text-rose-600"></i></div></div>
-            <p class="text-lg font-bold text-gray-900" id="dashTotalSoal">0</p>
-          </div>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
-            <h3 class="font-bold text-gray-900 mb-3 flex items-center space-x-2"><i data-lucide="shield" class="w-4 h-4 text-indigo-600"></i><span>Jumlah Pengguna</span></h3>
-            <div class="space-y-2 text-sm"><div class="flex justify-between py-2 border-b border-gray-50"><span class="text-gray-500">Admin</span><span class="font-bold text-gray-900" id="dashTotalAdmin">0</span></div><div class="flex justify-between py-2"><span class="text-gray-500">Guru</span><span class="font-bold text-gray-900" id="dashTotalGuru">0</span></div></div>
-          </div>
-          <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
-            <h3 class="font-bold text-gray-900 mb-3 flex items-center space-x-2"><i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i><span>Aktivitas Ujian</span></h3>
-            <div class="space-y-2 text-sm"><div class="flex justify-between py-2 border-b border-gray-50"><span class="text-gray-500">Sedang Mengerjakan</span><span class="font-bold text-amber-600" id="dashMengerjakan">0</span></div><div class="flex justify-between py-2 border-b border-gray-50"><span class="text-gray-500">Selesai</span><span class="font-bold text-emerald-600" id="dashSelesai">0</span></div><div class="flex justify-between py-2"><span class="text-gray-500">Total Log Tercatat</span><span class="font-bold text-gray-900" id="dashTotalLog">0</span></div></div>
-          </div>
-        </div>
-      </div>
 
-      <!-- DATA PENGGUNA -->
-      <div id="pageDataPengguna" class="admin-page hidden space-y-6">
+        <!-- Stat Cards Row -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          <div class="bg-white rounded-2xl p-4 md:p-5 border border-gray-100 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-wider">Sekolah</span>
+              <div class="p-2 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl shadow-sm"><i data-lucide="building-2" class="w-4 h-4 text-white"></i></div>
+            </div>
+            <p class="text-sm md:text-lg font-bold text-gray-900 truncate" id="dashNamaSekolah">-</p>
+            <p class="text-[10px] text-indigo-600 font-medium mt-1">Lembaga Pendidikan</p>
+          </div>
+          <div class="bg-white rounded-2xl p-4 md:p-5 border border-gray-100 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-wider">Total Siswa</span>
+              <div class="p-2 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-sm"><i data-lucide="users" class="w-4 h-4 text-white"></i></div>
+            </div>
+            <p class="text-sm md:text-lg font-bold text-gray-900" id="dashTotalSiswa">0</p>
+            <p class="text-[10px] text-emerald-600 font-medium mt-1">Terdaftar di sistem</p>
+          </div>
+          <div class="bg-white rounded-2xl p-4 md:p-5 border border-gray-100 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-wider">Total Kelas</span>
+              <div class="p-2 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl shadow-sm"><i data-lucide="layers" class="w-4 h-4 text-white"></i></div>
+            </div>
+            <p class="text-sm md:text-lg font-bold text-gray-900" id="dashTotalKelas">0</p>
+            <p class="text-[10px] text-amber-600 font-medium mt-1">Kelas aktif</p>
+          </div>
+          <div class="bg-white rounded-2xl p-4 md:p-5 border border-gray-100 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-wider">Total Mapel</span>
+              <div class="p-2 bg-gradient-to-br from-rose-500 to-rose-600 rounded-xl shadow-sm"><i data-lucide="book-open" class="w-4 h-4 text-white"></i></div>
+            </div>
+            <p class="text-sm md:text-lg font-bold text-gray-900" id="dashTotalSoal">0</p>
+            <p class="text-[10px] text-rose-600 font-medium mt-1">Bank soal tersedia</p>
+          </div>
+        </div>
+
+        <!-- Second Row: Charts/Stats -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <!-- Users Card -->
+          <div class="bg-white rounded-2xl p-4 md:p-5 border border-gray-100 shadow-sm lg:col-span-1">
+            <h3 class="font-bold text-gray-900 text-sm mb-3 flex items-center space-x-2"><i data-lucide="shield" class="w-4 h-4 text-indigo-600"></i><span>Pengguna Sistem</span></h3>
+            <div class="space-y-2">
+              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-purple-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-purple-500"></div><span class="text-xs text-gray-600">Admin</span></div><span class="text-sm font-bold text-gray-900" id="dashTotalAdmin">0</span></div>
+              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-blue-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-blue-500"></div><span class="text-xs text-gray-600">Guru</span></div><span class="text-sm font-bold text-gray-900" id="dashTotalGuru">0</span></div>
+              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-slate-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-slate-500"></div><span class="text-xs text-gray-600">Pengawas</span></div><span class="text-sm font-bold text-gray-900" id="dashTotalPengawas">0</span></div>
+            </div>
+          </div>
+
+          <!-- Exam Activity Card -->
+          <div class="bg-white rounded-2xl p-4 md:p-5 border border-gray-100 shadow-sm lg:col-span-1">
+            <h3 class="font-bold text-gray-900 text-sm mb-3 flex items-center space-x-2"><i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i><span>Aktivitas Ujian</span></h3>
+            <div class="space-y-2">
+              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-amber-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div><span class="text-xs text-gray-600">Mengerjakan</span></div><span class="text-sm font-bold text-amber-600" id="dashMengerjakan">0</span></div>
+              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-emerald-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-emerald-500"></div><span class="text-xs text-gray-600">Selesai</span></div><span class="text-sm font-bold text-emerald-600" id="dashSelesai">0</span></div>
+              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-slate-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-slate-500"></div><span class="text-xs text-gray-600">Total Log</span></div><span class="text-sm font-bold text-gray-900" id="dashTotalLog">0</span></div>
+            </div>
+          </div>
+
+          <!-- Quick Info / Soal Ownership Card -->
+          <div class="bg-white rounded-2xl p-4 md:p-5 border border-gray-100 shadow-sm lg:col-span-1">
+            <h3 class="font-bold text-gray-900 text-sm mb-3 flex items-center space-x-2"><i data-lucide="file-text" class="w-4 h-4 text-rose-600"></i><span>Info Bank Soal</span></h3>
+            <div class="space-y-2">
+              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-rose-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-rose-500"></div><span class="text-xs text-gray-600">Soal Saya</span></div><span class="text-sm font-bold text-rose-600" id="dashSoalSaya">0</span></div>
+              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-indigo-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-indigo-500"></div><span class="text-xs text-gray-600">Total Bank Soal</span></div><span class="text-sm font-bold text-indigo-600" id="dashTotalBankSoal">0</span></div>
+              <div id="dashQuickLinks" class="mt-3 pt-3 border-t border-gray-100 flex flex-wrap gap-2">
+                <button onclick="showAdminPage('bankSoal')" class="px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-lg text-xs font-medium hover:bg-indigo-100 transition">Kelola Bank Soal</button>
+                <button onclick="showAdminPage('monitor')" class="px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-medium hover:bg-emerald-100 transition">Monitor Ujian</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><div id="pageDataPengguna" class="admin-page hidden space-y-6">
         <h1 class="text-xl md:text-2xl font-bold text-gray-900">Data Pengguna</h1>
         <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
           <h3 class="font-bold text-gray-900 mb-4">Tambah Pengguna</h3>
@@ -254,7 +299,7 @@
             <input type="text" id="userNamaLengkap" placeholder="Nama Lengkap" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/>
             <input type="text" id="userUsername" placeholder="Username" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/>
             <div class="relative"><input type="password" id="userPassword" placeholder="Password" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm pr-10" /><button type="button" onclick="togglePass('userPassword',this)" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"><i data-lucide="eye" class="w-4 h-4"></i></button></div>
-            <select id="userRole" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Role</option><option value="admin">Admin</option><option value="guru">Guru</option></select>
+            <select id="userRole" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Role</option><option value="admin">Admin</option><option value="guru">Guru</option><option value="pengawas">Pengawas</option></select>
             <button id="btnSimpanUser" onclick="simpanUser()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl transition text-sm shadow">Simpan</button>
           </div>
           <input type="hidden" id="editUserId" value="">
@@ -321,7 +366,7 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div><label class="block text-xs font-semibold text-gray-500 mb-1">Mata Ujian <span class="text-red-400">*</span></label><input type="text" id="soalMataUjian" placeholder="Contoh: Matematika Wajib" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/><p class="text-[10px] text-gray-400 mt-0.5">Nama mata pelajaran ujian</p></div>
             <div><label class="block text-xs font-semibold text-gray-500 mb-1">Kelas <span class="text-red-400">*</span></label><select id="soalKelas" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Kelas</option></select><p class="text-[10px] text-gray-400 mt-0.5">Target kelas ujian</p></div>
-            <div><label class="block text-xs font-semibold text-gray-500 mb-1">Token <span class="text-red-400">*</span></label><div class="flex gap-2"><input type="text" id="soalToken" placeholder="5 digit angka" class="flex-1 px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/><button type="button" onclick="generateToken()" class="px-3 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-medium rounded-xl transition text-xs border border-emerald-200 whitespace-nowrap" title="Generate Token Otomatis"><i data-lucide="refresh-cw" class="w-4 h-4 inline-block mr-1"></i>Generate</button></div><p class="text-[10px] text-gray-400 mt-0.5">Klik Generate untuk membuat token 5 digit unik secara otomatis</p></div>
+            <div><label class="block text-xs font-semibold text-gray-500 mb-1">Token <span class="text-red-400">*</span></label><div class="flex gap-2"><input type="text" id="soalToken" placeholder="5 digit angka" class="flex-1 px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/><button type="button" onclick="generateToken()" class="px-3 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-medium rounded-xl transition text-xs border border-emerald-200 whitespace-nowrap" title="Generate Token Otomatis"><i data-lucide="refresh-cw" class="w-4 h-4 inline-block mr-1"></i>Generate</button></div><p class="text-[10px] text-gray-400 mt-0.5">Klik Generate untuk membuat token 5 digit unik secara otomatis</p></div><div><label class="block text-xs font-semibold text-gray-500 mb-1">Kolaborator (Guru)</label><select id="soalKolaborator" multiple class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">-- Muat data pengguna --</option></select><p class="text-[10px] text-gray-400 mt-0.5">Pilih guru yang boleh mengelola bank soal ini (tahan Ctrl untuk pilih banyak)</p></div>
             <div><label class="block text-xs font-semibold text-gray-500 mb-1">Status</label><select id="soalStatus" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="Aktif">Aktif</option><option value="Tidak Aktif">Tidak Aktif</option></select><p class="text-[10px] text-gray-400 mt-0.5">Hanya soal dengan status Aktif yang bisa diakses siswa</p></div>
             <div><label class="block text-xs font-semibold text-gray-500 mb-1">Durasi (Menit) <span class="text-red-400">*</span></label><input type="number" id="soalDurasi" placeholder="90" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/><p class="text-[10px] text-gray-400 mt-0.5">Lama waktu pengerjaan dalam menit</p></div>
             <div><label class="block text-xs font-semibold text-gray-500 mb-1">Jumlah Soal <span class="text-red-400">*</span></label><input type="number" id="soalJumlahSoal" placeholder="40" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/><p class="text-[10px] text-gray-400 mt-0.5">Total nomor soal dalam ujian</p></div>
@@ -340,7 +385,7 @@
           <div class="p-4 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2"><h3 class="font-bold text-gray-900 text-sm">Daftar Bank Soal</h3><div class="flex items-center gap-2"><label class="text-xs text-gray-500 font-medium">Filter Kelas:</label><select id="filterSoalKelas" onchange="muatDataSoal()" class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"><option value="">Semua Kelas</option></select></div></div>
           <div class="overflow-x-auto">
             <table class="w-full text-sm" id="tabelSoal">
-              <thead><tr class="bg-gray-50 text-gray-500 text-xs font-bold uppercase tracking-wider"><th class="p-3 text-left">Mata Ujian</th><th class="p-3 text-left">Kelas</th><th class="p-3 text-left">Status</th><th class="p-3 text-center">Durasi</th><th class="p-3 text-center">Soal</th><th class="p-3 text-center">Opsi</th><th class="p-3 text-center">Aksi</th></tr></thead>
+              <thead><tr class="bg-gray-50 text-gray-500 text-xs font-bold uppercase tracking-wider"><th class="p-3 text-left">Mata Ujian</th><th class="p-3 text-left">Kelas</th><th class="p-3 text-left">Status</th><th class="p-3 text-center">Durasi</th><th class="p-3 text-center">Soal</th><th class="p-3 text-center">Opsi</th><th class="p-3 text-left">Pemilik</th><th class="p-3 text-center">Aksi</th></tr></thead>
               <tbody id="tabelSoalBody"></tbody>
             </table>
           </div>
@@ -361,7 +406,7 @@
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           <div class="overflow-x-auto">
             <table class="w-full text-sm" id="tabelMonitor">
-              <thead><tr class="bg-gray-50 text-gray-500 text-xs font-bold uppercase tracking-wider"><th class="p-3 text-left">Nomor Ujian</th><th class="p-3 text-left">Nama Siswa</th><th class="p-3 text-left">Status</th><th class="p-3 text-center">Aksi</th></tr></thead>
+              <thead><tr class="bg-gray-50 text-gray-500 text-xs font-bold uppercase tracking-wider"><th class="p-3 text-left">Nomor Ujian</th><th class="p-3 text-left">Nama Siswa</th><th class="p-3 text-left">Status</th><th class="p-3 text-center">Progres</th><th class="p-3 text-center">Aksi</th></tr></thead>
               <tbody id="tabelMonitorBody"></tbody>
             </table>
           </div>
@@ -441,7 +486,7 @@
         <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-white/5 rounded-full"></div>
         <div class="flex items-center space-x-4">
           <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center"><i data-lucide="user" class="w-6 h-6 text-indigo-200"></i></div>
-          <div><h4 id="siswaNama" class="text-lg font-bold tracking-tight">-</h4><p id="siswaKelasDisplay" class="text-xs text-indigo-200 font-medium">Kelas -</p></div>
+          <div><h4 id="siswaNamaDisplay" class="text-lg font-bold tracking-tight">-</h4><p id="siswaKelasDisplay" class="text-xs text-indigo-200 font-medium">Kelas -</p></div>
         </div>
         <button onclick="logoutSiswa()" class="absolute top-4 right-4 text-white/60 hover:text-white p-1 rounded-lg hover:bg-white/10 transition"><i data-lucide="log-out" class="w-4 h-4"></i></button>
       </div>
@@ -621,7 +666,7 @@
       // Show cached settings from localStorage immediately
       try{var cached=JSON.parse(localStorage.getItem('cbt_app_settings'));if(cached){ok(cached);return;}}catch(e){}
       db.collection('pengaturan').doc('appSettings').get()
-        .then(function(d){var x=d.exists?d.data():{};var s={appName:x.appName||'CBT Aplikasi',schoolName:x.schoolName||'Sekolah',logoUrl:x.logoUrl||'',driveFolderUrl:x.driveFolderUrl||'',cheatTolerance:parseInt(x.cheatTolerance)||5};localStorage.setItem('cbt_app_settings',JSON.stringify(s));ok(s);})
+        .then(function(d){var x=d.exists?d.data():{};var s={appName:x.appName||'CBT Aplikasi',schoolName:x.schoolName||'Sekolah',logoUrl:x.logoUrl||'',driveFolderUrl:x.driveFolderUrl||'',cheatTolerance:parseInt(x.cheatTolerance)||5};localStorage.setItem('cbt_app_settings',JSON.stringify(s));ok(s);var sl=document.getElementById('sidebarLogo');if(sl&&s.logoUrl)sl.src=s.logoUrl;})
         .catch(function(e){if(nok)nok(e.message);});
     }
     function fbLoginSiswa(no,ok,nok) {
@@ -677,11 +722,31 @@
         .then(function(s){hideLoading();if(s.empty){showCustomAlert('Gagal','Username tidak ditemukan!','error');return;}var d=s.docs[0].data();if(d.password!==p){showCustomAlert('Gagal','Password salah!','error');return;}adminSession={id:s.docs[0].id,username:d.username,namaLengkap:d['nama-lengkap']||d.namaLengkap||d.username,role:d.role||'guru'};localStorage.setItem('cbt_admin_session',JSON.stringify(adminSession));masukAdminPanel();})
         .catch(function(e){hideLoading();showCustomAlert('Error',e.message,'error');});
     }
-    function masukAdminPanel() { document.getElementById('pageLogin').classList.add('hidden');document.getElementById('adminLayout').classList.remove('hidden');document.getElementById('studentApp').classList.add('hidden');document.getElementById('sidebarUserName').innerText=adminSession.namaLengkap;document.getElementById('sidebarUserRole').innerText=adminSession.role==='admin'?'Administrator':'Guru';document.getElementById('sidebarAvatar').innerText=adminSession.namaLengkap.charAt(0).toUpperCase();var sl=document.getElementById('sidebarLogo');if(sl){try{var cs=JSON.parse(localStorage.getItem('cbt_app_settings'));if(cs&&cs.logoUrl)sl.src=cs.logoUrl;}catch(e){}}var savedPage=localStorage.getItem('cbt_admin_page')||'dashboard';showAdminPage(savedPage);closeSidebar(); }
-    function logoutAdmin() { clearInterval(monitorInterval);localStorage.removeItem('cbt_admin_session');adminSession=null;document.getElementById('adminLayout').classList.add('hidden');document.getElementById('pageLogin').classList.remove('hidden'); }
+    function masukAdminPanel() { document.getElementById('pageLogin').classList.add('hidden');document.getElementById('adminLayout').classList.remove('hidden');document.getElementById('studentApp').classList.add('hidden');document.getElementById('sidebarUserName').innerText=adminSession.namaLengkap;document.getElementById('sidebarUserRole').innerText=adminSession.role==='admin'?'Administrator':(adminSession.role==='pengawas'?'Pengawas':'Guru');
+      // Apply role-based sidebar visibility
+      document.querySelectorAll('[data-role]').forEach(function(el){
+        var roles=el.getAttribute('data-role').split(',');
+        if(roles.includes('all')||roles.includes(adminSession.role)){
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      });document.getElementById('sidebarAvatar').innerText=adminSession.namaLengkap.charAt(0).toUpperCase();var sl=document.getElementById('sidebarLogo');if(sl){try{var cs=JSON.parse(localStorage.getItem('cbt_app_settings'));if(cs&&cs.logoUrl)sl.src=cs.logoUrl;}catch(e){}} // Always fetch fresh settings for logo
+      db.collection('pengaturan').doc('appSettings').get().then(function(doc){if(doc.exists){var d=doc.data();if(d.logoUrl&&sl)sl.src=d.logoUrl;}}).catch(function(){});
+      var savedPage=localStorage.getItem('cbt_admin_page')||'dashboard';showAdminPage(savedPage);closeSidebar(); }
+    function logoutAdmin() { clearInterval(monitorInterval);localStorage.removeItem('cbt_admin_session');localStorage.removeItem('cbt_app_settings');adminSession=null;document.getElementById('adminLayout').classList.add('hidden');document.getElementById('pageLogin').classList.remove('hidden');switchLoginTab('siswa');initAppState(); }
     function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarOverlay').classList.toggle('hidden'); }
+    function toggleSidebarCollapse() { document.body.classList.toggle('sidebar-collapsed'); var btn=document.querySelector('[onclick="toggleSidebarCollapse()"] i'); if(btn)btn.setAttribute('data-lucide',document.body.classList.contains('sidebar-collapsed')?'panel-left-open':'panel-left-close'); lucide.createIcons(); }
     function closeSidebar() { if(window.innerWidth<1024){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.add('hidden');} }
     function toggleSubmenu(btn) { var sub=btn.nextElementSibling,icon=btn.querySelector('[data-lucide="chevron-down"]');sub.classList.toggle('open');if(icon)icon.style.transform=sub.classList.contains('open')?'rotate(180deg)':'rotate(0deg)'; }
+    function populateKolaboratorDropdown() {
+      var sel=document.getElementById('soalKolaborator'); if(!sel)return;
+      db.collection('Users').where('role','==','guru').get().then(function(s){
+        sel.innerHTML='';
+        s.forEach(function(doc){var d=doc.data();sel.innerHTML+='<option value="'+escHtml(JSON.stringify({uid:doc.id,nama:d['nama-lengkap']||d.namaLengkap||d.username}))+'">'+escHtml(d['nama-lengkap']||d.namaLengkap||d.username)+'</option>';});
+        if(sel.options.length===0)sel.innerHTML='<option value="">Tidak ada guru</option>';
+      }).catch(function(){sel.innerHTML='<option value="">Gagal muat</option>';});
+    }
     function populateKelasDropdown(selectId, includeEmpty) {
       var sel=document.getElementById(selectId);if(!sel)return;if(includeEmpty)sel.innerHTML='<option value="">Pilih Kelas</option>';else sel.innerHTML='';
       db.collection('siswa').get().then(function(s){var k=new Set();s.forEach(function(d){if(d.data().kelas)k.add(d.data().kelas);});Array.from(k).sort().forEach(function(v){sel.innerHTML+='<option value="'+escHtml(v)+'">'+escHtml(v)+'</option>';});}).catch(function(){});
@@ -689,7 +754,7 @@
     function showAdminPage(pageId) {
       localStorage.setItem('cbt_admin_page', pageId);
       document.querySelectorAll('.admin-page').forEach(function(e){e.classList.add('hidden');});
-      var map={dashboard:'Dashboard',dataPengguna:'DataPengguna',dataSiswa:'DataSiswa',bankSoal:'BankSoal',monitor:'Monitor',hasil:'Hasil',analisis:'Analisis',pengaturan:'Pengaturan'};if(pageId==='bankSoal'){populateKelasDropdown('soalKelas');}if(pageId==='dataSiswa'){var fk=document.getElementById('filterSiswaKelas');if(fk&&fk.options.length<=1){populateKelasDropdown('filterSiswaKelas',true);}}if(pageId==='bankSoal'){var fsk=document.getElementById('filterSoalKelas');if(fsk&&fsk.options.length<=1){populateKelasDropdown('filterSoalKelas',true);}}
+      var map={dashboard:'Dashboard',dataPengguna:'DataPengguna',dataSiswa:'DataSiswa',bankSoal:'BankSoal',monitor:'Monitor',hasil:'Hasil',analisis:'Analisis',pengaturan:'Pengaturan'};if(pageId==='bankSoal'){populateKelasDropdown('soalKelas');populateKolaboratorDropdown();}if(pageId==='dataSiswa'){var fk=document.getElementById('filterSiswaKelas');if(fk&&fk.options.length<=1){populateKelasDropdown('filterSiswaKelas',true);}}if(pageId==='bankSoal'){var fsk=document.getElementById('filterSoalKelas');if(fsk&&fsk.options.length<=1){populateKelasDropdown('filterSoalKelas',true);}}
       var target=document.getElementById('page'+map[pageId]);if(target)target.classList.remove('hidden');
       document.getElementById('mobilePageTitle').innerText=target?(target.querySelector('h1')||{}).innerText||pageId:pageId;
       document.querySelectorAll('.nav-item').forEach(function(e){e.classList.remove('active');});
@@ -699,8 +764,12 @@
       if(fn[pageId])fn[pageId]();
     }
     function muatDashboard() {
+      document.getElementById('dashDate').innerText=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
       Promise.all([db.collection('pengaturan').doc('appSettings').get(),db.collection('siswa').get(),db.collection('soal').get(),db.collection('Users').get(),db.collection('log').get()])
-        .then(function(r){var set=r[0].exists?r[0].data():{};var s=r[1].docs,so=r[2].docs,u=r[3].docs,l=r[4].docs;var k=new Set();s.forEach(function(d){if(d.data().kelas)k.add(d.data().kelas);});var a=0,g=0;u.forEach(function(d){if(d.data().role==='admin')a++;else g++;});var mg=0,sl=0;l.forEach(function(d){var st=d.data().status;if(st==='Mengerjakan')mg++;else if(st==='Selesai')sl++;});document.getElementById('dashNamaSekolah').innerText=set.schoolName||'-';document.getElementById('dashTotalSiswa').innerText=s.length;document.getElementById('dashTotalKelas').innerText=k.size;document.getElementById('dashTotalSoal').innerText=so.length;document.getElementById('dashTotalAdmin').innerText=a;document.getElementById('dashTotalGuru').innerText=g;document.getElementById('dashMengerjakan').innerText=mg;document.getElementById('dashSelesai').innerText=sl;document.getElementById('dashTotalLog').innerText=l.length;})
+        .then(function(r){var set=r[0].exists?r[0].data():{};var s=r[1].docs,so=r[2].docs,u=r[3].docs,l=r[4].docs;var k=new Set();s.forEach(function(d){if(d.data().kelas)k.add(d.data().kelas);});var a=0,g=0,pw=0;u.forEach(function(d){var rl=d.data().role;if(rl==='admin')a++;else if(rl==='guru')g++;else if(rl==='pengawas')pw++;});var mg=0,sl=0;l.forEach(function(d){var st=d.data().status;if(st==='Mengerjakan')mg++;else if(st==='Selesai')sl++;});
+        // Count soal owned by current user
+        var soalSaya=0;so.forEach(function(doc){var d=doc.data();if(d.createdBy&&d.createdBy.uid===adminSession.id)soalSaya++;});
+        document.getElementById('dashNamaSekolah').innerText=set.schoolName||'-';document.getElementById('dashTotalSiswa').innerText=s.length;document.getElementById('dashTotalKelas').innerText=k.size;document.getElementById('dashTotalSoal').innerText=so.length;document.getElementById('dashTotalAdmin').innerText=a;document.getElementById('dashTotalGuru').innerText=g;document.getElementById('dashTotalPengawas').innerText=pw;document.getElementById('dashMengerjakan').innerText=mg;document.getElementById('dashSelesai').innerText=sl;document.getElementById('dashTotalLog').innerText=l.length;document.getElementById('dashTotalBankSoal').innerText=so.length;document.getElementById('dashSoalSaya').innerText=soalSaya;})
         .catch(function(e){console.error(e);});
     }
     function muatDataPengguna() {
@@ -759,7 +828,7 @@
     // ============= BANK SOAL =============
     function muatDataSoal() {
       var tb = document.getElementById('tabelSoalBody');
-      tb.innerHTML = '<tr><td colspan="7" class="p-4 text-center text-gray-400">Memuat...</td></tr>';
+      tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-gray-400">Memuat...</td></tr>';
       var filterKelas = document.getElementById('filterSoalKelas').value;
       db.collection('soal').orderBy('mataUjian').get().then(function(s) {
         tb.innerHTML = '';
@@ -774,12 +843,23 @@
         // Filter and sort
         var data = [];
         s.forEach(function(doc) { var d = doc.data(); if (!filterKelas || d.kelas === filterKelas) data.push({ id: doc.id, data: d }); });
+        // Access control: filter by owner/kolaborator for non-admin
+        var isAdmin = adminSession && adminSession.role === 'admin';
+        var isPengawas = adminSession && adminSession.role === 'pengawas';
+        if (!isAdmin && !isPengawas && adminSession) {
+          data = data.filter(function(item) {
+            var d = item.data;
+            var ownerMatch = d.createdBy && d.createdBy.uid === adminSession.id;
+            var kolabMatch = d.kolaborator && d.kolaborator.some(function(k){ return k.uid === adminSession.id; });
+            return ownerMatch || kolabMatch;
+          });
+        }
         data.sort(function(a, b) { return (a.data.mataUjian || '').localeCompare(b.data.mataUjian || ''); });
-        if (data.length === 0) { tb.innerHTML = '<tr><td colspan="7" class="p-4 text-center text-gray-400">Belum ada bank soal.</td></tr>'; return; }
+        if (data.length === 0) { tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-gray-400">Belum ada bank soal.</td></tr>'; return; }
         data.forEach(function(item) {
           var d = item.data;
           var sc = (d.status || 'Aktif').toLowerCase() === 'aktif' ? 'text-emerald-700 bg-emerald-50' : 'text-red-700 bg-red-50';
-          tb.innerHTML += '<tr class="border-b border-gray-50 hover:bg-gray-50/50 transition"><td class="p-3 font-medium text-gray-800">' + escHtml(d.mataUjian) + '</td><td class="p-3 text-gray-600">' + escHtml(d.kelas) + '</td><td class="p-3"><span class="px-2.5 py-1 text-xs font-bold rounded-lg ' + sc + '">' + escHtml(d.status || 'Aktif') + '</span></td><td class="p-3 text-center text-gray-700 font-medium">' + (d.durasi || '-') + '</td><td class="p-3 text-center text-gray-700 font-medium">' + (d.jumlahSoal || '-') + '</td><td class="p-3 text-center text-gray-700 font-medium">' + (d.jumlahOpsi || '-') + '</td><td class="p-3 text-center"><div class="flex items-center justify-center space-x-1"><button onclick="editSoal(\''+item.id+'\')" class="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Edit"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="hapusSoal(\''+item.id+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';
+          var pemilik = (d.createdBy && d.createdBy.nama) ? d.createdBy.nama : '-'; var kolabArr = d.kolaborator || []; var kolabStr = kolabArr.map(function(k){return k.nama;}).join(', '); if(kolabStr) pemilik += ' [+ kolab.length +]'; tb.innerHTML += '<tr class="border-b border-gray-50 hover:bg-gray-50/50 transition"><td class="p-3 font-medium text-gray-800">' + escHtml(d.mataUjian) + '</td><td class="p-3 text-gray-600">' + escHtml(d.kelas) + '</td><td class="p-3"><span class="px-2.5 py-1 text-xs font-bold rounded-lg ' + sc + '">' + escHtml(d.status || 'Aktif') + '</span></td><td class="p-3 text-center text-gray-700 font-medium">' + (d.durasi || '-') + '</td><td class="p-3 text-center text-gray-700 font-medium">' + (d.jumlahSoal || '-') + '</td><td class="p-3 text-center text-gray-700 font-medium">' + (d.jumlahOpsi || '-') + '</td><td class="p-3 text-gray-600 text-xs">' + escHtml(pemilik) + '</td><td class="p-3 text-center"><div class="flex items-center justify-center space-x-1"><button onclick="editSoal(\''+item.id+'\')" class="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Edit"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="hapusSoal(\''+item.id+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';
         });
         lucide.createIcons();
       });
@@ -792,7 +872,7 @@
       var kunci = kunciStr.split(/[\\n,]+/).map(function(s){return s.trim().toUpperCase()}).filter(function(s){return s;});
       if (kunci.length!==jml) { showCustomAlert('Perhatian', 'Jumlah kunci ('+kunci.length+') tidak sama dengan Jml Soal ('+jml+')!', 'warning'); return; }
       showLoading('Menyimpan...');
-      (eid ? db.collection('soal').doc(eid).update({ mataUjian:mata, kelas:kls, token:token, status:st, durasi:dur, jumlahSoal:jml, jumlahOpsi:ops, pdfId:pdf, kunciJawaban:kunci }) : db.collection('soal').add({ mataUjian:mata, kelas:kls, token:token, status:st, durasi:dur, jumlahSoal:jml, jumlahOpsi:ops, pdfId:pdf, kunciJawaban:kunci }))
+      var kolabSel=document.getElementById('soalKolaborator'); var kolabArr=[]; if(kolabSel){Array.from(kolabSel.selectedOptions).forEach(function(o){if(o.value)kolabArr.push(JSON.parse(o.value));});} (eid ? db.collection('soal').doc(eid).update({ mataUjian:mata, kelas:kls, token:token, status:st, durasi:dur, jumlahSoal:jml, jumlahOpsi:ops, pdfId:pdf, kunciJawaban:kunci, kolaborator:kolabArr }) : db.collection('soal').add({ mataUjian:mata, kelas:kls, token:token, status:st, durasi:dur, jumlahSoal:jml, jumlahOpsi:ops, pdfId:pdf, kunciJawaban:kunci, createdBy:{uid:adminSession.id,nama:adminSession.namaLengkap}, kolaborator:kolabArr }))
         .then(function() { hideLoading(); showCustomAlert('Berhasil', 'Bank soal disimpan.', 'info'); ['soalMataUjian','soalKelas','soalToken','soalDurasi','soalJumlahSoal','soalPdfId','soalKunciJawaban'].forEach(function(id){document.getElementById(id).value='';}); document.getElementById('editSoalId').value=''; document.getElementById('btnSimpanSoal').innerText='Simpan Bank Soal'; muatDataSoal(); })
         .catch(function(e) { hideLoading(); showCustomAlert('Error', e.message, 'error'); });
     }
@@ -808,7 +888,7 @@
         document.getElementById('soalJumlahOpsi').value = d.jumlahOpsi||'4';
         document.getElementById('soalPdfId').value = d.pdfId||'';
         document.getElementById('soalKunciJawaban').value = (d.kunciJawaban||[]).join(', ');
-        document.getElementById('editSoalId').value = id; document.getElementById('btnSimpanSoal').innerText = 'Perbarui Bank Soal';
+        document.getElementById('editSoalId').value = id; document.getElementById('btnSimpanSoal').innerText = 'Perbarui Bank Soal'; if(d.kolaborator){var ks=document.getElementById('soalKolaborator');if(ks){Array.from(ks.options).forEach(function(o){try{if(d.kolaborator.some(function(k){return k.uid===JSON.parse(o.value).uid;}))o.selected=true;}catch(e){}});}}
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     }
@@ -822,18 +902,41 @@
 
     // ============= MONITOR =============
     function muatFilterMonitor() {
+      // Populate kelas first; mataUjian will be filtered by onchange
       db.collection('soal').get().then(function(s) {
-        var m = new Set(), k = new Set();
-        s.forEach(function(doc) { var d = doc.data(); m.add(d.mataUjian); k.add(d.kelas); });
-        isiSelect('monitorMataUjian', m); isiSelect('monitorKelas', k);
+        var k = new Set();
+        var isAdmin = adminSession && adminSession.role === 'admin';
+        var isPengawas = adminSession && adminSession.role === 'pengawas';
+        s.forEach(function(doc) { var d = doc.data();
+          if (isAdmin || isPengawas) { k.add(d.kelas); }
+          else { var ownerMatch=d.createdBy&&d.createdBy.uid===adminSession.id; var kolabMatch=d.kolaborator&&d.kolaborator.some(function(kk){return kk.uid===adminSession.id;}); if(ownerMatch||kolabMatch) k.add(d.kelas); }
+        });
+        isiSelect('monitorKelas', k);
+        document.getElementById('monitorMataUjian').innerHTML = '<option value="">Pilih Kelas Dulu</option>';
+        // Add onchange to monitorKelas
+        document.getElementById('monitorKelas').onchange = function() { filterMonitorMataUjian(); };
       });
+    }
+    function filterMonitorMataUjian() {
+      var kls = document.getElementById('monitorKelas').value;
+      var sel = document.getElementById('monitorMataUjian');
+      sel.innerHTML = '<option value="">Pilih Mata Ujian</option>';
+      if (!kls) return;
+      var isAdmin = adminSession && adminSession.role === 'admin';
+      var isPengawas = adminSession && adminSession.role === 'pengawas';
+      db.collection('soal').where('kelas','==',kls).get().then(function(s) {
+        s.forEach(function(doc) { var d = doc.data();
+          var ok = isAdmin || isPengawas || (d.createdBy && d.createdBy.uid === adminSession.id) || (d.kolaborator && d.kolaborator.some(function(kk){ return kk.uid === adminSession.id; }));
+          if (ok) sel.innerHTML += '<option value="'+escHtml(d.mataUjian)+'">'+escHtml(d.mataUjian)+'</option>';
+        });
+      }).catch(function(){});
     }
     function tampilkanMonitor() { clearInterval(monitorInterval); refreshMonitor(); monitorInterval = setInterval(refreshMonitor, 30000); }
     function refreshMonitor() {
       var mata = document.getElementById('monitorMataUjian').value, kls = document.getElementById('monitorKelas').value;
       if (!mata||!kls) { showCustomAlert('Perhatian', 'Pilih mata ujian dan kelas!', 'warning'); return; }
       var tb = document.getElementById('tabelMonitorBody');
-      tb.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-gray-400">Memuat...</td></tr>';
+      tb.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-gray-400">Memuat...</td></tr>';
       Promise.all([
         db.collection('log').where('mataUjian','==',mata).get(),
         db.collection('siswa').where('kelas','==',kls).get()
@@ -846,9 +949,11 @@
           var sw = siswa[no]; if (!sw) return; hasData = true;
           var st = d.status||'-', sc = st==='Selesai' ? 'text-emerald-700 bg-emerald-50' : (st==='Mengerjakan' ? 'text-amber-700 bg-amber-50' : 'text-gray-700 bg-gray-100');
           if ((sw.status||'').toLowerCase()==='tidak aktif') { st = 'Diblokir'; sc = 'text-red-700 bg-red-50'; }
-          tb.innerHTML += '<tr class="border-b border-gray-50 hover:bg-gray-50/50 transition"><td class="p-3 font-medium text-gray-800">'+escHtml(no)+'</td><td class="p-3 text-gray-600">'+escHtml(d.namaSiswa)+'</td><td class="p-3"><span class="px-2.5 py-1 text-xs font-bold rounded-lg '+sc+'">'+st+'</span></td><td class="p-3 text-center"><div class="flex items-center justify-center space-x-1">'+(st==='Diblokir'?'<button onclick="bukaBlokir(\''+no+'\')" class="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-lg transition" title="Buka Blokir"><i data-lucide="unlock" class="w-4 h-4"></i></button>':'')+'<button onclick="resetSiswa(\''+no+'\',\''+escHtml(mata)+'\')" class="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Reset"><i data-lucide="rotate-ccw" class="w-4 h-4"></i></button><button onclick="hapusLogSiswa(\''+no+'\',\''+escHtml(mata)+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';
+          // Calculate progress
+          var progres = '0%'; try{var jwb=JSON.parse(d.jawaban||'{}');var total=Object.keys(jwb).length;var dijawab=0;for(var k in jwb){if(jwb[k]&&jwb[k]!=='')dijawab++;}if(total>0)progres=Math.round((dijawab/total)*100)+'%';}catch(e){progres='-';}
+          tb.innerHTML += '<tr class="border-b border-gray-50 hover:bg-gray-50/50 transition"><td class="p-3 font-medium text-gray-800">'+escHtml(no)+'</td><td class="p-3 text-gray-600">'+escHtml(d.namaSiswa)+'</td><td class="p-3"><span class="px-2.5 py-1 text-xs font-bold rounded-lg '+sc+'">'+st+'</span></td><td class="p-3 text-center"><div class="w-full bg-gray-100 rounded-full h-2 max-w-[80px] mx-auto"><div class="bg-indigo-500 h-2 rounded-full transition-all" style="width:'+(progres==='-'?'0':progres)+'"></div></div><span class="text-[10px] font-bold text-gray-600 mt-0.5 block">'+progres+'</span></td><td class="p-3 text-center"><div class="flex items-center justify-center space-x-1">'+(st==='Diblokir'?'<button onclick="bukaBlokir(\''+no+'\')" class="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-lg transition" title="Buka Blokir"><i data-lucide="unlock" class="w-4 h-4"></i></button>':'')+'<button onclick="resetSiswa(\''+no+'\',\''+escHtml(mata)+'\')" class="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Reset"><i data-lucide="rotate-ccw" class="w-4 h-4"></i></button><button onclick="hapusLogSiswa(\''+no+'\',\''+escHtml(mata)+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';
         });
-        if (!hasData) tb.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-gray-400">Tidak ada data.</td></tr>';
+        if (!hasData) tb.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-gray-400">Tidak ada data.</td></tr>';
         document.getElementById('monitorLastUpdate').innerText = 'Terakhir: '+new Date().toLocaleTimeString('id-ID');
         lucide.createIcons();
       });
@@ -878,11 +983,33 @@
 
     // ============= HASIL =============
     function muatFilterHasil() {
+      // Populate kelas first; mataUjian filtered by onchange
       db.collection('soal').get().then(function(s) {
-        var m = new Set(), k = new Set();
-        s.forEach(function(doc) { var d = doc.data(); m.add(d.mataUjian); k.add(d.kelas); });
-        isiSelect('hasilMataUjian', m); isiSelect('hasilKelasFilter', k);
+        var k = new Set();
+        var isAdmin = adminSession && adminSession.role === 'admin';
+        var isPengawas = adminSession && adminSession.role === 'pengawas';
+        s.forEach(function(doc) { var d = doc.data();
+          if (isAdmin || isPengawas) { k.add(d.kelas); }
+          else { var ownerMatch=d.createdBy&&d.createdBy.uid===adminSession.id; var kolabMatch=d.kolaborator&&d.kolaborator.some(function(kk){return kk.uid===adminSession.id;}); if(ownerMatch||kolabMatch) k.add(d.kelas); }
+        });
+        isiSelect('hasilKelasFilter', k);
+        document.getElementById('hasilMataUjian').innerHTML = '<option value="">Pilih Kelas Dulu</option>';
+        document.getElementById('hasilKelasFilter').onchange = function() { filterHasilMataUjian(); };
       });
+    }
+    function filterHasilMataUjian() {
+      var kls = document.getElementById('hasilKelasFilter').value;
+      var sel = document.getElementById('hasilMataUjian');
+      sel.innerHTML = '<option value="">Pilih Mata Ujian</option>';
+      if (!kls) return;
+      var isAdmin = adminSession && adminSession.role === 'admin';
+      var isPengawas = adminSession && adminSession.role === 'pengawas';
+      db.collection('soal').where('kelas','==',kls).get().then(function(s) {
+        s.forEach(function(doc) { var d = doc.data();
+          var ok = isAdmin || isPengawas || (d.createdBy && d.createdBy.uid === adminSession.id) || (d.kolaborator && d.kolaborator.some(function(kk){ return kk.uid === adminSession.id; }));
+          if (ok) sel.innerHTML += '<option value="'+escHtml(d.mataUjian)+'">'+escHtml(d.mataUjian)+'</option>';
+        });
+      }).catch(function(){});
     }
     function tampilkanHasil() {
       var mata = document.getElementById('hasilMataUjian').value, kls = document.getElementById('hasilKelasFilter').value;
@@ -898,7 +1025,7 @@
             var tgl = d.timestamp ? (d.timestamp.toDate ? d.timestamp.toDate().toLocaleString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '-') : '-';
             tb.innerHTML += '<tr class="border-b border-gray-50 hover:bg-gray-50/50 transition"><td class="p-3 font-medium text-gray-800">'+escHtml(d.nomorUjian)+'</td><td class="p-3 text-gray-600">'+escHtml(d.namaSiswa)+'</td><td class="p-3 text-gray-600">'+escHtml(d.kelas)+'</td><td class="p-3 text-gray-600">'+escHtml(d.mataUjian)+'</td><td class="p-3 text-center text-gray-600">'+escHtml(d.durasiPengerjaan)+'</td><td class="p-3 text-center"><span class="px-2.5 py-1 bg-indigo-50 text-indigo-700 font-bold rounded-lg text-xs">'+escHtml(d.nilai)+'</span></td><td class="p-3 text-gray-500 text-xs">'+tgl+'</td><td class="p-3 text-center"><button onclick="hapusHasil(\''+doc.id+'\',\''+escHtml(d.nomorUjian)+'\',\''+escHtml(d.mataUjian)+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td></tr>';
           }); lucide.createIcons();
-        });
+        }).catch(function(e) { tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-gray-400">Error: '+e.message+'. Periksa composite index di Firebase Console.</td></tr>'; });
     }
     function hapusHasil(id, no, mata) {
       showCustomConfirm('Hapus Hasil', 'Hapus data hasil dan log pengerjaan?', function() {
@@ -914,7 +1041,18 @@
     // ============= ANALISIS =============
     function muatFilterAnalisis() {
       db.collection('soal').get().then(function(s) {
-        var k = new Set(); s.forEach(function(doc) { k.add(doc.data().kelas); });
+        var k = new Set();
+        var isAdmin = adminSession && adminSession.role === 'admin';
+        var isPengawas = adminSession && adminSession.role === 'pengawas';
+        s.forEach(function(doc) { var d = doc.data();
+          if (isAdmin || isPengawas) {
+            k.add(d.kelas);
+          } else {
+            var ownerMatch = d.createdBy && d.createdBy.uid === adminSession.id;
+            var kolabMatch = d.kolaborator && d.kolaborator.some(function(kk){ return kk.uid === adminSession.id; });
+            if (ownerMatch || kolabMatch) { k.add(d.kelas); }
+          }
+        });
         isiSelect('analisisKelas', k); document.getElementById('analisisMataUjian').innerHTML = '<option value="">Pilih Kelas Dulu</option>';
       });
     }
@@ -922,7 +1060,7 @@
       var kls = document.getElementById('analisisKelas').value, sel = document.getElementById('analisisMataUjian');
       sel.innerHTML = '<option value="">Pilih Mata Ujian</option>';
       if (!kls) return;
-      db.collection('soal').where('kelas','==',kls).get().then(function(s) { s.forEach(function(doc) { var d=doc.data(); sel.innerHTML += '<option value="'+escHtml(d.mataUjian)+'">'+escHtml(d.mataUjian)+'</option>'; }); });
+      db.collection('soal').where('kelas','==',kls).get().then(function(s) { var isAdmin=adminSession&&adminSession.role==='admin'; var isPengawas=adminSession&&adminSession.role==='pengawas'; s.forEach(function(doc) { var d=doc.data(); var ok=isAdmin||isPengawas||(d.createdBy&&d.createdBy.uid===adminSession.id)||(d.kolaborator&&d.kolaborator.some(function(k){return k.uid===adminSession.id;})); if(ok) sel.innerHTML += '<option value="'+escHtml(d.mataUjian)+'">'+escHtml(d.mataUjian)+'</option>'; }); });
     }
     function tampilkanAnalisis() {
       var kls = document.getElementById('analisisKelas').value, mata = document.getElementById('analisisMataUjian').value;
@@ -1027,7 +1165,7 @@
     }
 
     function logoutSiswa() {
-      localStorage.removeItem('cbt_session_state');
+      localStorage.removeItem('cbt_session_state');localStorage.removeItem('cbt_app_settings');
       state.siswa = null; state.daftarUjian = []; state.riwayatUjian = []; state.selectedUjian = null; state.jawabanSiswa = {};
       document.getElementById('loginNomorUjian').value = '';
       document.getElementById('studentApp').classList.add('hidden');
@@ -1036,7 +1174,7 @@
 
     function updateIdentitasSiswaUI() {
       if (!state.siswa) return;
-      document.getElementById('siswaNama').innerText = state.siswa.nama;
+      var sn = document.getElementById('siswaNamaDisplay') || document.getElementById('siswaNama'); if (sn) sn.innerText = state.siswa.nama;
       var sk = document.getElementById('siswaKelasDisplay') || document.getElementById('siswaKelas'); if (sk) sk.innerText = 'Kelas: ' + state.siswa.kelas;
     }
 
@@ -1087,7 +1225,9 @@
       if (!token) { showCustomAlert('Perhatian', 'Masukkan token!', 'warning'); return; }
       showLoading('Verifikasi token...');
       callGoogleScript('validasiToken', { mataUjian: state.selectedUjian.mataUjian, tokenInput: token },
-        function(r) { hideLoading(); if (r.success) { closeTokenModal(); persiapanMasukRuangUjian(); } else showCustomAlert('Gagal', r.message, 'error'); },
+        function(r) { hideLoading(); if (r.success) { closeTokenModal(); // Log the entry
+          callGoogleScript('simpanLogJawaban', { nomorUjian:state.siswa.nomorUjian, namaSiswa:state.siswa.nama, kelas:state.siswa.kelas, mataUjian:state.selectedUjian.mataUjian, status:'Mengerjakan', jawabanJsonStr:'{}', sisaWaktu:state.selectedUjian.durasi+':00:00' }, function(){}, function(){} );
+          persiapanMasukRuangUjian(); } else showCustomAlert('Gagal', r.message, 'error'); },
         function(e) { hideLoading(); showCustomAlert('Error', e, 'error'); }
       );
     }
