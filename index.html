@@ -418,6 +418,11 @@
             <button onclick="tampilkanMonitor()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl transition text-sm shadow-md hover:shadow-lg whitespace-nowrap">Tampilkan</button>
             <button onclick="refreshMonitor()" class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-xl transition text-sm flex items-center space-x-1.5" id="btnRefreshMonitor"><i data-lucide="refresh-cw" class="w-4 h-4"></i><span class="hidden sm:inline">Refresh</span></button>
           </div>
+          <div id="monitorTokenContainer" class="mt-4 hidden p-3 bg-indigo-50 border border-indigo-100 rounded-xl items-center w-fit">
+            <i data-lucide="key" class="w-4 h-4 text-indigo-600 mr-2"></i>
+            <span class="text-sm font-semibold text-gray-700 mr-2">Token Ujian:</span>
+            <span id="monitorTokenDisplay" class="font-mono text-indigo-700 font-bold tracking-wider"></span>
+          </div>
         </div>
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           <div class="overflow-x-auto">
@@ -979,6 +984,8 @@
       if (!mata||!kls) { showCustomAlert('Perhatian', 'Pilih mata ujian dan kelas!', 'warning'); return; }
       var tb = document.getElementById('tabelMonitorBody');
       tb.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-gray-400">Memuat...</td></tr>';
+      var tokenContainer = document.getElementById('monitorTokenContainer'); if(tokenContainer) { tokenContainer.classList.add('hidden'); tokenContainer.classList.remove('flex'); }
+      db.collection('soal').where('mataUjian','==',mata).where('kelas','==',kls).get().then(function(s){ if(!s.empty){ var tk = s.docs[0].data().token; if(tk && tokenContainer){ document.getElementById('monitorTokenDisplay').innerText = tk; tokenContainer.classList.remove('hidden'); tokenContainer.classList.add('flex'); } } });
       Promise.all([
         db.collection('log').where('mataUjian','==',mata).get(),
         db.collection('siswa').where('kelas','==',kls).get()
