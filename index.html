@@ -433,7 +433,10 @@
           <div class="flex flex-col sm:flex-row gap-3 items-end">
             <div class="w-full sm:w-48"><label class="block text-xs font-semibold text-gray-500 mb-1">Kelas <span class="text-red-400">*</span></label><select id="hasilKelasFilter" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Kelas</option></select></div>
             <div class="w-full sm:w-48"><label class="block text-xs font-semibold text-gray-500 mb-1">Mata Ujian <span class="text-red-400">*</span></label><select id="hasilMataUjian" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Kelas Dulu</option></select></div>
-            <button onclick="tampilkanHasil()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl transition text-sm shadow">Tampilkan</button>
+            <div class="flex items-center space-x-2">
+              <button onclick="tampilkanHasil()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl transition text-sm shadow">Tampilkan</button>
+              <button id="btnDownloadHasil" onclick="downloadExcelHasil()" class="hidden px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl transition text-sm shadow flex items-center gap-2"><i data-lucide="file-spreadsheet" class="w-4 h-4"></i><span class="hidden sm:inline">Excel</span></button>
+            </div>
           </div>
         </div>
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
@@ -584,6 +587,33 @@
       <p class="text-xs text-rose-300 uppercase tracking-widest font-bold mb-1">Kembali Dalam</p>
       <div class="text-6xl font-black text-rose-400" id="cheatTimer">0</div>
       <p class="text-xs text-rose-300 mt-2">Detik atau Akun Anda akan Diblokir!</p>
+    </div>
+  </div>
+
+  <!-- MODAL LIHAT JAWABAN -->
+  <div id="viewJawabanModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[200] hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl transform transition-all">
+      <div class="p-4 md:p-5 border-b border-gray-100 flex items-center justify-between bg-gray-50 rounded-t-2xl">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center"><i data-lucide="file-check-2" class="w-5 h-5 text-indigo-600"></i></div>
+          <div><h2 class="text-lg font-bold text-gray-800" id="vjTitle">Detail Jawaban</h2><p class="text-xs text-gray-500" id="vjSubtitle">-</p></div>
+        </div>
+        <button onclick="closeViewJawaban()" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="flex-grow overflow-auto p-4 md:p-6 bg-slate-50 relative">
+        <div class="mb-4">
+          <a id="vjPdfLink" href="#" target="_blank" class="inline-flex items-center space-x-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition shadow-sm"><i data-lucide="external-link" class="w-4 h-4"></i><span>Buka File PDF Soal</span></a>
+        </div>
+        <div class="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-2" id="vjGrid"></div>
+        <div id="vjLoading" class="hidden absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div></div>
+      </div>
+      <div class="p-4 border-t border-gray-100 bg-white rounded-b-2xl flex justify-between items-center">
+        <div class="flex space-x-4 text-xs font-medium">
+          <div class="flex items-center space-x-1 text-emerald-600"><i data-lucide="check-circle-2" class="w-4 h-4"></i><span id="vjBenar">0 Benar</span></div>
+          <div class="flex items-center space-x-1 text-rose-600"><i data-lucide="x-circle" class="w-4 h-4"></i><span id="vjSalah">0 Salah</span></div>
+        </div>
+        <button onclick="closeViewJawaban()" class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl transition font-medium text-sm shadow-sm">Tutup</button>
+      </div>
     </div>
   </div>
 
@@ -1017,6 +1047,7 @@
     }
     function tampilkanHasil() {
       var mata = document.getElementById('hasilMataUjian').value, kls = document.getElementById('hasilKelasFilter').value;
+      var btnDl = document.getElementById('btnDownloadHasil'); if(btnDl) btnDl.classList.add('hidden');
       if (!mata||!kls) { showCustomAlert('Perhatian', 'Pilih mata ujian dan kelas!', 'warning'); return; }
       var tb = document.getElementById('tabelHasilBody');
       tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-gray-400">Memuat...</td></tr>';
@@ -1024,13 +1055,15 @@
         .then(function(s) {
           tb.innerHTML = '';
           if (s.empty) { tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-gray-400">Belum ada hasil.</td></tr>'; return; }
+          if (btnDl) btnDl.classList.remove('hidden');
           var hasilArr = [];
           s.forEach(function(doc) { hasilArr.push({id:doc.id, data:doc.data()}); });
           hasilArr.sort(function(a,b){var ta=a.data.timestamp,tb=b.data.timestamp;if(!ta&&!tb)return 0;if(!ta)return 1;if(!tb)return -1;if(ta.toDate&&tb.toDate)return tb.toDate()-ta.toDate();return 0;});
           hasilArr.forEach(function(item) { var doc = {id:item.id, data:function(){return item.data;}};
             var d = doc.data();
             var tgl = d.timestamp ? (d.timestamp.toDate ? d.timestamp.toDate().toLocaleString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '-') : '-';
-            tb.innerHTML += '<tr class="border-b border-gray-50 hover:bg-gray-50/50 transition"><td class="p-3 font-medium text-gray-800">'+escHtml(d.nomorUjian)+'</td><td class="p-3 text-gray-600">'+escHtml(d.namaSiswa)+'</td><td class="p-3 text-gray-600">'+escHtml(d.kelas)+'</td><td class="p-3 text-gray-600">'+escHtml(d.mataUjian)+'</td><td class="p-3 text-center text-gray-600">'+escHtml(d.durasiPengerjaan)+'</td><td class="p-3 text-center"><span class="px-2.5 py-1 bg-indigo-50 text-indigo-700 font-bold rounded-lg text-xs">'+escHtml(d.nilai)+'</span></td><td class="p-3 text-gray-500 text-xs">'+tgl+'</td><td class="p-3 text-center"><button onclick="hapusHasil(\''+doc.id+'\',\''+escHtml(d.nomorUjian)+'\',\''+escHtml(d.mataUjian)+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td></tr>';
+            var eNama = escHtml(d.namaSiswa).replace(/&#039;/g,"\\'");
+            tb.innerHTML += '<tr class="border-b border-gray-50 hover:bg-gray-50/50 transition"><td class="p-3 font-medium text-gray-800">'+escHtml(d.nomorUjian)+'</td><td class="p-3 text-gray-600">'+escHtml(d.namaSiswa)+'</td><td class="p-3 text-gray-600">'+escHtml(d.kelas)+'</td><td class="p-3 text-gray-600">'+escHtml(d.mataUjian)+'</td><td class="p-3 text-center text-gray-600">'+escHtml(d.durasiPengerjaan)+'</td><td class="p-3 text-center"><span class="px-2.5 py-1 bg-indigo-50 text-indigo-700 font-bold rounded-lg text-xs">'+escHtml(d.nilai)+'</span></td><td class="p-3 text-gray-500 text-xs">'+tgl+'</td><td class="p-3 text-center"><div class="flex items-center justify-center space-x-1"><button onclick="bukaViewJawaban(\''+escHtml(d.nomorUjian)+'\',\''+escHtml(d.mataUjian)+'\',\''+eNama+'\')" class="p-1.5 text-indigo-600 hover:bg-indigo-50 rounded-lg transition" title="Lihat Jawaban"><i data-lucide="eye" class="w-4 h-4"></i></button><button onclick="hapusHasil(\''+doc.id+'\',\''+escHtml(d.nomorUjian)+'\',\''+escHtml(d.mataUjian)+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';
           }); lucide.createIcons();
         }).catch(function(e) { tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-gray-400">Error memuat data: '+e.message+'</td></tr>'; });
     }
@@ -1043,6 +1076,81 @@
         ]).then(function() { hideLoading(); showCustomAlert('Berhasil', 'Data dihapus.', 'info'); tampilkanHasil(); })
           .catch(function(e) { hideLoading(); showCustomAlert('Error', e.message, 'error'); });
       });
+    }
+
+    function bukaViewJawaban(no, mata, nama) {
+      var m = document.getElementById('viewJawabanModal');
+      document.getElementById('vjTitle').innerText = 'Jawaban: ' + nama;
+      document.getElementById('vjSubtitle').innerText = mata + ' | ' + no;
+      document.getElementById('vjPdfLink').style.display = 'none';
+      document.getElementById('vjGrid').innerHTML = '';
+      document.getElementById('vjBenar').innerText = '0 Benar';
+      document.getElementById('vjSalah').innerText = '0 Salah';
+      document.getElementById('vjLoading').classList.remove('hidden');
+      m.classList.remove('hidden'); m.classList.add('flex');
+      
+      Promise.all([
+        db.collection('soal').where('mataUjian','==',mata).get(),
+        db.collection('log').where('nomorUjian','==',no).where('mataUjian','==',mata).where('action','==','Selesai').get()
+      ]).then(function(res) {
+        document.getElementById('vjLoading').classList.add('hidden');
+        var sSoal = res[0], sLog = res[1];
+        if(sSoal.empty) { showCustomAlert('Gagal', 'Data bank soal tidak ditemukan.', 'error'); return; }
+        var soalData = sSoal.docs[0].data();
+        if(soalData.filePdf) {
+          var btnPdf = document.getElementById('vjPdfLink');
+          btnPdf.href = soalData.filePdf;
+          btnPdf.style.display = 'inline-flex';
+        }
+        var kunci = soalData.kunciJawaban || [];
+        var jml = parseInt(soalData.jumlahSoal) || 0;
+        
+        var jwb = {};
+        if(!sLog.empty) {
+          var logData = sLog.docs[0].data();
+          if(logData.detail) { try { jwb = JSON.parse(logData.detail); } catch(e) {} }
+        }
+        
+        var gridHtml = '', benar = 0, salah = 0;
+        for(var i=1; i<=jml; i++) {
+          var ans = (jwb[i] || '').toString().trim().toUpperCase();
+          var knc = (kunci[i-1] || '').toString().trim().toUpperCase();
+          var isBenar = (ans === knc && knc !== '');
+          if(isBenar) benar++; else if(ans !== '' || knc !== '') salah++;
+          
+          var sc = isBenar ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : (ans==='' ? 'bg-gray-50 border-gray-200 text-gray-500' : 'bg-rose-50 border-rose-200 text-rose-700');
+          var icn = isBenar ? '<i data-lucide="check" class="w-3 h-3 text-emerald-500 absolute top-1 right-1"></i>' : (ans==='' ? '' : '<i data-lucide="x" class="w-3 h-3 text-rose-500 absolute top-1 right-1"></i>');
+          gridHtml += '<div class="relative p-2 rounded-xl border flex flex-col items-center justify-center '+sc+'"><span class="text-[10px] font-bold opacity-70 mb-1">'+i+'</span><span class="font-black text-lg">'+(ans||'-')+'</span>'+icn+'<div class="text-[9px] mt-1 opacity-70">Kunci: '+(knc||'-')+'</div></div>';
+        }
+        document.getElementById('vjGrid').innerHTML = gridHtml;
+        document.getElementById('vjBenar').innerText = benar + ' Benar';
+        document.getElementById('vjSalah').innerText = salah + ' Salah';
+        lucide.createIcons();
+      }).catch(function(e) {
+        document.getElementById('vjLoading').classList.add('hidden');
+        showCustomAlert('Error', e.message, 'error');
+      });
+    }
+    function closeViewJawaban() { document.getElementById('viewJawabanModal').classList.add('hidden'); document.getElementById('viewJawabanModal').classList.remove('flex'); }
+
+    function downloadExcelHasil() {
+      if (typeof XLSX === 'undefined') { showCustomAlert('Error', 'Library Excel tidak dimuat', 'error'); return; }
+      var rows = document.querySelectorAll('#tabelHasil tr');
+      var data = [];
+      rows.forEach(function(row) {
+        var rowData = [];
+        var cols = row.querySelectorAll('th, td');
+        for (var i = 0; i < cols.length - 1; i++) {
+          rowData.push(cols[i].innerText.trim());
+        }
+        data.push(rowData);
+      });
+      var ws = XLSX.utils.aoa_to_sheet(data);
+      var wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Hasil");
+      var m = document.getElementById('hasilMataUjian').value || 'Semua';
+      var k = document.getElementById('hasilKelasFilter').value || 'Semua';
+      XLSX.writeFile(wb, "Hasil_Ujian_" + m + "_" + k + ".xlsx");
     }
 
     // ============= ANALISIS =============
