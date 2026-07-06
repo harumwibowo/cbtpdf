@@ -376,7 +376,7 @@
         <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
           <div class="flex justify-between items-center mb-4">
             <h3 class="font-bold text-gray-900">Tambah / Edit Bank Soal</h3>
-            <button onclick="document.getElementById('formBankSoalArea').classList.toggle('hidden')" class="px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-lg text-xs font-medium hover:bg-indigo-100 transition shadow-sm">Tampilkan / Sembunyikan</button>
+            <button onclick="document.getElementById('formBankSoalArea').classList.toggle('hidden')" class="px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-lg text-xs font-medium hover:bg-indigo-100 transition shadow-sm">Tambah Bank Soal</button>
           </div>
           <div id="formBankSoalArea" class="hidden">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -1102,7 +1102,7 @@
       
       Promise.all([
         db.collection('soal').where('mataUjian','==',mata).get(),
-        db.collection('log').where('nomorUjian','==',no).where('mataUjian','==',mata).where('action','==','Selesai').get()
+        db.collection('log').where('nomorUjian','==',no).where('mataUjian','==',mata).get()
       ]).then(function(res) {
         document.getElementById('vjLoading').classList.add('hidden');
         var sSoal = res[0], sLog = res[1];
