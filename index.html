@@ -734,7 +734,7 @@
       });document.getElementById('sidebarAvatar').innerText=adminSession.namaLengkap.charAt(0).toUpperCase();
       var savedPage=localStorage.getItem('cbt_admin_page')||'dashboard';showAdminPage(savedPage);closeSidebar(); 
     }
-    function loadSidebarLogo() { var sl=document.getElementById('sidebarLogo'); if(!sl) return; var fb=document.getElementById('sidebarLogoFallback'); try{var cs=JSON.parse(localStorage.getItem('cbt_app_settings'));if(cs&&cs.logoUrl){sl.src=cs.logoUrl;sl.style.display='';if(fb)fb.style.display='none';return;}}catch(e){} db.collection('pengaturan').doc('appSettings').get().then(function(doc){if(doc.exists){var d=doc.data();if(d.logoUrl){sl.src=d.logoUrl;sl.style.display='';if(fb)fb.style.display='none';}else{showLogoFallback(sl,fb);}}}).catch(function(){showLogoFallback(sl,fb);}); }
+    function loadSidebarLogo() { var sl=document.getElementById('sidebarLogo'); if(!sl) return; var fb=document.getElementById('sidebarLogoFallback'); try{var cs=JSON.parse(localStorage.getItem('cbt_app_settings'));if(cs&&cs.logoUrl){sl.src=cs.logoUrl;sl.classList.remove('hidden');sl.style.display='block';if(fb)fb.style.display='none';return;}}catch(e){} db.collection('pengaturan').doc('appSettings').get().then(function(doc){if(doc.exists){var d=doc.data();if(d.logoUrl){sl.src=d.logoUrl;sl.classList.remove('hidden');sl.style.display='block';if(fb)fb.style.display='none';}else{showLogoFallback(sl,fb);}}}).catch(function(){showLogoFallback(sl,fb);}); }
     function showLogoFallback(sl,fb){sl.style.display='none';if(fb)fb.style.display='block';}
     // Call loadSidebarLogo on masukAdminPanel and after settings load
     function _initSidebarLogo(){setTimeout(function(){loadSidebarLogo();},100);}
