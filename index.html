@@ -374,7 +374,11 @@
       <div id="pageBankSoal" class="admin-page hidden space-y-6">
         <h1 class="text-xl md:text-2xl font-bold text-gray-900 flex items-center space-x-2"><i data-lucide="file-text" class="w-6 h-6 text-indigo-600"></i><span>Bank Soal</span></h1>
         <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
-          <h3 class="font-bold text-gray-900 mb-4">Tambah / Edit Bank Soal</h3>
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="font-bold text-gray-900">Tambah / Edit Bank Soal</h3>
+            <button onclick="document.getElementById('formBankSoalArea').classList.toggle('hidden')" class="px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-lg text-xs font-medium hover:bg-indigo-100 transition shadow-sm">Tampilkan / Sembunyikan</button>
+          </div>
+          <div id="formBankSoalArea" class="hidden">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div><label class="block text-xs font-semibold text-gray-500 mb-1">Mata Ujian <span class="text-red-400">*</span></label><input type="text" id="soalMataUjian" placeholder="Contoh: Matematika Wajib" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/><p class="text-[10px] text-gray-400 mt-0.5">Nama mata pelajaran ujian</p></div>
             <div><label class="block text-xs font-semibold text-gray-500 mb-1">Kelas <span class="text-red-400">*</span></label><select id="soalKelas" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Kelas</option></select><p class="text-[10px] text-gray-400 mt-0.5">Target kelas ujian</p></div>
@@ -392,12 +396,13 @@
           </div>
           <button id="btnSimpanSoal" onclick="simpanSoal()" class="mt-4 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl transition text-sm shadow-md hover:shadow-lg">Simpan Bank Soal</button>
           <input type="hidden" id="editSoalId" value="">
+          </div>
         </div>
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           <div class="p-4 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2"><h3 class="font-bold text-gray-900 text-sm">Daftar Bank Soal</h3><div class="flex items-center gap-2"><label class="text-xs text-gray-500 font-medium">Filter Kelas:</label><select id="filterSoalKelas" onchange="muatDataSoal()" class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"><option value="">Semua Kelas</option></select></div></div>
           <div class="overflow-x-auto">
             <table class="w-full text-sm" id="tabelSoal">
-              <thead><tr class="bg-gradient-to-r from-slate-50 to-gray-50 text-gray-500 text-xs font-bold uppercase tracking-wider border-b border-gray-100"><th class="p-3 text-left">Mata Ujian</th><th class="p-3 text-left">Kelas</th><th class="p-3 text-left">Status</th><th class="p-3 text-center">Durasi</th><th class="p-3 text-center">Soal</th><th class="p-3 text-center">Token</th><th class="p-3 text-left">Pemilik</th><th class="p-3 text-center">Aksi</th></tr></thead>
+              <thead><tr class="bg-gradient-to-r from-slate-50 to-gray-50 text-gray-500 text-xs font-bold uppercase tracking-wider border-b border-gray-100"><th class="p-3 text-left">Mata Ujian</th><th class="p-3 text-left">Kelas</th><th class="p-3 text-left">Status</th><th class="p-3 text-center">Soal</th><th class="p-3 text-center">Token</th><th class="p-3 text-left">Pemilik</th><th class="p-3 text-center">Aksi</th></tr></thead>
               <tbody id="tabelSoalBody"></tbody>
             </table>
           </div>
@@ -437,6 +442,9 @@
               <button onclick="tampilkanHasil()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl transition text-sm shadow">Tampilkan</button>
               <button id="btnDownloadHasil" onclick="downloadExcelHasil()" class="hidden px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl transition text-sm shadow flex items-center gap-2"><i data-lucide="file-spreadsheet" class="w-4 h-4"></i><span class="hidden sm:inline">Excel</span></button>
             </div>
+          </div>
+          <div id="hasilPdfLinkContainer" class="mt-4 hidden border-t border-gray-100 pt-3">
+             <a id="hasilPdfLink" href="#" target="_blank" class="text-sm text-indigo-600 hover:underline flex items-center gap-1 font-medium w-fit"><i data-lucide="external-link" class="w-4 h-4"></i> Lihat Soal PDF</a>
           </div>
         </div>
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
@@ -893,7 +901,7 @@
         data.forEach(function(item) {
           var d = item.data;
           var sc = (d.status || 'Aktif').toLowerCase() === 'aktif' ? 'text-emerald-700 bg-emerald-50' : 'text-red-700 bg-red-50';
-          var pemilik = (d.createdBy && d.createdBy.nama) ? d.createdBy.nama : '-'; var kolabArr = d.kolaborator || []; var kolabStr = kolabArr.map(function(k){return k.nama;}).join(', '); if(pemilik=='-'&&kolabStr) pemilik=kolabStr; else if(kolabStr) pemilik+=' [Kolab: '+kolabStr+']'; tb.innerHTML += '<tr class="border-b border-gray-50 hover:bg-gray-50/50 transition"><td class="p-3 font-medium text-gray-800">' + escHtml(d.mataUjian) + '</td><td class="p-3 text-gray-600">' + escHtml(d.kelas) + '</td><td class="p-3"><span class="px-2.5 py-1 text-xs font-bold rounded-lg ' + sc + '">' + escHtml(d.status || 'Aktif') + '</span></td><td class="p-3 text-center text-gray-700 font-medium">' + (d.durasi || '-') + '</td><td class="p-3 text-center text-gray-700 font-medium">' + (d.jumlahSoal || '-') + '</td><td class="p-3 text-center font-mono font-bold tracking-wider text-indigo-600">' + escHtml(d.token || '-') + '</td><td class="p-3 text-gray-600 text-xs">' + escHtml(pemilik) + '</td><td class="p-3 text-center"><div class="flex items-center justify-center space-x-1"><button onclick="editSoal(\''+item.id+'\')" class="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Edit"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="hapusSoal(\''+item.id+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';
+          var pemilik = (d.createdBy && d.createdBy.nama) ? d.createdBy.nama : '-'; var kolabArr = d.kolaborator || []; var kolabStr = kolabArr.map(function(k){return k.nama;}).join(', '); if(pemilik=='-'&&kolabStr) pemilik=kolabStr; else if(kolabStr) pemilik+=' [Kolab: '+kolabStr+']'; tb.innerHTML += '<tr class="border-b border-gray-50 hover:bg-gray-50/50 transition"><td class="p-3 font-medium text-gray-800">' + escHtml(d.mataUjian) + '</td><td class="p-3 text-gray-600">' + escHtml(d.kelas) + '</td><td class="p-3"><span class="px-2.5 py-1 text-xs font-bold rounded-lg ' + sc + '">' + escHtml(d.status || 'Aktif') + '</span></td><td class="p-3 text-center text-gray-700 font-medium"><a href="https://drive.google.com/file/d/' + (d.pdfId || '') + '/view" target="_blank" class="inline-flex items-center space-x-1 px-3 py-1.5 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-lg text-xs font-medium transition"><i data-lucide="external-link" class="w-3.5 h-3.5"></i><span>Buka PDF</span></a></td><td class="p-3 text-center font-mono font-bold tracking-wider text-indigo-600">' + escHtml(d.token || '-') + '</td><td class="p-3 text-gray-600 text-xs">' + escHtml(pemilik) + '</td><td class="p-3 text-center"><div class="flex items-center justify-center space-x-1"><button onclick="editSoal(\''+item.id+'\')" class="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Edit"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="hapusSoal(\''+item.id+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';
         });
         lucide.createIcons();
       });
@@ -923,6 +931,7 @@
         document.getElementById('soalPdfId').value = d.pdfId||'';
         document.getElementById('soalKunciJawaban').value = (d.kunciJawaban||[]).join(', ');
         document.getElementById('editSoalId').value = id; document.getElementById('btnSimpanSoal').innerText = 'Perbarui Bank Soal'; if(d.kolaborator){var ks=document.getElementById('soalKolaborator');if(ks){Array.from(ks.options).forEach(function(o){try{if(d.kolaborator.some(function(k){return k.uid===JSON.parse(o.value).uid;}))o.selected=true;}catch(e){}});}}
+        document.getElementById('formBankSoalArea').classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     }
@@ -1051,6 +1060,8 @@
       if (!mata||!kls) { showCustomAlert('Perhatian', 'Pilih mata ujian dan kelas!', 'warning'); return; }
       var tb = document.getElementById('tabelHasilBody');
       tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-gray-400">Memuat...</td></tr>';
+      var pdfContainer = document.getElementById('hasilPdfLinkContainer'); if(pdfContainer) pdfContainer.classList.add('hidden');
+      db.collection('soal').where('mataUjian','==',mata).where('kelas','==',kls).get().then(function(s){ if(!s.empty){ var pdfId = s.docs[0].data().pdfId; if(pdfId && pdfContainer){ document.getElementById('hasilPdfLink').href = 'https://drive.google.com/file/d/'+pdfId+'/preview'; pdfContainer.classList.remove('hidden'); } } });
       db.collection('hasil').where('mataUjian','==',mata).where('kelas','==',kls).get()
         .then(function(s) {
           tb.innerHTML = '';
@@ -1108,7 +1119,8 @@
         var jwb = {};
         if(!sLog.empty) {
           var logData = sLog.docs[0].data();
-          if(logData.detail) { try { jwb = JSON.parse(logData.detail); } catch(e) {} }
+          var jwbStr = logData.jawaban || logData.detail || '{}';
+          try { jwb = JSON.parse(jwbStr); } catch(e) {}
         }
         
         var gridHtml = '', benar = 0, salah = 0;
@@ -1266,6 +1278,7 @@
       if (pageId==='pageLogin') { document.getElementById('pageLogin').classList.remove('hidden'); document.getElementById('pageLogin').classList.add('flex'); studentApp.classList.add('hidden'); }
       else { studentApp.classList.remove('hidden'); var t=document.getElementById(pageId); if (t) { t.classList.remove('hidden'); t.classList.add('flex','flex-col'); } }
       if (pageId!=='pageUjian') stopAntiCheatDetection(); else startAntiCheatDetection();
+      var footer = document.getElementById('appFooter'); if (footer) footer.style.display = (pageId === 'pageUjian') ? 'none' : 'block';
       lucide.createIcons();
     }
 
@@ -1479,5 +1492,8 @@
     function closeConfirm() { document.getElementById('customConfirm').classList.add('hidden'); document.getElementById('customConfirm').classList.remove('flex'); }
 
   </script>
+  <footer id="appFooter" class="bg-white border-t border-gray-200 py-4 text-center text-sm text-gray-500 w-full z-[100] mt-auto">
+    &copy; 2026 CBT Developer System. All Rights Reserved.
+  </footer>
 </body>
 </html>
