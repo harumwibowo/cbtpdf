@@ -359,7 +359,7 @@
           </div>
         </div>
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-          <div class="p-4 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2"><h3 class="font-bold text-slate-900 text-sm">Daftar Siswa</h3><div class="flex items-center gap-2"><label class="text-xs text-slate-500 font-medium">Filter Kelas:</label><select id="filterSiswaKelas" onchange="muatDataSiswa()" class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"><option value="">Semua Kelas</option></select></div></div>
+          <div class="p-4 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2"><h3 class="font-bold text-slate-900 text-sm">Daftar Siswa</h3><div class="flex items-center gap-3"><label class="text-xs text-slate-500 font-medium">Filter Kelas:</label><select id="filterSiswaKelas" onchange="muatDataSiswa()" class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"><option value="">Semua</option></select><label class="text-xs text-slate-500 font-medium">Status:</label><select id="filterSiswaStatus" onchange="muatDataSiswa()" class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"><option value="">Semua</option><option value="Aktif">Aktif</option><option value="Tidak Aktif">Tidak Aktif</option></select></div></div>
           <div class="overflow-x-auto">
             <table class="w-full text-sm border-separate border-spacing-0" id="tabelSiswa">
               <thead><tr class="bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-200"><th class="p-4 text-left">Nomor Ujian</th><th class="p-4 text-left">Nama</th><th class="p-4 text-left">Kelas</th><th class="p-4 text-left">Status</th><th class="p-4 text-left">Keterangan</th><th class="p-4 text-center">Aksi</th></tr></thead>
@@ -829,6 +829,7 @@
     function muatDataSiswa() {
       var tb=document.getElementById('tabelSiswaBody');tb.innerHTML='<tr><td colspan="6" class="p-4 text-center text-slate-400">Memuat...</td></tr>';
       var filterKelas=document.getElementById('filterSiswaKelas').value;
+      var filterStatus=document.getElementById('filterSiswaStatus').value;
       var q=db.collection('siswa').orderBy('nomorUjian');
       q.get().then(function(s){
         tb.innerHTML='';
@@ -838,14 +839,14 @@
         var sel=document.getElementById('filterSiswaKelas');
         var curVal=sel.value;
         sel.innerHTML='<option value="">Semua Kelas</option>';
-        Array.from(kelasSet).sort().forEach(function(k){sel.innerHTML+='<option value="'+escHtml(k)+'">'+escHtml(k)+'</option>';});
+        Array.from(kelasSet).sort(function(a,b){return a.localeCompare(b);}).forEach(function(k){sel.innerHTML+='<option value="'+escHtml(k)+'">'+escHtml(k)+'</option>';});
         sel.value=curVal;
         // Filter and sort
         var data=[];
-        s.forEach(function(doc){var d2=doc.data();if(!filterKelas||d2.kelas===filterKelas)data.push({id:doc.id,data:d2});});
+        s.forEach(function(doc){var d2=doc.data();var kelasMatch=!filterKelas||d2.kelas===filterKelas;var statusMatch=!filterStatus||(d2.status||'Aktif')===filterStatus;if(kelasMatch&&statusMatch)data.push({id:doc.id,data:d2});});
         data.sort(function(a,b){return (a.data.nama||'').localeCompare(b.data.nama||'');});
         if(data.length===0){tb.innerHTML='<tr><td colspan="6" class="p-4 text-center text-slate-400">Belum ada data.</td></tr>';return;}
-        data.forEach(function(item){
+        data.forEach(function(item,idx){
           var d=item.data;var sc=(d.status||'Aktif').toLowerCase()==='aktif'?'text-emerald-700 bg-emerald-50':'text-red-700 bg-red-50';
           tb.innerHTML+='<tr class="border-b border-slate-100 hover:bg-slate-50/50 transition"><td class="p-4 font-medium text-slate-800">'+escHtml(d.nomorUjian)+'</td><td class="p-4 text-slate-600">'+escHtml(d.nama)+'</td><td class="p-4 text-slate-600">'+escHtml(d.kelas)+'</td><td class="p-4"><span class="px-2.5 py-1 text-xs font-bold rounded-lg '+sc+'">'+escHtml(d.status||'Aktif')+'</span></td><td class="p-4 text-slate-500 text-xs">'+escHtml(d.keterangan||'-')+'</td><td class="p-4 text-center"><div class="flex items-center justify-center space-x-1"><button onclick="editSiswa(\''+item.id+'\')" class="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Edit"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="hapusSiswa(\''+item.id+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';
         });lucide.createIcons();
@@ -902,7 +903,7 @@
         }
         data.sort(function(a, b) { return (a.data.mataUjian || '').localeCompare(b.data.mataUjian || ''); });
         if (data.length === 0) { tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-slate-400">Belum ada bank soal.</td></tr>'; return; }
-        data.forEach(function(item) {
+        data.forEach(function(item,idx) {
           var d = item.data;
           var sc = (d.status || 'Aktif').toLowerCase() === 'aktif' ? 'text-emerald-700 bg-emerald-50' : 'text-red-700 bg-red-50';
           var pemilik = (d.createdBy && d.createdBy.nama) ? d.createdBy.nama : '-'; var kolabArr = d.kolaborator || []; var kolabStr = kolabArr.map(function(k){return k.nama;}).join(', '); if(pemilik=='-'&&kolabStr) pemilik=kolabStr; else if(kolabStr) pemilik+=' [Kolab: '+kolabStr+']'; tb.innerHTML += '<tr class="border-b border-slate-100 hover:bg-slate-50/50 transition"><td class="p-4 font-medium text-slate-800">' + escHtml(d.mataUjian) + '</td><td class="p-4 text-slate-600">' + escHtml(d.kelas) + '</td><td class="p-4"><span class="px-2.5 py-1 text-xs font-bold rounded-lg ' + sc + '">' + escHtml(d.status || 'Aktif') + '</span></td><td class="p-4 text-center text-slate-700 font-medium"><a href="https://drive.google.com/file/d/' + (d.pdfId || '') + '/view" target="_blank" class="inline-flex items-center space-x-1 px-3 py-1.5 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-lg text-xs font-medium transition"><i data-lucide="external-link" class="w-3.5 h-3.5"></i><span>Buka PDF</span></a></td><td class="p-4 text-center font-mono font-bold tracking-wider text-indigo-600">' + escHtml(d.token || '-') + '</td><td class="p-4 text-slate-600 text-xs">' + escHtml(pemilik) + '</td><td class="p-4 text-center"><div class="flex items-center justify-center space-x-1"><button onclick="editSoal(\''+item.id+'\')" class="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Edit"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="hapusSoal(\''+item.id+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';
@@ -991,7 +992,7 @@
         db.collection('siswa').where('kelas','==',kls).get()
       ]).then(function(r) {
         var siswa = {}; r[1].forEach(function(d) { var x = d.data(); siswa[x.nomorUjian] = x; });
-        tb.innerHTML = ''; var seen = new Set(), hasData = false;
+        tb.innerHTML = ''; var seen = new Set(), hasData = false, rowIdx=0;
         r[0].forEach(function(doc) {
           var d = doc.data(), no = d.nomorUjian;
           if (seen.has(no)) return; seen.add(no);
@@ -1076,7 +1077,7 @@
           var hasilArr = [];
           s.forEach(function(doc) { hasilArr.push({id:doc.id, data:doc.data()}); });
           hasilArr.sort(function(a,b){var ta=a.data.timestamp,tb=b.data.timestamp;if(!ta&&!tb)return 0;if(!ta)return 1;if(!tb)return -1;if(ta.toDate&&tb.toDate)return tb.toDate()-ta.toDate();return 0;});
-          hasilArr.forEach(function(item) { var doc = {id:item.id, data:function(){return item.data;}};
+          hasilArr.forEach(function(item,idx) { var doc = {id:item.id, data:function(){return item.data;}};var zebraClass=idx%2===0?'bg-white':'bg-slate-50';
             var d = doc.data();
             var tgl = d.timestamp ? (d.timestamp.toDate ? d.timestamp.toDate().toLocaleString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '-') : '-';
             var eNama = escHtml(d.namaSiswa).replace(/&#039;/g,"\\'");
