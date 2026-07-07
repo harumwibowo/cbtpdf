@@ -28,21 +28,21 @@
     .sidebar-collapsed .lg\:ml-64 { margin-left: 0; }
     .sidebar-collapsed #sidebarCollapseBtn { left: 0.75rem; background: white; border: 1px solid #e5e7eb; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
     #sidebarCollapseBtn { transition: all 0.3s ease; z-index: 60; }
-    .nav-item.active bg-indigo-600 text-white { background-color: rgba(99, 102, 241, 0.1); color: #6366f1; border-right: 3px solid #6366f1; }
+    .nav-item.active { background-color: rgba(99, 102, 241, 0.1); color: #6366f1; border-right: 3px solid #6366f1; }
     @media (max-width: 1023px) { .sidebar-mobile { transform: translateX(-100%); } .sidebar-mobile.open { transform: translateX(0); } }
   </style>
 </head>
-<body class="bg-slate-50 text-white min-h-screen antialiased">
+<body class="bg-slate-50 text-slate-800 min-h-screen antialiased">
 
   <!-- LOADING SCREEN -->
   <div id="loadingOverlay" class="fixed inset-0 bg-gray-900/80 backdrop-blur-md z-[200] hidden items-center justify-center">
     <div class="bg-white p-8 rounded-2xl shadow-2xl flex flex-col items-center max-w-xs w-full text-center animate__animated animate__zoomIn">
       <div class="relative w-16 h-16 mb-4">
-        <div class="absolute inset-0 rounded-full border-4 border-slate-800"></div>
+        <div class="absolute inset-0 rounded-full border-4 border-slate-200"></div>
         <div class="absolute inset-0 rounded-full border-4 border-indigo-600 border-t-transparent animate-spin"></div>
       </div>
-      <h3 class="text-lg font-bold text-white mb-1">Memproses Data</h3>
-      <p class="text-sm text-indigo-200" id="loadingText">Harap tunggu sebentar...</p>
+      <h3 class="text-lg font-bold text-slate-800 mb-1">Memproses Data</h3>
+      <p class="text-sm text-slate-500" id="loadingText">Harap tunggu sebentar...</p>
     </div>
   </div>
 
@@ -53,7 +53,7 @@
         <div id="alertIconBg" class="p-3 rounded-full"><i id="alertIcon" data-lucide="alert-triangle" class="w-6 h-6"></i></div>
         <h3 id="alertTitle" class="text-xl font-bold text-slate-900">Pemberitahuan</h3>
       </div>
-      <p id="alertMessage" class="text-slate-300 mb-6 leading-relaxed"></p>
+      <p id="alertMessage" class="text-slate-600 mb-6 leading-relaxed"></p>
       <div class="flex justify-end">
         <button onclick="closeAlert()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md hover:shadow-indigo-200 transition-all duration-200 transition shadow-lg shadow-indigo-100">Mengerti</button>
       </div>
@@ -67,9 +67,9 @@
         <div class="p-3 rounded-full bg-amber-100 text-amber-600"><i data-lucide="help-circle" class="w-6 h-6"></i></div>
         <h3 id="confirmTitle" class="text-xl font-bold text-slate-900">Konfirmasi</h3>
       </div>
-      <p id="confirmMessage" class="text-slate-300 mb-6 leading-relaxed"></p>
+      <p id="confirmMessage" class="text-slate-600 mb-6 leading-relaxed"></p>
       <div class="flex justify-end space-x-3">
-        <button onclick="closeConfirm()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-300 font-medium rounded-xl transition">Batal</button>
+        <button onclick="closeConfirm()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl transition">Batal</button>
         <button id="btnConfirmAction" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl transition shadow-lg shadow-emerald-100">Ya, Lanjutkan</button>
       </div>
     </div>
@@ -95,10 +95,10 @@
       <!-- Form Siswa -->
       <div id="formSiswa" class="bg-white/95 backdrop-blur rounded-3xl p-6 md:p-8 shadow-2xl space-y-5">
         <div class="space-y-1">
-          <label class="block text-xs font-bold text-indigo-300 uppercase tracking-wider">Masukkan Nomor Ujian</label>
+          <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider">Masukkan Nomor Ujian</label>
           <div class="relative mt-2">
-            <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-indigo-300"><i data-lucide="key-round" class="w-5 h-5"></i></span>
-            <input type="text" id="loginNomorUjian" placeholder="Contoh: CBT-001" class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-800 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent font-medium text-white transition" />
+            <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400"><i data-lucide="key-round" class="w-5 h-5"></i></span>
+            <input type="text" id="loginNomorUjian" placeholder="Contoh: CBT-001" class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent font-medium text-slate-800 transition" />
           </div>
         </div>
         <button onclick="prosesLogin()" class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl transition shadow-lg shadow-indigo-200 flex items-center justify-center space-x-2">
@@ -110,17 +110,17 @@
       <div id="formAdmin" class="hidden bg-white/95 backdrop-blur rounded-3xl p-6 md:p-8 shadow-2xl space-y-5">
         <div class="space-y-4">
           <div class="space-y-1">
-            <label class="block text-xs font-bold text-indigo-300 uppercase tracking-wider">Username</label>
+            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider">Username</label>
             <div class="relative mt-2">
-              <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-indigo-300"><i data-lucide="user" class="w-5 h-5"></i></span>
-              <input type="text" id="loginUsername" placeholder="Masukkan username" class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-800 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent font-medium text-white transition" />
+              <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400"><i data-lucide="user" class="w-5 h-5"></i></span>
+              <input type="text" id="loginUsername" placeholder="Masukkan username" class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent font-medium text-slate-800 transition" />
             </div>
           </div>
           <div class="space-y-1">
-            <label class="block text-xs font-bold text-indigo-300 uppercase tracking-wider">Password</label>
+            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider">Password</label>
             <div class="relative mt-2">
-              <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-indigo-300"><i data-lucide="lock" class="w-5 h-5"></i></span>
-              <div class="relative"><input type="password" id="loginPassword" placeholder="Masukkan password" class="w-full pl-12 pr-12 py-3.5 bg-slate-50 border border-slate-800 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent font-medium text-white transition" /><button type="button" onclick="togglePass('loginPassword',this)" class="absolute inset-y-0 right-0 pr-4 flex items-center text-indigo-300 hover:text-slate-300"><i data-lucide="eye" class="w-5 h-5"></i></button></div>
+              <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400"><i data-lucide="lock" class="w-5 h-5"></i></span>
+              <div class="relative"><input type="password" id="loginPassword" placeholder="Masukkan password" class="w-full pl-12 pr-12 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent font-medium text-slate-800 transition" /><button type="button" onclick="togglePass('loginPassword',this)" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600"><i data-lucide="eye" class="w-5 h-5"></i></button></div>
             </div>
           </div>
         </div>
@@ -136,12 +136,12 @@
   <div id="adminLayout" class="hidden min-h-screen bg-gradient-to-br from-slate-50 to-gray-50">
 
     <!-- Mobile header -->
-    <div class="lg:hidden fixed top-0 left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-800 px-4 py-3 flex items-center justify-between shadow-sm">
-      <button onclick="toggleSidebar()" class="p-2 rounded-lg hover:bg-slate-100 text-slate-300">
+    <div class="lg:hidden fixed top-0 left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-3 flex items-center justify-between shadow-sm">
+      <button onclick="toggleSidebar()" class="p-2 rounded-lg hover:bg-slate-100 text-slate-600">
         <i data-lucide="menu" class="w-6 h-6"></i>
       </button>
-      <span class="font-bold text-sm text-white truncate mx-2" id="mobilePageTitle">Dasbor</span>
-      <button onclick="logoutAdmin()" class="p-2 rounded-lg hover:bg-slate-100 text-indigo-200" title="Keluar">
+      <span class="font-bold text-sm text-slate-800 truncate mx-2" id="mobilePageTitle">Dasbor</span>
+      <button onclick="logoutAdmin()" class="p-2 rounded-lg hover:bg-slate-100 text-slate-500" title="Keluar">
         <i data-lucide="log-out" class="w-5 h-5"></i>
       </button>
     </div>
@@ -149,117 +149,117 @@
     <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden"></div>
 
     <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar-mobile fixed left-0 top-0 z-50 h-full w-64 bg-slate-900 shadow-2xl flex flex-col sidebar-transition lg:translate-x-0">
-      <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+    <aside id="sidebar" class="sidebar-mobile fixed left-0 top-0 z-50 h-full w-64 bg-white/95 backdrop-blur-sm border-r border-slate-100 shadow-[4px_0_24px_rgba(0,0,0,0.02)] flex flex-col sidebar-transition lg:translate-x-0">
+      <div class="p-4 border-b border-slate-200 flex items-center justify-between">
         <div class="flex items-center space-x-3 truncate">
           <div class="relative w-10 h-10 flex-shrink-0 rounded-xl overflow-hidden bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center shadow-md">
             <img id="sidebarLogo" src="https://via.placeholder.com/36" alt="Logo" class="w-full h-full object-cover hidden" onerror="this.style.display='none';var f=document.getElementById('sidebarLogoFallback');if(f)f.style.display='block';" />
             <i id="sidebarLogoFallback" data-lucide="graduation-cap" class="w-5 h-5 text-white"></i>
           </div>
           <div class="truncate">
-            <h3 class="font-bold text-sm text-white leading-tight truncate">CBT Panel</h3>
-            <p class="text-[10px] text-indigo-400 font-medium" id="sidebarUserRole">Admin</p>
+            <h3 class="font-bold text-sm text-slate-800 leading-tight truncate">CBT Panel</h3>
+            <p class="text-[10px] text-indigo-600 font-medium" id="sidebarUserRole">Admin</p>
           </div>
         </div>
         
       </div>
 
       <nav class="flex-1 overflow-y-auto py-3 px-3 space-y-1 text-sm">
-        <button onclick="showAdminPage('dashboard')" data-page="dashboard" data-role="all" class="nav-item w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-indigo-800 hover:text-white transition-all text-left font-medium">
+        <button onclick="showAdminPage('dashboard')" data-page="dashboard" data-role="all" class="nav-item w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left font-medium">
           <i data-lucide="layout-dashboard" class="w-5 h-5 flex-shrink-0"></i>
           <span class="font-medium">Dasbor</span>
         </button>
 
         <div data-role="admin">
-          <button onclick="toggleSubmenu(this)" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-300 hover:bg-indigo-800 hover:text-white transition-all text-left">
+          <button onclick="toggleSubmenu(this)" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left">
             <div class="flex items-center space-x-3"><i data-lucide="database" class="w-5 h-5 flex-shrink-0"></i><span class="font-medium">Data Master</span></div>
             <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200"></i>
           </button>
           <div class="submenu-collapse ml-2">
-            <button onclick="showAdminPage('dataPengguna')" data-page="dataPengguna" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-indigo-200 hover:bg-indigo-800 hover:text-white transition-all text-left text-sm font-medium"><i data-lucide="users" class="w-4 h-4 flex-shrink-0"></i><span>Data Pengguna</span></button>
-            <button onclick="showAdminPage('dataSiswa')" data-page="dataSiswa" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-indigo-200 hover:bg-indigo-800 hover:text-white transition-all text-left text-sm"><i data-lucide="graduation-cap" class="w-4 h-4 flex-shrink-0"></i><span>Data Siswa</span></button>
+            <button onclick="showAdminPage('dataPengguna')" data-page="dataPengguna" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-slate-500 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left text-sm font-medium"><i data-lucide="users" class="w-4 h-4 flex-shrink-0"></i><span>Data Pengguna</span></button>
+            <button onclick="showAdminPage('dataSiswa')" data-page="dataSiswa" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-slate-500 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left text-sm"><i data-lucide="graduation-cap" class="w-4 h-4 flex-shrink-0"></i><span>Data Siswa</span></button>
           </div>
         </div>
 
         <div data-role="admin,guru">
-          <button onclick="toggleSubmenu(this)" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-300 hover:bg-indigo-800 hover:text-white transition-all text-left">
+          <button onclick="toggleSubmenu(this)" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left">
             <div class="flex items-center space-x-3"><i data-lucide="folder-open" class="w-5 h-5 flex-shrink-0"></i><span class="font-medium">Persiapan</span></div>
             <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200"></i>
           </button>
           <div class="submenu-collapse ml-2">
-            <button onclick="showAdminPage('bankSoal')" data-page="bankSoal" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-indigo-200 hover:bg-indigo-800 hover:text-white transition-all text-left text-sm"><i data-lucide="file-text" class="w-4 h-4 flex-shrink-0"></i><span>Bank Soal</span></button>
+            <button onclick="showAdminPage('bankSoal')" data-page="bankSoal" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-slate-500 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left text-sm"><i data-lucide="file-text" class="w-4 h-4 flex-shrink-0"></i><span>Bank Soal</span></button>
           </div>
         </div>
 
         <div data-role="admin,guru,pengawas">
-          <button onclick="toggleSubmenu(this)" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-300 hover:bg-indigo-800 hover:text-white transition-all text-left">
+          <button onclick="toggleSubmenu(this)" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left">
             <div class="flex items-center space-x-3"><i data-lucide="monitor" class="w-5 h-5 flex-shrink-0"></i><span class="font-medium">Ujian</span></div>
             <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200"></i>
           </button>
           <div class="submenu-collapse ml-2">
-            <button onclick="showAdminPage('monitor')" data-page="monitor" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-indigo-200 hover:bg-indigo-800 hover:text-white transition-all text-left text-sm"><i data-lucide="eye" class="w-4 h-4 flex-shrink-0"></i><span>Monitor</span></button>
-            <button onclick="showAdminPage('hasil')" data-page="hasil" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-indigo-200 hover:bg-indigo-800 hover:text-white transition-all text-left text-sm" data-role="admin,guru"><i data-lucide="clipboard-check" class="w-4 h-4 flex-shrink-0"></i><span>Hasil</span></button>
-            <button onclick="showAdminPage('analisis')" data-page="analisis" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-indigo-200 hover:bg-indigo-800 hover:text-white transition-all text-left text-sm" data-role="admin,guru"><i data-lucide="bar-chart-3" class="w-4 h-4 flex-shrink-0"></i><span>Analisis Bank Soal</span></button>
+            <button onclick="showAdminPage('monitor')" data-page="monitor" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-slate-500 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left text-sm"><i data-lucide="eye" class="w-4 h-4 flex-shrink-0"></i><span>Monitor</span></button>
+            <button onclick="showAdminPage('hasil')" data-page="hasil" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-slate-500 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left text-sm" data-role="admin,guru"><i data-lucide="clipboard-check" class="w-4 h-4 flex-shrink-0"></i><span>Hasil</span></button>
+            <button onclick="showAdminPage('analisis')" data-page="analisis" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-slate-500 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left text-sm" data-role="admin,guru"><i data-lucide="bar-chart-3" class="w-4 h-4 flex-shrink-0"></i><span>Analisis Bank Soal</span></button>
           </div>
         </div>
 
-        <button onclick="showAdminPage('pengaturan')" data-page="pengaturan" data-role="admin" class="nav-item w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-indigo-800 hover:text-white transition-all text-left">
+        <button onclick="showAdminPage('pengaturan')" data-page="pengaturan" data-role="admin" class="nav-item w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-left">
           <i data-lucide="settings" class="w-5 h-5 flex-shrink-0"></i><span class="font-medium">Pengaturan</span>
         </button>
       </nav>
 
-      <div class="p-4 border-t border-slate-800">
+      <div class="p-4 border-t border-slate-200">
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-2 truncate">
-            <div class="w-7 h-7 bg-slate-200 rounded-full flex items-center justify-center text-xs font-bold text-slate-300" id="sidebarAvatar">A</div>
-            <span class="text-xs font-medium text-slate-300 truncate" id="sidebarUserName">Admin</span>
+            <div class="w-7 h-7 bg-slate-200 rounded-full flex items-center justify-center text-xs font-bold text-slate-600" id="sidebarAvatar">A</div>
+            <span class="text-xs font-medium text-slate-700 truncate" id="sidebarUserName">Admin</span>
           </div>
-          <button onclick="logoutAdmin()" class="text-indigo-300 hover:text-red-500 p-1.5 rounded-lg hover:bg-red-50 transition" title="Keluar"><i data-lucide="log-out" class="w-4 h-4"></i></button>
+          <button onclick="logoutAdmin()" class="text-slate-400 hover:text-red-500 p-1.5 rounded-lg hover:bg-red-50 transition" title="Keluar"><i data-lucide="log-out" class="w-4 h-4"></i></button>
         </div>
       </div>
     </aside>
-    <button id="sidebarCollapseBtn" onclick="toggleSidebarCollapse()" class="hidden lg:flex fixed top-4 z-50 w-8 h-8 items-center justify-center rounded-xl bg-white border border-slate-800 text-indigo-200 hover:text-white hover:border-indigo-200 hover:bg-indigo-800 transition-all duration-300 shadow-sm" style="left:15.5rem;" title="Toggle Sidebar">
+    <button id="sidebarCollapseBtn" onclick="toggleSidebarCollapse()" class="hidden lg:flex fixed top-4 z-50 w-8 h-8 items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-indigo-600 hover:border-indigo-200 hover:bg-indigo-50 transition-all duration-300 shadow-sm" style="left:15.5rem;" title="Toggle Sidebar">
         <i data-lucide="panel-left-close" class="w-4 h-4"></i>
       </button>
 
     <!-- Main Content -->
-    <main id="adminContent" class="lg:ml-64 pt-20 lg:pt-8 p-4 md:p-8 min-h-screen">
+    <main id="adminContent" class="lg:ml-64 pt-16 lg:pt-0 p-4 md:p-6 min-h-screen">
       <!-- DASHBOARD -->
       <div id="pageDashboard" class="admin-page space-y-6">
         <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-4"><button onclick="toggleSidebarCollapse()" class="p-2 rounded-xl bg-white shadow-sm border border-slate-200 text-slate-600 hover:text-indigo-600"><i data-lucide="menu" class="w-5 h-5"></i></button><h1 class="text-xl md:text-2xl font-bold text-slate-900">Dasbor</h1></div>
-          <div class="flex items-center space-x-2 text-xs text-indigo-300"><i data-lucide="calendar" class="w-3.5 h-3.5"></i><span id="dashDate">-</span></div>
+          <h1 class="text-xl md:text-2xl font-bold text-slate-900">Dasbor</h1>
+          <div class="flex items-center space-x-2 text-xs text-slate-400"><i data-lucide="calendar" class="w-3.5 h-3.5"></i><span id="dashDate">-</span></div>
         </div>
 
         <!-- Stat Cards Row -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-          <div class="bg-white rounded-2xl p-4 md:p-5 border border-slate-800 shadow-sm hover:shadow-md transition">
+          <div class="bg-white rounded-2xl p-4 md:p-5 border border-slate-200 shadow-sm hover:shadow-md transition">
             <div class="flex items-center justify-between mb-2">
-              <span class="text-[10px] md:text-xs font-bold text-indigo-300 uppercase tracking-wider">Sekolah</span>
+              <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">Sekolah</span>
               <div class="p-2 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl shadow-sm"><i data-lucide="building-2" class="w-4 h-4 text-white"></i></div>
             </div>
             <p class="text-sm md:text-lg font-bold text-slate-900 break-words whitespace-normal leading-tight" id="dashNamaSekolah">-</p>
-            <p class="text-[10px] text-indigo-400 font-medium mt-1">Lembaga Pendidikan</p>
+            <p class="text-[10px] text-indigo-600 font-medium mt-1">Lembaga Pendidikan</p>
           </div>
-          <div class="bg-white rounded-2xl p-4 md:p-5 border border-slate-800 shadow-sm hover:shadow-md transition">
+          <div class="bg-white rounded-2xl p-4 md:p-5 border border-slate-200 shadow-sm hover:shadow-md transition">
             <div class="flex items-center justify-between mb-2">
-              <span class="text-[10px] md:text-xs font-bold text-indigo-300 uppercase tracking-wider">Total Siswa</span>
+              <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">Total Siswa</span>
               <div class="p-2 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-sm"><i data-lucide="users" class="w-4 h-4 text-white"></i></div>
             </div>
             <p class="text-sm md:text-lg font-bold text-slate-900" id="dashTotalSiswa">0</p>
             <p class="text-[10px] text-emerald-600 font-medium mt-1">Terdaftar di sistem</p>
           </div>
-          <div class="bg-white rounded-2xl p-4 md:p-5 border border-slate-800 shadow-sm hover:shadow-md transition">
+          <div class="bg-white rounded-2xl p-4 md:p-5 border border-slate-200 shadow-sm hover:shadow-md transition">
             <div class="flex items-center justify-between mb-2">
-              <span class="text-[10px] md:text-xs font-bold text-indigo-300 uppercase tracking-wider">Total Kelas</span>
+              <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">Total Kelas</span>
               <div class="p-2 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl shadow-sm"><i data-lucide="layers" class="w-4 h-4 text-white"></i></div>
             </div>
             <p class="text-sm md:text-lg font-bold text-slate-900" id="dashTotalKelas">0</p>
             <p class="text-[10px] text-amber-600 font-medium mt-1">Kelas aktif</p>
           </div>
-          <div class="bg-white rounded-2xl p-4 md:p-5 border border-slate-800 shadow-sm hover:shadow-md transition">
+          <div class="bg-white rounded-2xl p-4 md:p-5 border border-slate-200 shadow-sm hover:shadow-md transition">
             <div class="flex items-center justify-between mb-2">
-              <span class="text-[10px] md:text-xs font-bold text-indigo-300 uppercase tracking-wider">Total Mapel</span>
+              <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">Total Mapel</span>
               <div class="p-2 bg-gradient-to-br from-rose-500 to-rose-600 rounded-xl shadow-sm"><i data-lucide="book-open" class="w-4 h-4 text-white"></i></div>
             </div>
             <p class="text-sm md:text-lg font-bold text-slate-900" id="dashTotalSoal">0</p>
@@ -270,56 +270,56 @@
         <!-- Second Row: Charts/Stats -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <!-- Users Card -->
-          <div class="bg-white rounded-2xl p-4 md:p-5 border border-slate-800 shadow-sm lg:col-span-1">
-            <h3 class="font-bold text-slate-900 text-sm mb-3 flex items-center space-x-2"><i data-lucide="shield" class="w-4 h-4 text-indigo-400"></i><span>Pengguna Sistem</span></h3>
+          <div class="bg-white rounded-2xl p-4 md:p-5 border border-slate-200 shadow-sm lg:col-span-1">
+            <h3 class="font-bold text-slate-900 text-sm mb-3 flex items-center space-x-2"><i data-lucide="shield" class="w-4 h-4 text-indigo-600"></i><span>Pengguna Sistem</span></h3>
             <div class="space-y-2">
-              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-purple-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-purple-500"></div><span class="text-xs text-slate-300">Admin</span></div><span class="text-sm font-bold text-slate-900" id="dashTotalAdmin">0</span></div>
-              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-blue-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-blue-500"></div><span class="text-xs text-slate-300">Guru</span></div><span class="text-sm font-bold text-slate-900" id="dashTotalGuru">0</span></div>
-              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-slate-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-slate-500"></div><span class="text-xs text-slate-300">Pengawas</span></div><span class="text-sm font-bold text-slate-900" id="dashTotalPengawas">0</span></div>
+              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-purple-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-purple-500"></div><span class="text-xs text-slate-600">Admin</span></div><span class="text-sm font-bold text-slate-900" id="dashTotalAdmin">0</span></div>
+              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-blue-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-blue-500"></div><span class="text-xs text-slate-600">Guru</span></div><span class="text-sm font-bold text-slate-900" id="dashTotalGuru">0</span></div>
+              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-slate-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-slate-500"></div><span class="text-xs text-slate-600">Pengawas</span></div><span class="text-sm font-bold text-slate-900" id="dashTotalPengawas">0</span></div>
             </div>
           </div>
 
           <!-- Exam Activity Card -->
-          <div class="bg-white rounded-2xl p-4 md:p-5 border border-slate-800 shadow-sm lg:col-span-1">
+          <div class="bg-white rounded-2xl p-4 md:p-5 border border-slate-200 shadow-sm lg:col-span-1">
             <h3 class="font-bold text-slate-900 text-sm mb-3 flex items-center space-x-2"><i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i><span>Aktivitas Ujian</span></h3>
             <div class="space-y-2">
-              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-amber-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div><span class="text-xs text-slate-300">Mengerjakan</span></div><span class="text-sm font-bold text-amber-600" id="dashMengerjakan">0</span></div>
-              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-emerald-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-emerald-500"></div><span class="text-xs text-slate-300">Selesai</span></div><span class="text-sm font-bold text-emerald-600" id="dashSelesai">0</span></div>
-              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-slate-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-slate-500"></div><span class="text-xs text-slate-300">Total Log</span></div><span class="text-sm font-bold text-slate-900" id="dashTotalLog">0</span></div>
+              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-amber-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div><span class="text-xs text-slate-600">Mengerjakan</span></div><span class="text-sm font-bold text-amber-600" id="dashMengerjakan">0</span></div>
+              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-emerald-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-emerald-500"></div><span class="text-xs text-slate-600">Selesai</span></div><span class="text-sm font-bold text-emerald-600" id="dashSelesai">0</span></div>
+              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-slate-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-slate-500"></div><span class="text-xs text-slate-600">Total Log</span></div><span class="text-sm font-bold text-slate-900" id="dashTotalLog">0</span></div>
             </div>
           </div>
 
           <!-- Quick Info / Soal Ownership Card -->
-          <div class="bg-white rounded-2xl p-4 md:p-5 border border-slate-800 shadow-sm lg:col-span-1">
+          <div class="bg-white rounded-2xl p-4 md:p-5 border border-slate-200 shadow-sm lg:col-span-1">
             <h3 class="font-bold text-slate-900 text-sm mb-3 flex items-center space-x-2"><i data-lucide="file-text" class="w-4 h-4 text-rose-600"></i><span>Info Bank Soal</span></h3>
             <div class="space-y-2">
-              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-rose-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-rose-500"></div><span class="text-xs text-slate-300">Soal Saya</span></div><span class="text-sm font-bold text-rose-600" id="dashSoalSaya">0</span></div>
-              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-indigo-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-indigo-500"></div><span class="text-xs text-slate-300">Total Bank Soal</span></div><span class="text-sm font-bold text-indigo-400" id="dashTotalBankSoal">0</span></div>
-              <div id="dashQuickLinks" class="mt-3 pt-3 border-t border-slate-800 flex flex-wrap gap-2">
-                <button onclick="showAdminPage('bankSoal')" class="px-3 py-1.5 bg-indigo-50 text-indigo-400 rounded-lg text-xs font-medium hover:bg-indigo-100 transition">Kelola Bank Soal</button>
+              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-rose-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-rose-500"></div><span class="text-xs text-slate-600">Soal Saya</span></div><span class="text-sm font-bold text-rose-600" id="dashSoalSaya">0</span></div>
+              <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-indigo-50 to-transparent rounded-xl"><div class="flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-indigo-500"></div><span class="text-xs text-slate-600">Total Bank Soal</span></div><span class="text-sm font-bold text-indigo-600" id="dashTotalBankSoal">0</span></div>
+              <div id="dashQuickLinks" class="mt-3 pt-3 border-t border-slate-200 flex flex-wrap gap-2">
+                <button onclick="showAdminPage('bankSoal')" class="px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-lg text-xs font-medium hover:bg-indigo-100 transition">Kelola Bank Soal</button>
                 <button onclick="showAdminPage('monitor')" class="px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-medium hover:bg-emerald-100 transition">Monitor Ujian</button>
               </div>
             </div>
           </div>
         </div>
       </div><div id="pageDataPengguna" class="admin-page hidden space-y-6">
-        <h1 class="text-xl md:text-2xl font-bold text-slate-900 flex items-center space-x-2"><i data-lucide="users" class="w-6 h-6 text-indigo-400"></i><span>Data Pengguna</span></h1>
-        <div class="bg-white rounded-2xl p-6 bg-white border border-slate-800 shadow-sm hover:shadow-lg transition-all duration-300 hover:shadow-md transition-all duration-200">
+        <h1 class="text-xl md:text-2xl font-bold text-slate-900 flex items-center space-x-2"><i data-lucide="users" class="w-6 h-6 text-indigo-600"></i><span>Data Pengguna</span></h1>
+        <div class="bg-white rounded-2xl p-6 bg-white border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 hover:shadow-md transition-all duration-200">
           <h3 class="font-bold text-slate-900 mb-4">Tambah Pengguna</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
-            <input type="text" id="userNamaLengkap" placeholder="Nama Lengkap" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/>
-            <input type="text" id="userUsername" placeholder="Username" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/>
-            <div class="relative"><input type="password" id="userPassword" placeholder="Password" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm pr-10" /><button type="button" onclick="togglePass('userPassword',this)" class="absolute inset-y-0 right-0 pr-3 flex items-center text-indigo-300 hover:text-slate-300"><i data-lucide="eye" class="w-4 h-4"></i></button></div>
-            <select id="userRole" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Role</option><option value="admin">Admin</option><option value="guru">Guru</option><option value="pengawas">Pengawas</option></select>
+            <input type="text" id="userNamaLengkap" placeholder="Nama Lengkap" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/>
+            <input type="text" id="userUsername" placeholder="Username" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/>
+            <div class="relative"><input type="password" id="userPassword" placeholder="Password" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm pr-10" /><button type="button" onclick="togglePass('userPassword',this)" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600"><i data-lucide="eye" class="w-4 h-4"></i></button></div>
+            <select id="userRole" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Role</option><option value="admin">Admin</option><option value="guru">Guru</option><option value="pengawas">Pengawas</option></select>
             <button id="btnSimpanUser" onclick="simpanUser()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md hover:shadow-indigo-200 transition-all duration-200 transition text-sm shadow-md hover:shadow-lg">Simpan</button>
           </div>
           <input type="hidden" id="editUserId" value="">
         </div>
-        <div class="bg-white rounded-2xl border border-slate-800 shadow-sm overflow-hidden">
-          <div class="p-4 border-b border-slate-800"><h3 class="font-bold text-slate-900 text-sm">Daftar Pengguna</h3></div>
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="p-4 border-b border-slate-200"><h3 class="font-bold text-slate-900 text-sm">Daftar Pengguna</h3></div>
           <div class="overflow-x-auto">
             <table class="w-full text-sm border-separate border-spacing-0" id="tabelPengguna">
-              <thead><tr class="bg-slate-100 text-indigo-200 text-xs font-bold uppercase tracking-wider border-b border-slate-800"><th class="p-4 text-left">Nama Lengkap</th><th class="p-4 text-left">Username</th><th class="p-4 text-left">Role</th><th class="p-4 text-center">Aksi</th></tr></thead>
+              <thead><tr class="bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-200"><th class="p-4 text-left">Nama Lengkap</th><th class="p-4 text-left">Username</th><th class="p-4 text-left">Role</th><th class="p-4 text-center">Aksi</th></tr></thead>
               <tbody id="tabelPenggunaBody"></tbody>
             </table>
           </div>
@@ -328,19 +328,19 @@
 
       <!-- DATA SISWA -->
       <div id="pageDataSiswa" class="admin-page hidden space-y-6">
-        <h1 class="text-xl md:text-2xl font-bold text-slate-900 flex items-center space-x-2"><i data-lucide="graduation-cap" class="w-6 h-6 text-indigo-400"></i><span>Data Siswa</span></h1>
-        <div class="bg-white rounded-2xl p-6 bg-white border border-slate-800 shadow-sm hover:shadow-lg transition-all duration-300">
+        <h1 class="text-xl md:text-2xl font-bold text-slate-900 flex items-center space-x-2"><i data-lucide="graduation-cap" class="w-6 h-6 text-indigo-600"></i><span>Data Siswa</span></h1>
+        <div class="bg-white rounded-2xl p-6 bg-white border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300">
           <h3 class="font-bold text-slate-900 mb-4">Tambah Siswa</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
-            <input type="text" id="siswaNomorUjian" placeholder="Nomor Ujian" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/>
-            <input type="text" id="siswaNama" placeholder="Nama Siswa" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/>
-            <input type="text" id="siswaKelas" placeholder="Kelas" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/>
-            <select id="siswaStatus" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="Aktif">Aktif</option><option value="Tidak Aktif">Tidak Aktif</option></select>
+            <input type="text" id="siswaNomorUjian" placeholder="Nomor Ujian" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/>
+            <input type="text" id="siswaNama" placeholder="Nama Siswa" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/>
+            <input type="text" id="siswaKelas" placeholder="Kelas" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/>
+            <select id="siswaStatus" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="Aktif">Aktif</option><option value="Tidak Aktif">Tidak Aktif</option></select>
             <button id="btnSimpanSiswa" onclick="simpanSiswa()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md hover:shadow-indigo-200 transition-all duration-200 transition text-sm shadow-md hover:shadow-lg">Simpan</button>
           </div>
           <input type="hidden" id="editSiswaId" value="">
         </div>
-        <div class="bg-white rounded-2xl p-6 bg-white border border-slate-800 shadow-sm hover:shadow-lg transition-all duration-300">
+        <div class="bg-white rounded-2xl p-6 bg-white border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <h3 class="font-bold text-slate-900 text-sm">Import Data Siswa dari Excel</h3>
             <div class="flex flex-wrap gap-2">
@@ -352,17 +352,17 @@
             </div>
           </div>
           <div id="importPreview" class="hidden space-y-3">
-            <div class="overflow-x-auto max-h-48 overflow-y-auto border border-slate-800 rounded-xl">
-              <table class="w-full text-xs"><thead><tr class="bg-slate-50 text-indigo-200 font-bold uppercase"><th class="p-2">No</th><th class="p-2">Nomor Ujian</th><th class="p-2">Nama</th><th class="p-2">Kelas</th></tr></thead><tbody id="importPreviewBody"></tbody></table>
+            <div class="overflow-x-auto max-h-48 overflow-y-auto border border-slate-200 rounded-xl">
+              <table class="w-full text-xs"><thead><tr class="bg-slate-50 text-slate-500 font-bold uppercase"><th class="p-2">No</th><th class="p-2">Nomor Ujian</th><th class="p-2">Nama</th><th class="p-2">Kelas</th></tr></thead><tbody id="importPreviewBody"></tbody></table>
             </div>
-            <div class="flex gap-2"><button onclick="konfirmasiImportSiswa()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md hover:shadow-indigo-200 transition-all duration-200 text-xs transition">Konfirmasi Import</button><button onclick="batalImport()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-300 font-medium rounded-xl text-xs transition">Batal</button></div>
+            <div class="flex gap-2"><button onclick="konfirmasiImportSiswa()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md hover:shadow-indigo-200 transition-all duration-200 text-xs transition">Konfirmasi Import</button><button onclick="batalImport()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl text-xs transition">Batal</button></div>
           </div>
         </div>
-        <div class="bg-white rounded-2xl border border-slate-800 shadow-sm overflow-hidden">
-          <div class="p-4 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2"><h3 class="font-bold text-slate-900 text-sm">Daftar Siswa</h3><div class="flex items-center gap-2"><label class="text-xs text-indigo-200 font-medium">Filter Kelas:</label><select id="filterSiswaKelas" onchange="muatDataSiswa()" class="px-3 py-1.5 bg-slate-50 border border-slate-800 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"><option value="">Semua Kelas</option></select></div></div>
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="p-4 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2"><h3 class="font-bold text-slate-900 text-sm">Daftar Siswa</h3><div class="flex items-center gap-2"><label class="text-xs text-slate-500 font-medium">Filter Kelas:</label><select id="filterSiswaKelas" onchange="muatDataSiswa()" class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"><option value="">Semua Kelas</option></select></div></div>
           <div class="overflow-x-auto">
             <table class="w-full text-sm border-separate border-spacing-0" id="tabelSiswa">
-              <thead><tr class="bg-slate-100 text-indigo-200 text-xs font-bold uppercase tracking-wider border-b border-slate-800"><th class="p-4 text-left">Nomor Ujian</th><th class="p-4 text-left">Nama</th><th class="p-4 text-left">Kelas</th><th class="p-4 text-left">Status</th><th class="p-4 text-left">Keterangan</th><th class="p-4 text-center">Aksi</th></tr></thead>
+              <thead><tr class="bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-200"><th class="p-4 text-left">Nomor Ujian</th><th class="p-4 text-left">Nama</th><th class="p-4 text-left">Kelas</th><th class="p-4 text-left">Status</th><th class="p-4 text-left">Keterangan</th><th class="p-4 text-center">Aksi</th></tr></thead>
               <tbody id="tabelSiswaBody"></tbody>
             </table>
           </div>
@@ -371,37 +371,37 @@
 
       <!-- BANK SOAL -->
       <div id="pageBankSoal" class="admin-page hidden space-y-6">
-        <h1 class="text-xl md:text-2xl font-bold text-slate-900 flex items-center space-x-2"><i data-lucide="file-text" class="w-6 h-6 text-indigo-400"></i><span>Bank Soal</span></h1>
-        <div class="bg-white rounded-2xl p-6 bg-white border border-slate-800 shadow-sm hover:shadow-lg transition-all duration-300">
+        <h1 class="text-xl md:text-2xl font-bold text-slate-900 flex items-center space-x-2"><i data-lucide="file-text" class="w-6 h-6 text-indigo-600"></i><span>Bank Soal</span></h1>
+        <div class="bg-white rounded-2xl p-6 bg-white border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300">
           <div class="flex justify-between items-center mb-4">
             <h3 class="font-bold text-slate-900">Tambah / Edit Bank Soal</h3>
-            <button onclick="document.getElementById('formBankSoalArea').classList.toggle('hidden')" class="px-3 py-1.5 bg-indigo-50 text-indigo-400 rounded-lg text-xs font-medium hover:bg-indigo-100 transition shadow-sm">Tambah Bank Soal</button>
+            <button onclick="document.getElementById('formBankSoalArea').classList.toggle('hidden')" class="px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-lg text-xs font-medium hover:bg-indigo-100 transition shadow-sm">Tambah Bank Soal</button>
           </div>
           <div id="formBankSoalArea" class="hidden">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div><label class="block text-xs font-semibold text-indigo-200 mb-1">Mata Ujian <span class="text-red-400">*</span></label><input type="text" id="soalMataUjian" placeholder="Contoh: Matematika Wajib" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/><p class="text-[10px] text-indigo-300 mt-0.5">Nama mata pelajaran ujian</p></div>
-            <div><label class="block text-xs font-semibold text-indigo-200 mb-1">Kelas <span class="text-red-400">*</span></label><select id="soalKelas" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Kelas</option></select><p class="text-[10px] text-indigo-300 mt-0.5">Target kelas ujian</p></div>
-            <div><label class="block text-xs font-semibold text-indigo-200 mb-1">Token <span class="text-red-400">*</span></label><div class="flex gap-2"><input type="text" id="soalToken" placeholder="5 digit angka" class="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/><button type="button" onclick="generateToken()" class="px-3 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-medium rounded-xl transition text-xs border border-emerald-200 whitespace-nowrap" title="Generate Token Otomatis"><i data-lucide="refresh-cw" class="w-4 h-4 inline-block mr-1"></i>Generate</button></div><p class="text-[10px] text-indigo-300 mt-0.5">Klik Generate untuk membuat token 5 digit unik secara otomatis</p></div><div><label class="block text-xs font-semibold text-indigo-200 mb-1">Kolaborator (Guru)</label><select id="soalKolaborator" multiple class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">-- Muat data pengguna --</option></select><p class="text-[10px] text-indigo-300 mt-0.5">Pilih guru yang boleh mengelola bank soal ini (tahan Ctrl untuk pilih banyak)</p></div>
-            <div><label class="block text-xs font-semibold text-indigo-200 mb-1">Status</label><select id="soalStatus" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="Aktif">Aktif</option><option value="Tidak Aktif">Tidak Aktif</option></select><p class="text-[10px] text-indigo-300 mt-0.5">Hanya soal dengan status Aktif yang bisa diakses siswa</p></div>
-            <div><label class="block text-xs font-semibold text-indigo-200 mb-1">Durasi (Menit) <span class="text-red-400">*</span></label><input type="number" id="soalDurasi" placeholder="90" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/><p class="text-[10px] text-indigo-300 mt-0.5">Lama waktu pengerjaan dalam menit</p></div>
-            <div><label class="block text-xs font-semibold text-indigo-200 mb-1">Jumlah Soal <span class="text-red-400">*</span></label><input type="number" id="soalJumlahSoal" placeholder="40" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/><p class="text-[10px] text-indigo-300 mt-0.5">Total nomor soal dalam ujian</p></div>
-            <div><label class="block text-xs font-semibold text-indigo-200 mb-1">Jumlah Opsi</label><select id="soalJumlahOpsi" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="3">3 (A-C)</option><option value="4" selected>4 (A-D)</option><option value="5">5 (A-E)</option></select><p class="text-[10px] text-indigo-300 mt-0.5">Jumlah pilihan jawaban per soal</p></div>
-            <div><label class="block text-xs font-semibold text-indigo-200 mb-1">PDF ID (Google Drive) <span class="text-red-400">*</span></label><input type="text" id="soalPdfId" placeholder="1ABCdefGHIjKLM" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/><p class="text-[10px] text-indigo-300 mt-0.5">ID file Google Drive (dari URL: drive.google.com/file/d/ID_INI/view)</p></div>
+            <div><label class="block text-xs font-semibold text-slate-500 mb-1">Mata Ujian <span class="text-red-400">*</span></label><input type="text" id="soalMataUjian" placeholder="Contoh: Matematika Wajib" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/><p class="text-[10px] text-slate-400 mt-0.5">Nama mata pelajaran ujian</p></div>
+            <div><label class="block text-xs font-semibold text-slate-500 mb-1">Kelas <span class="text-red-400">*</span></label><select id="soalKelas" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Kelas</option></select><p class="text-[10px] text-slate-400 mt-0.5">Target kelas ujian</p></div>
+            <div><label class="block text-xs font-semibold text-slate-500 mb-1">Token <span class="text-red-400">*</span></label><div class="flex gap-2"><input type="text" id="soalToken" placeholder="5 digit angka" class="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/><button type="button" onclick="generateToken()" class="px-3 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-medium rounded-xl transition text-xs border border-emerald-200 whitespace-nowrap" title="Generate Token Otomatis"><i data-lucide="refresh-cw" class="w-4 h-4 inline-block mr-1"></i>Generate</button></div><p class="text-[10px] text-slate-400 mt-0.5">Klik Generate untuk membuat token 5 digit unik secara otomatis</p></div><div><label class="block text-xs font-semibold text-slate-500 mb-1">Kolaborator (Guru)</label><select id="soalKolaborator" multiple class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">-- Muat data pengguna --</option></select><p class="text-[10px] text-slate-400 mt-0.5">Pilih guru yang boleh mengelola bank soal ini (tahan Ctrl untuk pilih banyak)</p></div>
+            <div><label class="block text-xs font-semibold text-slate-500 mb-1">Status</label><select id="soalStatus" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="Aktif">Aktif</option><option value="Tidak Aktif">Tidak Aktif</option></select><p class="text-[10px] text-slate-400 mt-0.5">Hanya soal dengan status Aktif yang bisa diakses siswa</p></div>
+            <div><label class="block text-xs font-semibold text-slate-500 mb-1">Durasi (Menit) <span class="text-red-400">*</span></label><input type="number" id="soalDurasi" placeholder="90" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/><p class="text-[10px] text-slate-400 mt-0.5">Lama waktu pengerjaan dalam menit</p></div>
+            <div><label class="block text-xs font-semibold text-slate-500 mb-1">Jumlah Soal <span class="text-red-400">*</span></label><input type="number" id="soalJumlahSoal" placeholder="40" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/><p class="text-[10px] text-slate-400 mt-0.5">Total nomor soal dalam ujian</p></div>
+            <div><label class="block text-xs font-semibold text-slate-500 mb-1">Jumlah Opsi</label><select id="soalJumlahOpsi" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="3">3 (A-C)</option><option value="4" selected>4 (A-D)</option><option value="5">5 (A-E)</option></select><p class="text-[10px] text-slate-400 mt-0.5">Jumlah pilihan jawaban per soal</p></div>
+            <div><label class="block text-xs font-semibold text-slate-500 mb-1">PDF ID (Google Drive) <span class="text-red-400">*</span></label><input type="text" id="soalPdfId" placeholder="1ABCdefGHIjKLM" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/><p class="text-[10px] text-slate-400 mt-0.5">ID file Google Drive (dari URL: drive.google.com/file/d/ID_INI/view)</p></div>
           </div>
           <div class="mt-3">
-            <label class="block text-xs font-semibold text-indigo-200 mb-1">Kunci Jawaban <span class="text-red-400">*</span></label>
-            <textarea id="soalKunciJawaban" rows="2" placeholder="A, B, C, D, A, B, C, D, ... (pisahkan dengan koma atau baris baru)" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"></textarea>
-            <p class="text-[10px] text-indigo-300 mt-0.5">Kunci jawaban dipisah koma atau baris baru, jumlahnya harus sama dengan Jumlah Soal</p>
+            <label class="block text-xs font-semibold text-slate-500 mb-1">Kunci Jawaban <span class="text-red-400">*</span></label>
+            <textarea id="soalKunciJawaban" rows="2" placeholder="A, B, C, D, A, B, C, D, ... (pisahkan dengan koma atau baris baru)" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"></textarea>
+            <p class="text-[10px] text-slate-400 mt-0.5">Kunci jawaban dipisah koma atau baris baru, jumlahnya harus sama dengan Jumlah Soal</p>
           </div>
           <button id="btnSimpanSoal" onclick="simpanSoal()" class="mt-4 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md hover:shadow-indigo-200 transition-all duration-200 transition text-sm shadow-md hover:shadow-lg">Simpan Bank Soal</button>
           <input type="hidden" id="editSoalId" value="">
           </div>
         </div>
-        <div class="bg-white rounded-2xl border border-slate-800 shadow-sm overflow-hidden">
-          <div class="p-4 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2"><h3 class="font-bold text-slate-900 text-sm">Daftar Bank Soal</h3><div class="flex items-center gap-2"><label class="text-xs text-indigo-200 font-medium">Filter Kelas:</label><select id="filterSoalKelas" onchange="muatDataSoal()" class="px-3 py-1.5 bg-slate-50 border border-slate-800 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"><option value="">Semua Kelas</option></select></div></div>
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="p-4 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2"><h3 class="font-bold text-slate-900 text-sm">Daftar Bank Soal</h3><div class="flex items-center gap-2"><label class="text-xs text-slate-500 font-medium">Filter Kelas:</label><select id="filterSoalKelas" onchange="muatDataSoal()" class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"><option value="">Semua Kelas</option></select></div></div>
           <div class="overflow-x-auto">
             <table class="w-full text-sm border-separate border-spacing-0" id="tabelSoal">
-              <thead><tr class="bg-slate-100 text-indigo-200 text-xs font-bold uppercase tracking-wider border-b border-slate-800"><th class="p-4 text-left">Mata Ujian</th><th class="p-4 text-left">Kelas</th><th class="p-4 text-left">Status</th><th class="p-4 text-center">Soal</th><th class="p-4 text-center">Token</th><th class="p-4 text-left">Pemilik</th><th class="p-4 text-center">Aksi</th></tr></thead>
+              <thead><tr class="bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-200"><th class="p-4 text-left">Mata Ujian</th><th class="p-4 text-left">Kelas</th><th class="p-4 text-left">Status</th><th class="p-4 text-center">Soal</th><th class="p-4 text-center">Token</th><th class="p-4 text-left">Pemilik</th><th class="p-4 text-center">Aksi</th></tr></thead>
               <tbody id="tabelSoalBody"></tbody>
             </table>
           </div>
@@ -410,51 +410,51 @@
 
       <!-- MONITOR -->
       <div id="pageMonitor" class="admin-page hidden space-y-6">
-        <h1 class="text-xl md:text-2xl font-bold text-slate-900 flex items-center space-x-2"><i data-lucide="eye" class="w-6 h-6 text-indigo-400"></i><span>Monitor Ujian</span></h1>
-        <div class="bg-white rounded-2xl p-6 bg-white border border-slate-800 shadow-sm hover:shadow-lg transition-all duration-300">
+        <h1 class="text-xl md:text-2xl font-bold text-slate-900 flex items-center space-x-2"><i data-lucide="eye" class="w-6 h-6 text-indigo-600"></i><span>Monitor Ujian</span></h1>
+        <div class="bg-white rounded-2xl p-6 bg-white border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300">
           <div class="flex flex-col sm:flex-row gap-3 items-end">
-            <div class="w-full sm:w-48"><label class="block text-xs font-semibold text-indigo-200 mb-1">Kelas <span class="text-red-400">*</span></label><select id="monitorKelas" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Kelas</option></select></div>
-            <div class="w-full sm:w-48"><label class="block text-xs font-semibold text-indigo-200 mb-1">Mata Ujian <span class="text-red-400">*</span></label><select id="monitorMataUjian" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Kelas Dulu</option></select></div>
+            <div class="w-full sm:w-48"><label class="block text-xs font-semibold text-slate-500 mb-1">Kelas <span class="text-red-400">*</span></label><select id="monitorKelas" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Kelas</option></select></div>
+            <div class="w-full sm:w-48"><label class="block text-xs font-semibold text-slate-500 mb-1">Mata Ujian <span class="text-red-400">*</span></label><select id="monitorMataUjian" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Kelas Dulu</option></select></div>
             <button onclick="tampilkanMonitor()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md hover:shadow-indigo-200 transition-all duration-200 transition text-sm shadow-md hover:shadow-lg whitespace-nowrap">Tampilkan</button>
-            <button onclick="refreshMonitor()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-300 font-medium rounded-xl transition text-sm flex items-center space-x-1.5" id="btnRefreshMonitor"><i data-lucide="refresh-cw" class="w-4 h-4"></i><span class="hidden sm:inline">Refresh</span></button>
+            <button onclick="refreshMonitor()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl transition text-sm flex items-center space-x-1.5" id="btnRefreshMonitor"><i data-lucide="refresh-cw" class="w-4 h-4"></i><span class="hidden sm:inline">Refresh</span></button>
           </div>
           <div id="monitorTokenContainer" class="mt-4 hidden p-3 bg-indigo-50 border border-indigo-100 rounded-xl items-center w-fit">
-            <i data-lucide="key" class="w-4 h-4 text-indigo-400 mr-2"></i>
-            <span class="text-sm font-semibold text-slate-300 mr-2">Token Ujian:</span>
+            <i data-lucide="key" class="w-4 h-4 text-indigo-600 mr-2"></i>
+            <span class="text-sm font-semibold text-slate-700 mr-2">Token Ujian:</span>
             <span id="monitorTokenDisplay" class="font-mono text-indigo-700 font-bold tracking-wider"></span>
           </div>
         </div>
-        <div class="bg-white rounded-2xl border border-slate-800 shadow-sm overflow-hidden">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <div class="overflow-x-auto">
             <table class="w-full text-sm border-separate border-spacing-0" id="tabelMonitor">
-              <thead><tr class="bg-slate-100 text-indigo-200 text-xs font-bold uppercase tracking-wider border-b border-slate-800"><th class="p-4 text-left">Nomor Ujian</th><th class="p-4 text-left">Nama Siswa</th><th class="p-4 text-left">Status</th><th class="p-4 text-center">Progres</th><th class="p-4 text-center">Aksi</th></tr></thead>
+              <thead><tr class="bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-200"><th class="p-4 text-left">Nomor Ujian</th><th class="p-4 text-left">Nama Siswa</th><th class="p-4 text-left">Status</th><th class="p-4 text-center">Progres</th><th class="p-4 text-center">Aksi</th></tr></thead>
               <tbody id="tabelMonitorBody"></tbody>
             </table>
           </div>
         </div>
-        <p class="text-xs text-indigo-300" id="monitorLastUpdate">Terakhir diperbarui: -</p>
+        <p class="text-xs text-slate-400" id="monitorLastUpdate">Terakhir diperbarui: -</p>
       </div>
 
       <!-- HASIL ADMIN -->
       <div id="pageHasil" class="admin-page hidden space-y-6">
-        <h1 class="text-xl md:text-2xl font-bold text-slate-900 flex items-center space-x-2"><i data-lucide="clipboard-check" class="w-6 h-6 text-indigo-400"></i><span>Hasil Ujian</span></h1>
-        <div class="bg-white rounded-2xl p-6 bg-white border border-slate-800 shadow-sm hover:shadow-lg transition-all duration-300">
+        <h1 class="text-xl md:text-2xl font-bold text-slate-900 flex items-center space-x-2"><i data-lucide="clipboard-check" class="w-6 h-6 text-indigo-600"></i><span>Hasil Ujian</span></h1>
+        <div class="bg-white rounded-2xl p-6 bg-white border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300">
           <div class="flex flex-col sm:flex-row gap-3 items-end">
-            <div class="w-full sm:w-48"><label class="block text-xs font-semibold text-indigo-200 mb-1">Kelas <span class="text-red-400">*</span></label><select id="hasilKelasFilter" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Kelas</option></select></div>
-            <div class="w-full sm:w-48"><label class="block text-xs font-semibold text-indigo-200 mb-1">Mata Ujian <span class="text-red-400">*</span></label><select id="hasilMataUjian" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Kelas Dulu</option></select></div>
+            <div class="w-full sm:w-48"><label class="block text-xs font-semibold text-slate-500 mb-1">Kelas <span class="text-red-400">*</span></label><select id="hasilKelasFilter" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Kelas</option></select></div>
+            <div class="w-full sm:w-48"><label class="block text-xs font-semibold text-slate-500 mb-1">Mata Ujian <span class="text-red-400">*</span></label><select id="hasilMataUjian" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"><option value="">Pilih Kelas Dulu</option></select></div>
             <div class="flex items-center space-x-2">
               <button onclick="tampilkanHasil()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md hover:shadow-indigo-200 transition-all duration-200 transition text-sm shadow">Tampilkan</button>
               <button id="btnDownloadHasil" onclick="downloadExcelHasil()" class="hidden px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl transition text-sm shadow flex items-center gap-2"><i data-lucide="file-spreadsheet" class="w-4 h-4"></i><span class="hidden sm:inline">Excel</span></button>
             </div>
           </div>
-          <div id="hasilPdfLinkContainer" class="mt-4 hidden border-t border-slate-800 pt-3">
-             <a id="hasilPdfLink" href="#" target="_blank" class="text-sm text-indigo-400 hover:underline flex items-center gap-1 font-medium w-fit"><i data-lucide="external-link" class="w-4 h-4"></i> Lihat Soal PDF</a>
+          <div id="hasilPdfLinkContainer" class="mt-4 hidden border-t border-slate-200 pt-3">
+             <a id="hasilPdfLink" href="#" target="_blank" class="text-sm text-indigo-600 hover:underline flex items-center gap-1 font-medium w-fit"><i data-lucide="external-link" class="w-4 h-4"></i> Lihat Soal PDF</a>
           </div>
         </div>
-        <div class="bg-white rounded-2xl border border-slate-800 shadow-sm overflow-hidden">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <div class="overflow-x-auto">
             <table class="w-full text-sm border-separate border-spacing-0" id="tabelHasil">
-              <thead><tr class="bg-slate-100 text-indigo-200 text-xs font-bold uppercase tracking-wider border-b border-slate-800"><th class="p-4 text-left">No. Ujian</th><th class="p-4 text-left">Nama</th><th class="p-4 text-left">Kelas</th><th class="p-4 text-left">Mata Ujian</th><th class="p-4 text-center">Durasi</th><th class="p-4 text-center">Nilai</th><th class="p-4 text-left">Timestamp</th><th class="p-4 text-center">Aksi</th></tr></thead>
+              <thead><tr class="bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-200"><th class="p-4 text-left">No. Ujian</th><th class="p-4 text-left">Nama</th><th class="p-4 text-left">Kelas</th><th class="p-4 text-left">Mata Ujian</th><th class="p-4 text-center">Durasi</th><th class="p-4 text-center">Nilai</th><th class="p-4 text-left">Timestamp</th><th class="p-4 text-center">Aksi</th></tr></thead>
               <tbody id="tabelHasilBody"></tbody>
             </table>
           </div>
@@ -463,22 +463,22 @@
 
       <!-- ANALISIS -->
       <div id="pageAnalisis" class="admin-page hidden space-y-6">
-        <h1 class="text-xl md:text-2xl font-bold text-slate-900 flex items-center space-x-2"><i data-lucide="bar-chart-3" class="w-6 h-6 text-indigo-400"></i><span>Analisis Bank Soal</span></h1>
-        <div class="bg-white rounded-2xl p-6 bg-white border border-slate-800 shadow-sm hover:shadow-lg transition-all duration-300">
+        <h1 class="text-xl md:text-2xl font-bold text-slate-900 flex items-center space-x-2"><i data-lucide="bar-chart-3" class="w-6 h-6 text-indigo-600"></i><span>Analisis Bank Soal</span></h1>
+        <div class="bg-white rounded-2xl p-6 bg-white border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300">
           <div class="flex flex-col sm:flex-row gap-3 items-end">
-            <div class="w-full sm:w-48"><label class="block text-xs font-semibold text-indigo-200 mb-1">Kelas</label><select id="analisisKelas" onchange="filterAnalisisMataUjian()" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"></select></div>
-            <div class="w-full sm:w-48"><label class="block text-xs font-semibold text-indigo-200 mb-1">Mata Ujian</label><select id="analisisMataUjian" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"></select></div>
+            <div class="w-full sm:w-48"><label class="block text-xs font-semibold text-slate-500 mb-1">Kelas</label><select id="analisisKelas" onchange="filterAnalisisMataUjian()" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"></select></div>
+            <div class="w-full sm:w-48"><label class="block text-xs font-semibold text-slate-500 mb-1">Mata Ujian</label><select id="analisisMataUjian" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"></select></div>
             <button onclick="tampilkanAnalisis()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md hover:shadow-indigo-200 transition-all duration-200 transition text-sm shadow">Tampilkan</button>
           </div>
         </div>
         <div id="analisisResult" class="hidden space-y-4">
-          <div class="bg-white rounded-2xl p-4 border border-slate-800 shadow-sm">
-            <p class="text-sm"><span class="font-semibold text-slate-300">URL Soal PDF: </span><a id="analisisPdfUrl" href="#" target="_blank" class="text-indigo-400 underline text-sm break-all"></a></p>
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+            <p class="text-sm"><span class="font-semibold text-slate-600">URL Soal PDF: </span><a id="analisisPdfUrl" href="#" target="_blank" class="text-indigo-600 underline text-sm break-all"></a></p>
           </div>
-          <div class="bg-white rounded-2xl border border-slate-800 shadow-sm overflow-hidden">
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
             <div class="overflow-x-auto">
               <table class="w-full text-sm border-separate border-spacing-0" id="tabelAnalisis">
-                <thead><tr class="bg-slate-100 text-indigo-200 text-xs font-bold uppercase tracking-wider border-b border-slate-800"><th class="p-4 text-center">Nomor</th><th class="p-4 text-center">Jumlah</th><th class="p-4 text-center">%</th><th class="p-4 text-center">Tingkat Kesulitan</th></tr></thead>
+                <thead><tr class="bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-200"><th class="p-4 text-center">Nomor</th><th class="p-4 text-center">Jumlah</th><th class="p-4 text-center">%</th><th class="p-4 text-center">Tingkat Kesulitan</th></tr></thead>
                 <tbody id="tabelAnalisisBody"></tbody>
               </table>
             </div>
@@ -488,14 +488,14 @@
 
       <!-- PENGATURAN -->
       <div id="pagePengaturan" class="admin-page hidden space-y-6">
-        <h1 class="text-xl md:text-2xl font-bold text-slate-900 flex items-center space-x-2"><i data-lucide="settings" class="w-6 h-6 text-indigo-400"></i><span>Pengaturan Aplikasi</span></h1>
-        <div class="bg-white rounded-2xl p-6 bg-white border border-slate-800 shadow-sm hover:shadow-lg transition-all duration-300 max-w-2xl">
+        <h1 class="text-xl md:text-2xl font-bold text-slate-900 flex items-center space-x-2"><i data-lucide="settings" class="w-6 h-6 text-indigo-600"></i><span>Pengaturan Aplikasi</span></h1>
+        <div class="bg-white rounded-2xl p-6 bg-white border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 max-w-2xl">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div><label class="block text-xs font-semibold text-indigo-200 mb-1">Nama Aplikasi</label><input type="text" id="setAppName" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/></div>
-            <div><label class="block text-xs font-semibold text-indigo-200 mb-1">Nama Sekolah</label><input type="text" id="setSchoolName" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/></div>
-            <div><label class="block text-xs font-semibold text-indigo-200 mb-1">Logo URL</label><input type="text" id="setLogoUrl" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/></div>
-            <div><label class="block text-xs font-semibold text-indigo-200 mb-1">Drive Folder URL</label><input type="text" id="setDriveUrl" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/></div>
-            <div><label class="block text-xs font-semibold text-indigo-200 mb-1">Toleransi Kecurangan (Detik)</label><input type="number" id="setCheatTolerance" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/></div>
+            <div><label class="block text-xs font-semibold text-slate-500 mb-1">Nama Aplikasi</label><input type="text" id="setAppName" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/></div>
+            <div><label class="block text-xs font-semibold text-slate-500 mb-1">Nama Sekolah</label><input type="text" id="setSchoolName" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/></div>
+            <div><label class="block text-xs font-semibold text-slate-500 mb-1">Logo URL</label><input type="text" id="setLogoUrl" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/></div>
+            <div><label class="block text-xs font-semibold text-slate-500 mb-1">Drive Folder URL</label><input type="text" id="setDriveUrl" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/></div>
+            <div><label class="block text-xs font-semibold text-slate-500 mb-1">Toleransi Kecurangan (Detik)</label><input type="number" id="setCheatTolerance" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"/></div>
           </div>
           <button onclick="simpanPengaturan()" class="mt-4 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md hover:shadow-indigo-200 transition-all duration-200 transition text-sm shadow-md hover:shadow-lg">Simpan Pengaturan</button>
         </div>
@@ -505,7 +505,7 @@
   </div>
 
   <!-- ======================== STUDENT PAGES ======================== -->
-  <main id="studentApp" class="hidden flex-grow flex flex-col w-full max-w-md mx-auto bg-white shadow-xl relative min-h-screen border-x border-slate-800 overflow-hidden">
+  <main id="studentApp" class="hidden flex-grow flex flex-col w-full max-w-md mx-auto bg-white shadow-xl relative min-h-screen border-x border-slate-100 overflow-hidden">
 
     <!-- STUDENT PERSIAPAN -->
     <section id="pagePersiapan" class="hidden flex-col p-5 animate__animated animate__fadeIn space-y-5">
@@ -518,31 +518,31 @@
         <button onclick="logoutSiswa()" class="absolute top-4 right-4 text-white/60 hover:text-white p-1 rounded-lg hover:bg-white/10 transition"><i data-lucide="log-out" class="w-4 h-4"></i></button>
       </div>
       <div class="space-y-3">
-        <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider flex items-center space-x-2"><i data-lucide="book-open" class="w-4 h-4 text-indigo-300"></i><span>Ujian Tersedia</span></h3>
+        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider flex items-center space-x-2"><i data-lucide="book-open" class="w-4 h-4 text-slate-400"></i><span>Ujian Tersedia</span></h3>
         <div id="daftarUjianWrapper" class="space-y-3"></div>
       </div>
       <div class="space-y-3 pt-2">
-        <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider flex items-center space-x-2"><i data-lucide="award" class="w-4 h-4 text-indigo-300"></i><span>Riwayat &amp; Nilai Anda</span></h3>
-        <div id="daftarRiwayatWrapper" class="bg-white border border-slate-800 rounded-2xl overflow-hidden shadow-sm"></div>
+        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider flex items-center space-x-2"><i data-lucide="award" class="w-4 h-4 text-slate-400"></i><span>Riwayat &amp; Nilai Anda</span></h3>
+        <div id="daftarRiwayatWrapper" class="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm"></div>
       </div>
     </section>
 
     <!-- STUDENT UJIAN -->
     <section id="pageUjian" class="hidden relative flex-col h-[100dvh] max-h-[100dvh] bg-slate-900 text-white animate__animated animate__fadeIn overflow-hidden">
       <div class="bg-slate-950 p-4 border-b border-slate-800 flex items-center justify-between z-10">
-        <div class="flex flex-col"><span id="ujianMataPelajaran" class="text-sm font-bold truncate max-w-[150px]">-</span><span id="ujianSiswaNama" class="text-[10px] text-indigo-300 truncate max-w-[150px]">-</span></div>
+        <div class="flex flex-col"><span id="ujianMataPelajaran" class="text-sm font-bold truncate max-w-[150px]">-</span><span id="ujianSiswaNama" class="text-[10px] text-slate-400 truncate max-w-[150px]">-</span></div>
         <div class="flex items-center space-x-2 bg-rose-500/10 px-3 py-1.5 rounded-full border border-rose-500/20 text-rose-400"><i data-lucide="clock" class="w-4 h-4 animate-pulse"></i><span id="ujianTimer" class="font-bold font-mono text-sm">00:00:00</span></div>
       </div>
-      <div class="flex-grow relative overflow-hidden bg-slate-800" id="examMainArea"><div id="pdfContainer" class="absolute inset-0 flex flex-col bg-slate-950" style="bottom: 56px;"><div class="bg-slate-900/80 backdrop-blur-md px-4 py-2 flex justify-between items-center z-10 border-b border-slate-800/40"><span class="text-xs text-indigo-300 font-medium">Soal Ujian (PDF)</span><div class="flex items-center space-x-2"><button onclick="zoomPdf(false)" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition" title="Perkecil"><i data-lucide="zoom-out" class="w-4 h-4"></i></button><button onclick="zoomPdf(true)" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition" title="Perbesar"><i data-lucide="zoom-in" class="w-4 h-4"></i></button></div></div><div class="flex-grow overflow-auto relative" id="pdfScrollArea"><div id="pdfZoomWrapper" class="transition-all duration-200" style="min-width:100%;min-height:100%;width:100%;height:100%"><iframe id="pdfIframe" src="" class="w-full h-full border-none" style="min-width:100%;min-height:100%"></iframe></div></div></div></div>
+      <div class="flex-grow relative overflow-hidden bg-slate-800" id="examMainArea"><div id="pdfContainer" class="absolute inset-0 flex flex-col bg-slate-950" style="bottom: 56px;"><div class="bg-slate-900/80 backdrop-blur-md px-4 py-2 flex justify-between items-center z-10 border-b border-slate-800/40"><span class="text-xs text-slate-400 font-medium">Soal Ujian (PDF)</span><div class="flex items-center space-x-2"><button onclick="zoomPdf(false)" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition" title="Perkecil"><i data-lucide="zoom-out" class="w-4 h-4"></i></button><button onclick="zoomPdf(true)" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition" title="Perbesar"><i data-lucide="zoom-in" class="w-4 h-4"></i></button></div></div><div class="flex-grow overflow-auto relative" id="pdfScrollArea"><div id="pdfZoomWrapper" class="transition-all duration-200" style="min-width:100%;min-height:100%;width:100%;height:100%"><iframe id="pdfIframe" src="" class="w-full h-full border-none" style="min-width:100%;min-height:100%"></iframe></div></div></div></div>
       <!-- Drawer fixed at bottom -->
-      <div id="lembarJawabanDrawer" class="absolute bottom-0 z-50 bg-white text-white shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.3)] border-t border-slate-800 transition-all duration-300 flex flex-col" style="height:auto;max-height:75vh;width:100%;max-width:28rem;left:0;right:0;margin-left:auto;margin-right:auto;border-radius:1.5rem 1.5rem 0 0;transform:translateY(calc(100% - 56px))">
-          <button onclick="toggleLembarJawaban()" class="w-full py-3 px-5 flex items-center justify-between border-b border-slate-800 bg-slate-50 hover:bg-slate-100/80 transition cursor-pointer focus:outline-none" style="border-radius:1.5rem 1.5rem 0 0">
-            <div class="flex items-center space-x-2"><i data-lucide="key-round" class="w-4 h-4 text-indigo-400"></i><span class="font-bold text-white text-sm">Lembar Jawaban</span><span id="answeredCounter" class="text-xs bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full font-bold">0/0</span></div>
-            <div class="flex items-center space-x-2 text-indigo-400"><span class="text-xs font-semibold" id="toggleDrawerText">Tampilkan</span><i id="toggleDrawerIcon" data-lucide="chevron-up" class="w-4 h-4 transition-transform duration-300"></i></div>
+      <div id="lembarJawabanDrawer" class="absolute bottom-0 z-50 bg-white text-slate-800 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.3)] border-t border-slate-200 transition-all duration-300 flex flex-col" style="height:auto;max-height:75vh;width:100%;max-width:28rem;left:0;right:0;margin-left:auto;margin-right:auto;border-radius:1.5rem 1.5rem 0 0;transform:translateY(calc(100% - 56px))">
+          <button onclick="toggleLembarJawaban()" class="w-full py-3 px-5 flex items-center justify-between border-b border-slate-100 bg-slate-50 hover:bg-slate-100/80 transition cursor-pointer focus:outline-none" style="border-radius:1.5rem 1.5rem 0 0">
+            <div class="flex items-center space-x-2"><i data-lucide="key-round" class="w-4 h-4 text-indigo-600"></i><span class="font-bold text-slate-800 text-sm">Lembar Jawaban</span><span id="answeredCounter" class="text-xs bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full font-bold">0/0</span></div>
+            <div class="flex items-center space-x-2 text-indigo-600"><span class="text-xs font-semibold" id="toggleDrawerText">Tampilkan</span><i id="toggleDrawerIcon" data-lucide="chevron-up" class="w-4 h-4 transition-transform duration-300"></i></div>
           </button>
           <div id="lembarJawabanList" class="flex-grow overflow-y-auto p-4 space-y-3 bg-white" style="max-height:calc(75vh - 56px)"></div>
-          <div class="p-3 bg-slate-50 border-t border-slate-800 flex items-center justify-between">
-            <button onclick="toggleLembarJawaban()" class="px-4 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-300 font-bold rounded-xl text-xs transition">Tutup Lembar</button>
+          <div class="p-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+            <button onclick="toggleLembarJawaban()" class="px-4 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-xs transition">Tutup Lembar</button>
             <button onclick="submitSelesaiUjian()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition shadow-lg shadow-emerald-200 flex items-center space-x-2"><span>Kirim Jawaban</span><i data-lucide="send" class="w-4 h-4"></i></button>
           </div>
         </div>
@@ -553,15 +553,15 @@
       <div class="flex flex-col items-center space-y-4">
         <div class="p-4 bg-emerald-100 text-emerald-600 rounded-full animate__animated animate__bounceIn"><i data-lucide="check-check" class="w-16 h-16"></i></div>
         <h2 class="text-2xl font-black text-slate-900 tracking-tight">Ujian Selesai!</h2>
-        <p class="text-sm text-indigo-200">Terima kasih, lembar jawaban Anda telah berhasil terkirim dan disimpan.</p>
+        <p class="text-sm text-slate-500">Terima kasih, lembar jawaban Anda telah berhasil terkirim dan disimpan.</p>
       </div>
       <div class="bg-slate-50 border border-slate-150 rounded-3xl p-6 space-y-4 text-left shadow-inner">
-        <h4 class="text-xs font-bold text-indigo-300 uppercase tracking-widest text-center border-b border-slate-800/50 pb-2">Rincian Hasil Ujian</h4>
+        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest text-center border-b border-slate-200/50 pb-2">Rincian Hasil Ujian</h4>
         <div class="space-y-3 text-sm">
-          <div class="flex justify-between"><span class="font-medium text-slate-300">No. Ujian:</span><span id="hasilNoUjian" class="font-semibold text-slate-900">-</span></div>
-          <div class="flex justify-between"><span class="font-medium text-slate-300">Nama Siswa:</span><span id="hasilNama" class="font-semibold text-slate-900">-</span></div>
-          <div class="flex justify-between"><span class="font-medium text-slate-300">Kelas:</span><span id="hasilKelas" class="font-semibold text-slate-900">-</span></div>
-          <div class="flex justify-between"><span class="font-medium text-slate-300">Mata Ujian:</span><span id="hasilMataUjianSiswa" class="font-semibold text-indigo-400">-</span></div>
+          <div class="flex justify-between"><span class="font-medium text-slate-600">No. Ujian:</span><span id="hasilNoUjian" class="font-semibold text-slate-900">-</span></div>
+          <div class="flex justify-between"><span class="font-medium text-slate-600">Nama Siswa:</span><span id="hasilNama" class="font-semibold text-slate-900">-</span></div>
+          <div class="flex justify-between"><span class="font-medium text-slate-600">Kelas:</span><span id="hasilKelas" class="font-semibold text-slate-900">-</span></div>
+          <div class="flex justify-between"><span class="font-medium text-slate-600">Mata Ujian:</span><span id="hasilMataUjianSiswa" class="font-semibold text-indigo-600">-</span></div>
         </div>
         <div class="bg-indigo-600 rounded-2xl p-4 text-center text-white shadow-lg shadow-indigo-100"><span class="text-[10px] uppercase font-bold tracking-widest text-indigo-200">NILAI AKHIR</span><div class="text-4xl font-black mt-1" id="hasilScore">0.00</div></div>
       </div>
@@ -574,17 +574,17 @@
   <div id="tokenModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[180] hidden items-center justify-center p-4">
     <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 animate__animated animate__zoomIn">
       <div class="flex justify-between items-start mb-4">
-        <div><h3 class="text-lg font-bold text-slate-900">Persiapan Ujian</h3><p id="tokenUjianName" class="text-sm text-indigo-400 font-semibold mt-1">Mata Pelajaran</p></div>
-        <button onclick="closeTokenModal()" class="text-indigo-300 hover:text-slate-300"><i data-lucide="x" class="w-5 h-5"></i></button>
+        <div><h3 class="text-lg font-bold text-slate-900">Persiapan Ujian</h3><p id="tokenUjianName" class="text-sm text-indigo-600 font-semibold mt-1">Mata Pelajaran</p></div>
+        <button onclick="closeTokenModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
-      <div class="space-y-4 mb-6 text-sm text-slate-300 bg-slate-50 p-4 rounded-xl border border-slate-800">
-        <div class="flex justify-between"><span class="font-medium">Kelas:</span><span id="tokenUjianKelas" class="font-semibold text-white">-</span></div>
-        <div class="flex justify-between"><span class="font-medium">Jumlah Soal:</span><span id="tokenUjianJumlah" class="font-semibold text-white">-</span></div>
-        <div class="flex justify-between"><span class="font-medium">Durasi:</span><span id="tokenUjianDurasi" class="font-semibold text-white">- Menit</span></div>
+      <div class="space-y-4 mb-6 text-sm text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-100">
+        <div class="flex justify-between"><span class="font-medium">Kelas:</span><span id="tokenUjianKelas" class="font-semibold text-slate-800">-</span></div>
+        <div class="flex justify-between"><span class="font-medium">Jumlah Soal:</span><span id="tokenUjianJumlah" class="font-semibold text-slate-800">-</span></div>
+        <div class="flex justify-between"><span class="font-medium">Durasi:</span><span id="tokenUjianDurasi" class="font-semibold text-slate-800">- Menit</span></div>
       </div>
       <div class="mb-6">
-        <label class="block text-xs font-semibold text-indigo-200 uppercase tracking-wider mb-2">Masukkan Token Ujian</label>
-        <input type="text" id="tokenField" placeholder="Masukkan 5-6 digit Token" class="w-full px-4 py-3 bg-slate-50 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-center font-bold tracking-widest text-white uppercase" />
+        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Masukkan Token Ujian</label>
+        <input type="text" id="tokenField" placeholder="Masukkan 5-6 digit Token" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-center font-bold tracking-widest text-slate-800 uppercase" />
       </div>
       <button id="btnMulaiUjianSubmit" onclick="submitTokenUjian()" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition duration-200 shadow-lg shadow-indigo-100 flex items-center justify-center space-x-2"><span>Masuk Ruang Ujian</span><i data-lucide="arrow-right" class="w-4 h-4"></i></button>
     </div>
@@ -605,12 +605,12 @@
   <!-- MODAL LIHAT JAWABAN -->
   <div id="viewJawabanModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[200] hidden items-center justify-center p-4">
     <div class="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl transform transition-all">
-      <div class="p-4 md:p-5 border-b border-slate-800 flex items-center justify-between bg-slate-50 rounded-t-2xl">
+      <div class="p-4 md:p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50 rounded-t-2xl">
         <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center"><i data-lucide="file-check-2" class="w-5 h-5 text-indigo-400"></i></div>
-          <div><h2 class="text-lg font-bold text-white" id="vjTitle">Detail Jawaban</h2><p class="text-xs text-indigo-200" id="vjSubtitle">-</p></div>
+          <div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center"><i data-lucide="file-check-2" class="w-5 h-5 text-indigo-600"></i></div>
+          <div><h2 class="text-lg font-bold text-slate-800" id="vjTitle">Detail Jawaban</h2><p class="text-xs text-slate-500" id="vjSubtitle">-</p></div>
         </div>
-        <button onclick="closeViewJawaban()" class="p-2 text-indigo-300 hover:text-slate-300 hover:bg-slate-100 rounded-lg transition"><i data-lucide="x" class="w-5 h-5"></i></button>
+        <button onclick="closeViewJawaban()" class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
       <div class="flex-grow overflow-auto p-4 md:p-6 bg-slate-50 relative">
         <div class="mb-4">
@@ -619,12 +619,12 @@
         <div class="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-2" id="vjGrid"></div>
         <div id="vjLoading" class="hidden absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div></div>
       </div>
-      <div class="p-4 border-t border-slate-800 bg-white rounded-b-2xl flex justify-between items-center">
+      <div class="p-4 border-t border-slate-200 bg-white rounded-b-2xl flex justify-between items-center">
         <div class="flex space-x-4 text-xs font-medium">
           <div class="flex items-center space-x-1 text-emerald-600"><i data-lucide="check-circle-2" class="w-4 h-4"></i><span id="vjBenar">0 Benar</span></div>
           <div class="flex items-center space-x-1 text-rose-600"><i data-lucide="x-circle" class="w-4 h-4"></i><span id="vjSalah">0 Salah</span></div>
         </div>
-        <button onclick="closeViewJawaban()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-300 rounded-xl transition font-medium text-sm shadow-sm">Tutup</button>
+        <button onclick="closeViewJawaban()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition font-medium text-sm shadow-sm">Tutup</button>
       </div>
     </div>
   </div>
@@ -803,8 +803,8 @@
       var map={dashboard:'Dashboard',dataPengguna:'DataPengguna',dataSiswa:'DataSiswa',bankSoal:'BankSoal',monitor:'Monitor',hasil:'Hasil',analisis:'Analisis',pengaturan:'Pengaturan'};if(pageId==='bankSoal'){populateKelasDropdown('soalKelas');populateKolaboratorDropdown();}if(pageId==='dataSiswa'){var fk=document.getElementById('filterSiswaKelas');if(fk&&fk.options.length<=1){populateKelasDropdown('filterSiswaKelas',true);}}if(pageId==='bankSoal'){var fsk=document.getElementById('filterSoalKelas');if(fsk&&fsk.options.length<=1){populateKelasDropdown('filterSoalKelas',true);}}
       var target=document.getElementById('page'+map[pageId]);if(target)target.classList.remove('hidden');
       document.getElementById('mobilePageTitle').innerText=target?(target.querySelector('h1')||{}).innerText||pageId:pageId;
-      document.querySelectorAll('.nav-item').forEach(function(e){e.classList.remove('active bg-indigo-600 text-white');});
-      document.querySelectorAll('.nav-item[data-page="'+pageId+'"]').forEach(function(e){e.classList.add('active bg-indigo-600 text-white');});
+      document.querySelectorAll('.nav-item').forEach(function(e){e.classList.remove('active');});
+      document.querySelectorAll('.nav-item[data-page="'+pageId+'"]').forEach(function(e){e.classList.add('active');});
       closeSidebar();lucide.createIcons();
       var fn={dashboard:muatDashboard,dataPengguna:muatDataPengguna,dataSiswa:muatDataSiswa,bankSoal:muatDataSoal,monitor:function(){muatFilterMonitor();clearInterval(monitorInterval);},hasil:muatFilterHasil,analisis:muatFilterAnalisis,pengaturan:muatPengaturan};
       if(fn[pageId])fn[pageId]();
@@ -819,15 +819,15 @@
         .catch(function(e){console.error(e);});
     }
     function muatDataPengguna() {
-      var tb=document.getElementById('tabelPenggunaBody');tb.innerHTML='<tr><td colspan="4" class="p-4 text-center text-indigo-300">Memuat...</td></tr>';
-      db.collection('Users').get().then(function(s){tb.innerHTML='';if(s.empty){tb.innerHTML='<tr><td colspan="4" class="p-4 text-center text-indigo-300">Belum ada data.</td></tr>';return;}s.forEach(function(doc){var d=doc.data();tb.innerHTML+='<tr class="border-b border-slate-800 hover:bg-slate-50/50 transition"><td class="p-4 font-medium text-white">'+escHtml(d['nama-lengkap']||d.namaLengkap||'-')+'</td><td class="p-4 text-slate-300">'+escHtml(d.username)+'</td><td class="p-4"><span class="px-2.5 py-1 text-xs font-bold rounded-lg '+(d.role==='admin'?'bg-purple-50 text-purple-700':'bg-blue-50 text-blue-700')+'">'+escHtml(d.role)+'</span></td><td class="p-4 text-center"><div class="flex items-center justify-center space-x-1"><button onclick="editUser(\''+doc.id+'\')" class="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Edit"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="hapusUser(\''+doc.id+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';});lucide.createIcons();});
+      var tb=document.getElementById('tabelPenggunaBody');tb.innerHTML='<tr><td colspan="4" class="p-4 text-center text-slate-400">Memuat...</td></tr>';
+      db.collection('Users').get().then(function(s){tb.innerHTML='';if(s.empty){tb.innerHTML='<tr><td colspan="4" class="p-4 text-center text-slate-400">Belum ada data.</td></tr>';return;}s.forEach(function(doc){var d=doc.data();tb.innerHTML+='<tr class="border-b border-slate-100 hover:bg-slate-50/50 transition"><td class="p-4 font-medium text-slate-800">'+escHtml(d['nama-lengkap']||d.namaLengkap||'-')+'</td><td class="p-4 text-slate-600">'+escHtml(d.username)+'</td><td class="p-4"><span class="px-2.5 py-1 text-xs font-bold rounded-lg '+(d.role==='admin'?'bg-purple-50 text-purple-700':'bg-blue-50 text-blue-700')+'">'+escHtml(d.role)+'</span></td><td class="p-4 text-center"><div class="flex items-center justify-center space-x-1"><button onclick="editUser(\''+doc.id+'\')" class="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Edit"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="hapusUser(\''+doc.id+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';});lucide.createIcons();});
     }
     function simpanUser() { var nl=getVal('userNamaLengkap'),u=getVal('userUsername'),p=getVal('userPassword'),r=getVal('userRole'),eid=getVal('editUserId');if(!nl||!u||!p||!r){showCustomAlert('Perhatian','Semua field wajib diisi!','warning');return;}var data={'nama-lengkap':nl,username:u,password:p,role:r};showLoading('Menyimpan...');(eid?db.collection('Users').doc(eid).update(data):db.collection('Users').add(data)).then(function(){hideLoading();showCustomAlert('Berhasil',eid?'Pengguna diperbarui.':'Pengguna ditambahkan.','info');bersihkanFormUser();muatDataPengguna();}).catch(function(e){hideLoading();showCustomAlert('Error',e.message,'error');}); }
     function bersihkanFormUser(){['userNamaLengkap','userUsername','userPassword','userRole'].forEach(function(id){document.getElementById(id).value='';});document.getElementById('editUserId').value='';document.getElementById('btnSimpanUser').innerText='Simpan';}
     function editUser(id){db.collection('Users').doc(id).get().then(function(doc){if(!doc.exists)return;var d=doc.data();document.getElementById('userNamaLengkap').value=d['nama-lengkap']||d.namaLengkap||'';document.getElementById('userUsername').value=d.username||'';document.getElementById('userPassword').value=d.password||'';document.getElementById('userRole').value=d.role||'';document.getElementById('editUserId').value=id;document.getElementById('btnSimpanUser').innerText='Perbarui';window.scrollTo({top:0,behavior:'smooth'});});}
     function hapusUser(id){showCustomConfirm('Hapus Pengguna','Yakin hapus pengguna ini?',function(){showLoading('Menghapus...');db.collection('Users').doc(id).delete().then(function(){hideLoading();showCustomAlert('Berhasil','Dihapus.','info');muatDataPengguna();}).catch(function(e){hideLoading();showCustomAlert('Error',e.message,'error');});});}
     function muatDataSiswa() {
-      var tb=document.getElementById('tabelSiswaBody');tb.innerHTML='<tr><td colspan="6" class="p-4 text-center text-indigo-300">Memuat...</td></tr>';
+      var tb=document.getElementById('tabelSiswaBody');tb.innerHTML='<tr><td colspan="6" class="p-4 text-center text-slate-400">Memuat...</td></tr>';
       var filterKelas=document.getElementById('filterSiswaKelas').value;
       var q=db.collection('siswa').orderBy('nomorUjian');
       q.get().then(function(s){
@@ -844,10 +844,10 @@
         var data=[];
         s.forEach(function(doc){var d2=doc.data();if(!filterKelas||d2.kelas===filterKelas)data.push({id:doc.id,data:d2});});
         data.sort(function(a,b){return (a.data.nama||'').localeCompare(b.data.nama||'');});
-        if(data.length===0){tb.innerHTML='<tr><td colspan="6" class="p-4 text-center text-indigo-300">Belum ada data.</td></tr>';return;}
+        if(data.length===0){tb.innerHTML='<tr><td colspan="6" class="p-4 text-center text-slate-400">Belum ada data.</td></tr>';return;}
         data.forEach(function(item){
           var d=item.data;var sc=(d.status||'Aktif').toLowerCase()==='aktif'?'text-emerald-700 bg-emerald-50':'text-red-700 bg-red-50';
-          tb.innerHTML+='<tr class="border-b border-slate-800 hover:bg-slate-50/50 transition"><td class="p-4 font-medium text-white">'+escHtml(d.nomorUjian)+'</td><td class="p-4 text-slate-300">'+escHtml(d.nama)+'</td><td class="p-4 text-slate-300">'+escHtml(d.kelas)+'</td><td class="p-4"><span class="px-2.5 py-1 text-xs font-bold rounded-lg '+sc+'">'+escHtml(d.status||'Aktif')+'</span></td><td class="p-4 text-indigo-200 text-xs">'+escHtml(d.keterangan||'-')+'</td><td class="p-4 text-center"><div class="flex items-center justify-center space-x-1"><button onclick="editSiswa(\''+item.id+'\')" class="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Edit"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="hapusSiswa(\''+item.id+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';
+          tb.innerHTML+='<tr class="border-b border-slate-100 hover:bg-slate-50/50 transition"><td class="p-4 font-medium text-slate-800">'+escHtml(d.nomorUjian)+'</td><td class="p-4 text-slate-600">'+escHtml(d.nama)+'</td><td class="p-4 text-slate-600">'+escHtml(d.kelas)+'</td><td class="p-4"><span class="px-2.5 py-1 text-xs font-bold rounded-lg '+sc+'">'+escHtml(d.status||'Aktif')+'</span></td><td class="p-4 text-slate-500 text-xs">'+escHtml(d.keterangan||'-')+'</td><td class="p-4 text-center"><div class="flex items-center justify-center space-x-1"><button onclick="editSiswa(\''+item.id+'\')" class="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Edit"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="hapusSiswa(\''+item.id+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';
         });lucide.createIcons();
       });
     }
@@ -863,8 +863,8 @@
         for(var i=1;i<rows.length;i++){var r=rows[i];if(r.length>=3)importDataCache.push({nomorUjian:String(r[0]||'').trim(),nama:String(r[1]||'').trim(),kelas:String(r[2]||'').trim()});}
         if(importDataCache.length===0){showCustomAlert('Error','Tidak ada data.','error');return;}
         var pb=document.getElementById('importPreviewBody');pb.innerHTML='';
-        importDataCache.slice(0,20).forEach(function(item,idx){pb.innerHTML+='<tr class="border-b border-slate-800"><td class="p-2 text-center">'+(idx+1)+'</td><td class="p-2">'+escHtml(item.nomorUjian)+'</td><td class="p-2">'+escHtml(item.nama)+'</td><td class="p-2">'+escHtml(item.kelas)+'</td></tr>';});
-        if(importDataCache.length>20)pb.innerHTML+='<tr><td colspan="4" class="p-2 text-center text-indigo-300">...dan '+(importDataCache.length-20)+' lainnya</td></tr>';
+        importDataCache.slice(0,20).forEach(function(item,idx){pb.innerHTML+='<tr class="border-b border-slate-100"><td class="p-2 text-center">'+(idx+1)+'</td><td class="p-2">'+escHtml(item.nomorUjian)+'</td><td class="p-2">'+escHtml(item.nama)+'</td><td class="p-2">'+escHtml(item.kelas)+'</td></tr>';});
+        if(importDataCache.length>20)pb.innerHTML+='<tr><td colspan="4" class="p-2 text-center text-slate-400">...dan '+(importDataCache.length-20)+' lainnya</td></tr>';
         document.getElementById('importPreview').classList.remove('hidden');
       };reader.readAsArrayBuffer(file);event.target.value='';
     }
@@ -874,7 +874,7 @@
     // ============= BANK SOAL =============
     function muatDataSoal() {
       var tb = document.getElementById('tabelSoalBody');
-      tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-indigo-300">Memuat...</td></tr>';
+      tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-slate-400">Memuat...</td></tr>';
       var filterKelas = document.getElementById('filterSoalKelas').value;
       db.collection('soal').orderBy('mataUjian').get().then(function(s) {
         tb.innerHTML = '';
@@ -901,11 +901,11 @@
           });
         }
         data.sort(function(a, b) { return (a.data.mataUjian || '').localeCompare(b.data.mataUjian || ''); });
-        if (data.length === 0) { tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-indigo-300">Belum ada bank soal.</td></tr>'; return; }
+        if (data.length === 0) { tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-slate-400">Belum ada bank soal.</td></tr>'; return; }
         data.forEach(function(item) {
           var d = item.data;
           var sc = (d.status || 'Aktif').toLowerCase() === 'aktif' ? 'text-emerald-700 bg-emerald-50' : 'text-red-700 bg-red-50';
-          var pemilik = (d.createdBy && d.createdBy.nama) ? d.createdBy.nama : '-'; var kolabArr = d.kolaborator || []; var kolabStr = kolabArr.map(function(k){return k.nama;}).join(', '); if(pemilik=='-'&&kolabStr) pemilik=kolabStr; else if(kolabStr) pemilik+=' [Kolab: '+kolabStr+']'; tb.innerHTML += '<tr class="border-b border-slate-800 hover:bg-slate-50/50 transition"><td class="p-4 font-medium text-white">' + escHtml(d.mataUjian) + '</td><td class="p-4 text-slate-300">' + escHtml(d.kelas) + '</td><td class="p-4"><span class="px-2.5 py-1 text-xs font-bold rounded-lg ' + sc + '">' + escHtml(d.status || 'Aktif') + '</span></td><td class="p-4 text-center text-slate-300 font-medium"><a href="https://drive.google.com/file/d/' + (d.pdfId || '') + '/view" target="_blank" class="inline-flex items-center space-x-1 px-3 py-1.5 bg-indigo-50 text-indigo-400 hover:bg-indigo-100 rounded-lg text-xs font-medium transition"><i data-lucide="external-link" class="w-3.5 h-3.5"></i><span>Buka PDF</span></a></td><td class="p-4 text-center font-mono font-bold tracking-wider text-indigo-400">' + escHtml(d.token || '-') + '</td><td class="p-4 text-slate-300 text-xs">' + escHtml(pemilik) + '</td><td class="p-4 text-center"><div class="flex items-center justify-center space-x-1"><button onclick="editSoal(\''+item.id+'\')" class="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Edit"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="hapusSoal(\''+item.id+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';
+          var pemilik = (d.createdBy && d.createdBy.nama) ? d.createdBy.nama : '-'; var kolabArr = d.kolaborator || []; var kolabStr = kolabArr.map(function(k){return k.nama;}).join(', '); if(pemilik=='-'&&kolabStr) pemilik=kolabStr; else if(kolabStr) pemilik+=' [Kolab: '+kolabStr+']'; tb.innerHTML += '<tr class="border-b border-slate-100 hover:bg-slate-50/50 transition"><td class="p-4 font-medium text-slate-800">' + escHtml(d.mataUjian) + '</td><td class="p-4 text-slate-600">' + escHtml(d.kelas) + '</td><td class="p-4"><span class="px-2.5 py-1 text-xs font-bold rounded-lg ' + sc + '">' + escHtml(d.status || 'Aktif') + '</span></td><td class="p-4 text-center text-slate-700 font-medium"><a href="https://drive.google.com/file/d/' + (d.pdfId || '') + '/view" target="_blank" class="inline-flex items-center space-x-1 px-3 py-1.5 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-lg text-xs font-medium transition"><i data-lucide="external-link" class="w-3.5 h-3.5"></i><span>Buka PDF</span></a></td><td class="p-4 text-center font-mono font-bold tracking-wider text-indigo-600">' + escHtml(d.token || '-') + '</td><td class="p-4 text-slate-600 text-xs">' + escHtml(pemilik) + '</td><td class="p-4 text-center"><div class="flex items-center justify-center space-x-1"><button onclick="editSoal(\''+item.id+'\')" class="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Edit"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="hapusSoal(\''+item.id+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';
         });
         lucide.createIcons();
       });
@@ -983,7 +983,7 @@
       var mata = document.getElementById('monitorMataUjian').value, kls = document.getElementById('monitorKelas').value;
       if (!mata||!kls) { showCustomAlert('Perhatian', 'Pilih mata ujian dan kelas!', 'warning'); return; }
       var tb = document.getElementById('tabelMonitorBody');
-      tb.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-indigo-300">Memuat...</td></tr>';
+      tb.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-slate-400">Memuat...</td></tr>';
       var tokenContainer = document.getElementById('monitorTokenContainer'); if(tokenContainer) { tokenContainer.classList.add('hidden'); tokenContainer.classList.remove('flex'); }
       db.collection('soal').where('mataUjian','==',mata).where('kelas','==',kls).get().then(function(s){ if(!s.empty){ var tk = s.docs[0].data().token; if(tk && tokenContainer){ document.getElementById('monitorTokenDisplay').innerText = tk; tokenContainer.classList.remove('hidden'); tokenContainer.classList.add('flex'); } } });
       Promise.all([
@@ -996,13 +996,13 @@
           var d = doc.data(), no = d.nomorUjian;
           if (seen.has(no)) return; seen.add(no);
           var sw = siswa[no]; if (!sw) return; hasData = true;
-          var st = d.status||'-', sc = st==='Selesai' ? 'text-emerald-700 bg-emerald-50' : (st==='Mengerjakan' ? 'text-amber-700 bg-amber-50' : 'text-slate-300 bg-slate-100');
+          var st = d.status||'-', sc = st==='Selesai' ? 'text-emerald-700 bg-emerald-50' : (st==='Mengerjakan' ? 'text-amber-700 bg-amber-50' : 'text-slate-700 bg-slate-100');
           if ((sw.status||'').toLowerCase()==='tidak aktif') { st = 'Diblokir'; sc = 'text-red-700 bg-red-50'; }
           // Calculate progress
           var progres = '0%'; try{var jwb=JSON.parse(d.jawaban||'{}');var total=Object.keys(jwb).length;var dijawab=0;for(var k in jwb){if(jwb[k]&&jwb[k]!=='')dijawab++;}if(total>0)progres=Math.round((dijawab/total)*100)+'%';}catch(e){progres='-';}
-          tb.innerHTML += '<tr class="border-b border-slate-800 hover:bg-slate-50/50 transition"><td class="p-4 font-medium text-white">'+escHtml(no)+'</td><td class="p-4 text-slate-300">'+escHtml(d.namaSiswa)+'</td><td class="p-4"><span class="px-2.5 py-1 text-xs font-bold rounded-lg '+sc+'">'+st+'</span></td><td class="p-4 text-center"><div class="w-full bg-slate-100 rounded-full h-2 max-w-[80px] mx-auto"><div class="bg-indigo-500 h-2 rounded-full transition-all" style="width:'+(progres==='-'?'0':progres)+'"></div></div><span class="text-[10px] font-bold text-slate-300 mt-0.5 block">'+progres+'</span></td><td class="p-4 text-center"><div class="flex items-center justify-center space-x-1">'+(st==='Diblokir'?'<button onclick="bukaBlokir(\''+no+'\')" class="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-lg transition" title="Buka Blokir"><i data-lucide="unlock" class="w-4 h-4"></i></button>':'')+'<button onclick="resetSiswa(\''+no+'\',\''+escHtml(mata)+'\')" class="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Reset"><i data-lucide="rotate-ccw" class="w-4 h-4"></i></button><button onclick="hapusLogSiswa(\''+no+'\',\''+escHtml(mata)+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';
+          tb.innerHTML += '<tr class="border-b border-slate-100 hover:bg-slate-50/50 transition"><td class="p-4 font-medium text-slate-800">'+escHtml(no)+'</td><td class="p-4 text-slate-600">'+escHtml(d.namaSiswa)+'</td><td class="p-4"><span class="px-2.5 py-1 text-xs font-bold rounded-lg '+sc+'">'+st+'</span></td><td class="p-4 text-center"><div class="w-full bg-slate-100 rounded-full h-2 max-w-[80px] mx-auto"><div class="bg-indigo-500 h-2 rounded-full transition-all" style="width:'+(progres==='-'?'0':progres)+'"></div></div><span class="text-[10px] font-bold text-slate-600 mt-0.5 block">'+progres+'</span></td><td class="p-4 text-center"><div class="flex items-center justify-center space-x-1">'+(st==='Diblokir'?'<button onclick="bukaBlokir(\''+no+'\')" class="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-lg transition" title="Buka Blokir"><i data-lucide="unlock" class="w-4 h-4"></i></button>':'')+'<button onclick="resetSiswa(\''+no+'\',\''+escHtml(mata)+'\')" class="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Reset"><i data-lucide="rotate-ccw" class="w-4 h-4"></i></button><button onclick="hapusLogSiswa(\''+no+'\',\''+escHtml(mata)+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';
         });
-        if (!hasData) tb.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-indigo-300">Tidak ada data.</td></tr>';
+        if (!hasData) tb.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-slate-400">Tidak ada data.</td></tr>';
         document.getElementById('monitorLastUpdate').innerText = 'Terakhir: '+new Date().toLocaleTimeString('id-ID');
         lucide.createIcons();
       });
@@ -1065,13 +1065,13 @@
       var btnDl = document.getElementById('btnDownloadHasil'); if(btnDl) btnDl.classList.add('hidden');
       if (!mata||!kls) { showCustomAlert('Perhatian', 'Pilih mata ujian dan kelas!', 'warning'); return; }
       var tb = document.getElementById('tabelHasilBody');
-      tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-indigo-300">Memuat...</td></tr>';
+      tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-slate-400">Memuat...</td></tr>';
       var pdfContainer = document.getElementById('hasilPdfLinkContainer'); if(pdfContainer) pdfContainer.classList.add('hidden');
       db.collection('soal').where('mataUjian','==',mata).where('kelas','==',kls).get().then(function(s){ if(!s.empty){ var pdfId = s.docs[0].data().pdfId; if(pdfId && pdfContainer){ document.getElementById('hasilPdfLink').href = 'https://drive.google.com/file/d/'+pdfId+'/preview'; pdfContainer.classList.remove('hidden'); } } });
       db.collection('hasil').where('mataUjian','==',mata).where('kelas','==',kls).get()
         .then(function(s) {
           tb.innerHTML = '';
-          if (s.empty) { tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-indigo-300">Belum ada hasil.</td></tr>'; return; }
+          if (s.empty) { tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-slate-400">Belum ada hasil.</td></tr>'; return; }
           if (btnDl) btnDl.classList.remove('hidden');
           var hasilArr = [];
           s.forEach(function(doc) { hasilArr.push({id:doc.id, data:doc.data()}); });
@@ -1080,9 +1080,9 @@
             var d = doc.data();
             var tgl = d.timestamp ? (d.timestamp.toDate ? d.timestamp.toDate().toLocaleString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '-') : '-';
             var eNama = escHtml(d.namaSiswa).replace(/&#039;/g,"\\'");
-            tb.innerHTML += '<tr class="border-b border-slate-800 hover:bg-slate-50/50 transition"><td class="p-4 font-medium text-white">'+escHtml(d.nomorUjian)+'</td><td class="p-4 text-slate-300">'+escHtml(d.namaSiswa)+'</td><td class="p-4 text-slate-300">'+escHtml(d.kelas)+'</td><td class="p-4 text-slate-300">'+escHtml(d.mataUjian)+'</td><td class="p-4 text-center text-slate-300">'+escHtml(d.durasiPengerjaan)+'</td><td class="p-4 text-center"><span class="px-2.5 py-1 bg-indigo-50 text-indigo-700 font-bold rounded-lg text-xs">'+escHtml(d.nilai)+'</span></td><td class="p-4 text-indigo-200 text-xs">'+tgl+'</td><td class="p-4 text-center"><div class="flex items-center justify-center space-x-1"><button onclick="bukaViewJawaban(\''+escHtml(d.nomorUjian)+'\',\''+escHtml(d.mataUjian)+'\',\''+eNama+'\')" class="p-1.5 text-indigo-400 hover:bg-indigo-800 rounded-lg transition" title="Lihat Jawaban"><i data-lucide="eye" class="w-4 h-4"></i></button><button onclick="hapusHasil(\''+doc.id+'\',\''+escHtml(d.nomorUjian)+'\',\''+escHtml(d.mataUjian)+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';
+            tb.innerHTML += '<tr class="border-b border-slate-100 hover:bg-slate-50/50 transition"><td class="p-4 font-medium text-slate-800">'+escHtml(d.nomorUjian)+'</td><td class="p-4 text-slate-600">'+escHtml(d.namaSiswa)+'</td><td class="p-4 text-slate-600">'+escHtml(d.kelas)+'</td><td class="p-4 text-slate-600">'+escHtml(d.mataUjian)+'</td><td class="p-4 text-center text-slate-600">'+escHtml(d.durasiPengerjaan)+'</td><td class="p-4 text-center"><span class="px-2.5 py-1 bg-indigo-50 text-indigo-700 font-bold rounded-lg text-xs">'+escHtml(d.nilai)+'</span></td><td class="p-4 text-slate-500 text-xs">'+tgl+'</td><td class="p-4 text-center"><div class="flex items-center justify-center space-x-1"><button onclick="bukaViewJawaban(\''+escHtml(d.nomorUjian)+'\',\''+escHtml(d.mataUjian)+'\',\''+eNama+'\')" class="p-1.5 text-indigo-600 hover:bg-indigo-50 rounded-lg transition" title="Lihat Jawaban"><i data-lucide="eye" class="w-4 h-4"></i></button><button onclick="hapusHasil(\''+doc.id+'\',\''+escHtml(d.nomorUjian)+'\',\''+escHtml(d.mataUjian)+'\')" class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>';
           }); lucide.createIcons();
-        }).catch(function(e) { tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-indigo-300">Error memuat data: '+e.message+'</td></tr>'; });
+        }).catch(function(e) { tb.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-slate-400">Error memuat data: '+e.message+'</td></tr>'; });
     }
     function hapusHasil(id, no, mata) {
       showCustomConfirm('Hapus Hasil', 'Hapus data hasil dan log pengerjaan?', function() {
@@ -1136,7 +1136,7 @@
           var isBenar = (ans === knc && knc !== '');
           if(isBenar) benar++; else if(ans !== '' || knc !== '') salah++;
           
-          var sc = isBenar ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : (ans==='' ? 'bg-slate-50 border-slate-800 text-indigo-200' : 'bg-rose-50 border-rose-200 text-rose-700');
+          var sc = isBenar ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : (ans==='' ? 'bg-slate-50 border-slate-200 text-slate-500' : 'bg-rose-50 border-rose-200 text-rose-700');
           var icn = isBenar ? '<i data-lucide="check" class="w-3 h-3 text-emerald-500 absolute top-1 right-1"></i>' : (ans==='' ? '' : '<i data-lucide="x" class="w-3 h-3 text-rose-500 absolute top-1 right-1"></i>');
           gridHtml += '<div class="relative p-2 rounded-xl border flex flex-col items-center justify-center '+sc+'"><span class="text-[10px] font-bold opacity-70 mb-1">'+i+'</span><span class="font-black text-lg">'+(ans||'-')+'</span>'+icn+'<div class="text-[9px] mt-1 opacity-70">Kunci: '+(knc||'-')+'</div></div>';
         }
@@ -1199,7 +1199,7 @@
       var kls = document.getElementById('analisisKelas').value, mata = document.getElementById('analisisMataUjian').value;
       if (!kls||!mata) { showCustomAlert('Perhatian', 'Pilih kelas dan mata ujian!', 'warning'); return; }
       var result = document.getElementById('analisisResult');
-      document.getElementById('tabelAnalisisBody').innerHTML = '<tr><td colspan="4" class="p-4 text-center text-indigo-300">Memuat...</td></tr>';
+      document.getElementById('tabelAnalisisBody').innerHTML = '<tr><td colspan="4" class="p-4 text-center text-slate-400">Memuat...</td></tr>';
       result.classList.remove('hidden');
       db.collection('soal').where('mataUjian','==',mata).get()
         .then(function(ss) {
@@ -1210,14 +1210,14 @@
           return db.collection('log').where('mataUjian','==',mata).where('status','==','Selesai').get().then(function(ls) {
             var jwb = []; ls.forEach(function(doc) { try { jwb.push(JSON.parse(doc.data().jawaban)); } catch(e) {} });
             var tb = document.getElementById('tabelAnalisisBody'); tb.innerHTML = '';
-            if (jwb.length===0) { tb.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-indigo-300">Belum ada siswa selesai.</td></tr>'; return; }
+            if (jwb.length===0) { tb.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-slate-400">Belum ada siswa selesai.</td></tr>'; return; }
             for (var i=0; i<jml; i++) {
               var benar = 0;
               for (var j=0; j<jwb.length; j++) { var a = (jwb[j][i+1]||'').toString().trim().toUpperCase(), b = (kunci[i]||'').toString().trim().toUpperCase(); if (a===b && b!=='') benar++; }
               var p = parseFloat(((benar/jwb.length)*100).toFixed(2));
               var tingkat = p > 66.67 ? 'Mudah' : (p > 33.33 ? 'Sedang' : 'Susah');
               var warna = p > 66.67 ? 'text-emerald-700 bg-emerald-50' : (p > 33.33 ? 'text-amber-700 bg-amber-50' : 'text-red-700 bg-red-50');
-              tb.innerHTML += '<tr class="border-b border-slate-800 text-center"><td class="p-4 font-bold text-white">'+(i+1)+'</td><td class="p-4 text-slate-300">'+jwb.length+'</td><td class="p-4 font-semibold text-white">'+p+'%</td><td class="p-4"><span class="px-3 py-1 text-xs font-bold rounded-lg '+warna+'">'+tingkat+'</span></td></tr>';
+              tb.innerHTML += '<tr class="border-b border-slate-100 text-center"><td class="p-4 font-bold text-slate-800">'+(i+1)+'</td><td class="p-4 text-slate-600">'+jwb.length+'</td><td class="p-4 font-semibold text-slate-800">'+p+'%</td><td class="p-4"><span class="px-3 py-1 text-xs font-bold rounded-lg '+warna+'">'+tingkat+'</span></td></tr>';
             } lucide.createIcons();
           });
         });
@@ -1323,21 +1323,21 @@
 
     function renderDaftarUjianUI() {
       var c = document.getElementById('daftarUjianWrapper'); c.innerHTML = '';
-      if (state.daftarUjian.length===0) { c.innerHTML = '<div class="bg-white p-6 rounded-2xl border border-slate-800 text-center text-indigo-300 font-medium"><i data-lucide="smile" class="w-8 h-8 mx-auto mb-2 text-slate-300"></i><span class="text-xs">Tidak ada ujian aktif.</span></div>'; lucide.createIcons(); return; }
+      if (state.daftarUjian.length===0) { c.innerHTML = '<div class="bg-white p-6 rounded-2xl border border-slate-100 text-center text-slate-400 font-medium"><i data-lucide="smile" class="w-8 h-8 mx-auto mb-2 text-slate-300"></i><span class="text-xs">Tidak ada ujian aktif.</span></div>'; lucide.createIcons(); return; }
       state.daftarUjian.forEach(function(u,i) {
         var item = document.createElement('div');
         item.className = 'bg-white p-4 rounded-2xl border border-slate-150 flex justify-between items-center hover:border-indigo-300 transition duration-200 cursor-pointer shadow-sm';
         item.onclick = function() { openTokenModal(i); };
-        item.innerHTML = '<div class="flex items-center space-x-3.5"><div class="p-3 bg-indigo-50 text-indigo-400 rounded-xl"><i data-lucide="clipboard-list" class="w-5 h-5"></i></div><div><h4 class="font-bold text-white text-sm">'+escHtml(u.mataUjian)+'</h4><p class="text-[11px] text-indigo-300 font-medium flex items-center mt-1"><span class="mr-2">'+u.jumlahSoal+' Soal</span><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span><span>'+u.durasi+' Menit</span></p></div></div><button class="p-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-400 rounded-xl transition duration-200"><i data-lucide="play" class="w-4 h-4 fill-indigo-600"></i></button>';
+        item.innerHTML = '<div class="flex items-center space-x-3.5"><div class="p-3 bg-indigo-50 text-indigo-600 rounded-xl"><i data-lucide="clipboard-list" class="w-5 h-5"></i></div><div><h4 class="font-bold text-slate-800 text-sm">'+escHtml(u.mataUjian)+'</h4><p class="text-[11px] text-slate-400 font-medium flex items-center mt-1"><span class="mr-2">'+u.jumlahSoal+' Soal</span><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span><span>'+u.durasi+' Menit</span></p></div></div><button class="p-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 rounded-xl transition duration-200"><i data-lucide="play" class="w-4 h-4 fill-indigo-600"></i></button>';
         c.appendChild(item);
       }); lucide.createIcons();
     }
 
     function renderDaftarRiwayatUI() {
       var c = document.getElementById('daftarRiwayatWrapper'); c.innerHTML = '';
-      if (state.riwayatUjian.length===0) { c.innerHTML = '<div class="p-4 text-center text-indigo-300 text-xs">Belum ada riwayat.</div>'; return; }
-      var h = '<table class="w-full text-left text-xs border-collapse"><thead><tr class="bg-slate-50 border-b border-slate-800 text-indigo-300 font-bold"><th class="p-4">Mata Ujian</th><th class="p-4 text-center">Nilai</th></tr></thead><tbody>';
-      state.riwayatUjian.forEach(function(r) { h += '<tr class="border-b border-slate-50 hover:bg-slate-50/50 transition"><td class="p-4 font-semibold text-slate-300">'+escHtml(r.mataUjian)+'</td><td class="p-4 text-center"><span class="inline-block px-2.5 py-1 bg-indigo-50 text-indigo-400 font-bold rounded-lg">'+r.nilai+'</span></td></tr>'; });
+      if (state.riwayatUjian.length===0) { c.innerHTML = '<div class="p-4 text-center text-slate-400 text-xs">Belum ada riwayat.</div>'; return; }
+      var h = '<table class="w-full text-left text-xs border-collapse"><thead><tr class="bg-slate-50 border-b border-slate-100 text-slate-400 font-bold"><th class="p-4">Mata Ujian</th><th class="p-4 text-center">Nilai</th></tr></thead><tbody>';
+      state.riwayatUjian.forEach(function(r) { h += '<tr class="border-b border-slate-50 hover:bg-slate-50/50 transition"><td class="p-4 font-semibold text-slate-700">'+escHtml(r.mataUjian)+'</td><td class="p-4 text-center"><span class="inline-block px-2.5 py-1 bg-indigo-50 text-indigo-600 font-bold rounded-lg">'+r.nilai+'</span></td></tr>'; });
       h += '</tbody></table>'; c.innerHTML = h;
     }
 
@@ -1402,9 +1402,9 @@
         var sel = state.jawabanSiswa[s]||'', oh = '';
         for (var o=0; o<ops; o++) {
           var h = huruf[o], ck = sel===h?'checked':'';
-          oh += '<label class="flex items-center justify-center cursor-pointer"><input type="radio" name="soal_rad_'+s+'" value="'+h+'" '+ck+' onchange="pilihJawabanSiswa('+s+',\''+h+'\')" class="hidden peer" /><div class="w-10 h-10 rounded-xl border border-slate-800 flex items-center justify-center font-bold text-sm text-slate-300 bg-slate-50 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-600 transition duration-150">'+h+'</div></label>';
+          oh += '<label class="flex items-center justify-center cursor-pointer"><input type="radio" name="soal_rad_'+s+'" value="'+h+'" '+ck+' onchange="pilihJawabanSiswa('+s+',\''+h+'\')" class="hidden peer" /><div class="w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center font-bold text-sm text-slate-700 bg-slate-50 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-600 transition duration-150">'+h+'</div></label>';
         }
-        c.innerHTML += '<div class="flex flex-col space-y-2 pb-3 border-b border-slate-800"><div class="flex items-center justify-between"><span class="text-sm font-bold text-white">Soal Nomor '+s+'</span><button onclick="raguRaguReset('+s+')" class="text-[10px] text-indigo-300 font-medium hover:text-slate-300">Kosongkan</button></div><div class="flex items-center space-x-2">'+oh+'</div></div>';
+        c.innerHTML += '<div class="flex flex-col space-y-2 pb-3 border-b border-slate-100"><div class="flex items-center justify-between"><span class="text-sm font-bold text-slate-800">Soal Nomor '+s+'</span><button onclick="raguRaguReset('+s+')" class="text-[10px] text-slate-400 font-medium hover:text-slate-600">Kosongkan</button></div><div class="flex items-center space-x-2">'+oh+'</div></div>';
       }
     }
 
@@ -1485,7 +1485,7 @@
       title.innerText=t; msg.innerText=m; bg.className='p-3 rounded-full ';
       if (type==='error') { bg.classList.add('bg-rose-100','text-rose-600'); icon.setAttribute('data-lucide','shield-alert'); }
       else if (type==='warning') { bg.classList.add('bg-amber-100','text-amber-600'); icon.setAttribute('data-lucide','alert-triangle'); }
-      else { bg.classList.add('bg-indigo-100','text-indigo-400'); icon.setAttribute('data-lucide','info'); }
+      else { bg.classList.add('bg-indigo-100','text-indigo-600'); icon.setAttribute('data-lucide','info'); }
       lucide.createIcons(); modal.classList.remove('hidden'); modal.classList.add('flex');
     }
     function closeAlert() { document.getElementById('customAlert').classList.add('hidden'); document.getElementById('customAlert').classList.remove('flex'); }
@@ -1498,7 +1498,7 @@
     function closeConfirm() { document.getElementById('customConfirm').classList.add('hidden'); document.getElementById('customConfirm').classList.remove('flex'); }
 
   </script>
-  <footer id="appFooter" class="bg-white border-t border-slate-800 py-1 text-center text-xs text-indigo-200 w-full z-[100] mt-auto">
+  <footer id="appFooter" class="bg-white border-t border-slate-200 py-1 text-center text-xs text-slate-500 w-full z-[100] mt-auto">
     &copy; 2026 CBT PDF | Made by Harum Wibowo | Versi 1.0
   </footer>
 </body>
