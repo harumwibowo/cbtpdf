@@ -1,1 +1,0 @@
-import{D as e,_ as t,b as n}from"./index-BxNrZme4.js";import{t as r}from"./_plugin-vue_export-helper-BDNMzG2s.js";var i={},a={class:`app-footer`};function o(r,i){return e(),n(`footer`,a,[...i[0]||=[t(`span`,null,`Dibuat oleh Harum Wibowo | Versi 1.0`,-1)]])}var s=r(i,[[`render`,o],[`__scopeId`,`data-v-697a8d9c`]]);export{s as t};
